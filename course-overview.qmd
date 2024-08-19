@@ -1,10 +1,27 @@
 ---
-title: "STA 210: Regression Analysis"
+title: "CSC 2626: Imitation Learning for Robotics"
 ---
 
-Learn approaches for analyzing multivariate data sets, emphasizing analysis of variance, linear regression, and logistic regression.
-Learn techniques for checking the appropriateness of proposed models, such as residual analyses and case influence diagnostics, and techniques for selecting models.
-Gain experience dealing with the challenges that arise in practice through assignments that utilize real-world data.
-This class emphasizes data analysis over mathematical theory.
+### Course Overview
 
-![](images/background-bikeshare.png){fig-alt="A series of six, generic data visualizations: a scatterplot, a density plot, a contour plot, a line plot, a box plot, and another scatterplot." width="700"}
+In the next few decades we are going to witness millions of people, from various backgrounds and levels of technical expertise, needing to effectively interact with robotic technologies on a daily basis. As such, people will need to modify the behavior of their robots without explicitly writing code, but by providing only a small number of kinesthetic or visual demonstrations, or even natural language commands. At the same time, robots should try to infer and predict the human's intentions and internal objectives from past interactions, in order to provide assistance before it is explicitly asked. This **graduate-level course** will examine some of the most important papers in imitation learning for robot control, placing more emphasis on developments in the last 10 years. Its purpose is to familiarize students with the frontiers of this research area, to help them identify open problems, and to enable them to make a research contribution.
+
+
+This course will broadly cover the following areas:
+
+* Imitating the policies of demonstrators (people, expensive algorithms, optimal controllers)
+* Connections between imitation learning, optimal control, and reinforcement learning
+* Learning the cost functions that best explain a set of demonstrations
+* Shared autonomy between humans and robots for real-time control
+
+### Prerequisites
+
+You need to be comfortable with: introductory machine learning concepts (such as from CSC411/CSC413/ECE521 or equivalent), linear algebra, basic multivariable calculus, intro to probability. You also need to have strong programming skills in Python. Note: if you don't meet all the prerequisites above please contact the instructor by email. Optional, but recommended: experience with neural networks, such as from CSC321, introductory-level familiarity with reinforcement learning and control.
+
+### Course Delivery Details
+
+* Lectures: In-person, Mondays @ 1pm-4pm ET, [Carr Hall 404](https://g.co/kgs/RTTRTPa)
+* Announcements will be posted on Quercus
+* Discussions will take place on Piazza
+* Zoom recordings will be posted on Quercus after lectures
+* [Anonymous feedback form](https://www.surveymonkey.com/r/LJJV5LY) for suggested improvements
