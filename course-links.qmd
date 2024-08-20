@@ -1,12 +1,72 @@
 ---
-title: "Useful links"
+title: "Useful Resources and Links"
 ---
 
-|                            |                                                                                                                                      |
-|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
-| RStudio containers         | 🔗 on [Duke Container Manager](https://cmgr.oit.duke.edu/containers)                                                                  |
-| Course GitHub organization | 🔗 on [GitHub](https://github.com/sta210-s22)                                                                                        |
-| Discussion forum           | 🔗 on [Sakai](https://sakai.duke.edu/portal/site/779c3ebe-3b88-4bcc-bd01-1813e8396a23/tool/13b6446a-a6c6-4222-8cfb-c36d1f70802b)                                                                 |
-| Lecture streaming and recordings         | 🔗 on [Panopto](https://duke.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%22d6c1d58a-cb6d-4732-9d4b-ae0c011bf767%22) |
-| Gradebook                  | 🔗 on [Sakai](https://sakai.duke.edu/portal/site/779c3ebe-3b88-4bcc-bd01-1813e8396a23/tool/69078433-67a6-4054-a2e7-9e6c202ecdc3/)     |
-| Virtual meetings           | 🔗 on [Sakai](https://sakai.duke.edu/portal/site/779c3ebe-3b88-4bcc-bd01-1813e8396a23/page/d5eef508-07a4-4c6d-b7bd-4614a9631562)      |
+
+### Recommended Simulators
+You are encouraged to use the simplest possible simulator to accomplish the task you are interested in. You can submit links to simulators not included here by [opening a github issue](https://github.com/csc2626/website/issues/new).
+
+|                  |                                                                          |
+|----------------------------|--------------------------------------------------------------------------|
+| [Simulately](https://simulately.wiki/docs/comparison)  | A detailed wiki comparing various widely-used robotics simulators. Read this first. The rest of this table shows simulators and environments not mentioned by Simulately. |
+| [Isaac Lab (formerly Isaac Orbit / Isaac Gym)](https://isaac-sim.github.io/IsaacLab/)   | Layer of abstraction and tools to make using Isaac Sim easier. |
+| [Drake Simulator](https://drake.mit.edu/) | A framework of simulation, analysis and control tools for robotics.           |
+| [Deepmind Control Suite](https://github.com/deepmind/dm_control) | Set of robotics environments on top of Mujoco.           |
+| [Mujoco Menagerie](https://github.com/google-deepmind/mujoco_menagerie) | High-quality description files and assets for robots, built on top of Mujoco.           |
+| [OpenAI Gym](https://www.gymlibrary.dev/index.html)         | Atari, Mujoco, classic control, and third-party environments for RL.     |
+| [RoboSuite](https://robosuite.ai/) | Robotics simulation environments on top of Mujoco. Also a benchmark.                            |
+| [Klampt](http://motion.pratt.duke.edu/klampt/) | Modeling, simulating, planning, and optimization for complex robots, particularly for manipulation and locomotion tasks.                            |
+| [DART](https://dart.readthedocs.io/en/latest/) | Physics simulator for robotics and animation.                           |
+| [CARLA](https://carla.org/) | Self-driving environment and benchmarks on top of the Unreal simulation engine.                            |
+| [AirSim](https://github.com/Microsoft/AirSim/) | Robotics simulation environments for flying and driving, built on top of Unreal engine.                            |
+| [gym-pybullet-drones](https://github.com/utiasDSL/gym-pybullet-drones) | Robotics simulation environments and tools for quadrotors on top of PyBullet. |
+| [Habitat 3.0](https://aihabitat.org/habitat3/) | Simulation of indoor scenes, humans, and robots. Good for visual navigation and social navigation tasks.                           |
+| [GPUDrive](https://github.com/Emerge-Lab/gpudrive) | GPU-accelerated multi-agent driving simulator.              |
+| [ProcGen](https://github.com/openai/procgen) | Procedurally generated simulation environments (not robotics, but useful).          |
+| [RaiSim](https://raisim.com/) | Rigid body physics engine. Supports biomechanics of human motion, as well as quadrupeds.          |
+| [Flightmare](https://uzh-rpg.github.io/flightmare/) | Simulation environment for flying vehicles built on top of the Unity simulation engine. |
+| [IKEA Furniture Assembly](https://clvrai.github.io/furniture/) | IKEA furniture assembly environment. |
+| [FurnitureBench](https://clvrai.github.io/furniture-bench/) | Simulators, datasets, and real environments for furniture assembly |
+| [RLBench](https://github.com/stepjam/RLBench) | Simulation environments for manipulation, built on top of the CoppeliaSim simulator. |
+| [ALFRED](https://askforalfred.com/) | Simulation environments for visual and language-based navigation and manipulation tasks. |
+| [MyoSuite](https://sites.google.com/view/myosuite/) | Muscosceletal simulation environments for biomechanics, based on Mujoco. |
+| [MetaWorld](https://github.com/Farama-Foundation/Metaworld?tab=readme-ov-file) | Multi-task RL environments and benchmarks. |
+
+
+
+
+### Recommended datasets
+
+|                  |                                                                          |
+|----------------------------|--------------------------------------------------------------------------|
+| [Simulately](https://simulately.wiki/docs/dataset)  | A detailed wiki comparing various widely-used robotics datasets. Read this first. The rest of this table shows datasets not mentioned by Simulately. |
+| [D4RL](https://sites.google.com/view/d4rl/home)  | Manipulation and navigation datasets for offline RL |
+| [RoboMimic](https://robomimic.github.io/)  | Manipulation datasets and imitation learning algorithms |
+| [MimicGen](https://mimicgen.github.io/)  | Automatic augmentation of manipulation datasets starting from human demonstrations |
+| [Optimus](https://github.com/NVlabs/Optimus/)  | Automatically generating long-horizon manipulation dataset from Task and Motion Planners.  |
+| [DROID](https://droid-dataset.github.io/)  | Manipulation dataset across various labs and robots |
+| [D4RL](https://sites.google.com/view/d4rl/home)  | Manipulation and navigation datasets for offline RL |
+
+
+	  
+
+### Recommended RL, IL, trajectory optimization, and motion planning libraries
+
+
+
+|                  |                                                                          |
+|----------------------------|--------------------------------------------------------------------------|
+| [Simulately](https://simulately.wiki/docs/toolkits/ReinforcementLearning)  | A detailed wiki comparing various widely-used RL libaries. Read this first. The rest of this table shows libraries not mentioned by Simulately. |
+| [RSL RL](https://github.com/leggedrobotics/rsl_rl)  | RL library used for training quadrupeds at the [RSL lab](https://github.com/leggedrobotics/rsl_rl) at ETHZ. Used in Isaac Lab.  |
+| [STORM](https://sites.google.com/view/manipulation-mpc/home)  | MPC motion planner on the GPU   |
+| [OMPL](https://ompl.kavrakilab.org/)  | Open motion planning library   |
+| [Mink](https://github.com/kevinzakka/mink)  | Inverse kinematics library, built on top of [pink](https://github.com/stephane-caron/pink) and [pinocchio](https://github.com/stack-of-tasks/pinocchio)   |
+| [PureJaxRL](https://github.com/luchris429/purejaxrl)  | RL library in JAX, with training and environments running fully on GPU |
+| [CleanRL](https://github.com/vwxyzjn/cleanrl)  | Clean implementations of Online RL baselines   |
+| [Clean Offline RL](https://github.com/corl-team/CORL)  | Clean implementations of Offline RL baselines   |
+| [rliable](https://agarwl.github.io/rliable/)  | Method and library for reliable evaluation of RL algorithms   |
+| [Diffusion policy](https://diffusion-policy.cs.columbia.edu/)  | Implementation of diffusion policy in action space for imitation learning  |
+| [Implicit behavior cloning](https://github.com/google-research/ibc)  | Implementation of behavior cloning with energy based models |
+| [Model-based RL algorithms](https://github.com/opendilab/awesome-model-based-RL)  | List of model-based RL algorithms  |
+
+
