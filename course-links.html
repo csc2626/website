@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>CSC2626 - Fall 2024 - Useful links</title>
+<title>CSC2626 - Fall 2024 - Useful Resources and Links</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -71,9 +71,11 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<meta property="og:title" content="CSC2626 - Fall 2024 - Useful links">
+<meta property="og:title" content="CSC2626 - Fall 2024 - Useful Resources and Links">
+<meta property="og:description" content="Homepage for CSC2626 - Imitation Learning for Robotics, Fall 2024.">
 <meta property="og:site_name" content="CSC2626 - Fall 2024">
-<meta name="twitter:title" content="CSC2626 - Fall 2024 - Useful links">
+<meta name="twitter:title" content="CSC2626 - Fall 2024 - Useful Resources and Links">
+<meta name="twitter:description" content="Homepage for CSC2626 - Imitation Learning for Robotics, Fall 2024.">
 <meta name="twitter:image" content="https://csc2626.github.io/website/images/twitter-card.png">
 <meta name="twitter:creator" content="@minebocek">
 <meta name="twitter:image-height" content="418">
@@ -180,14 +182,22 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#recommended-simulators" id="toc-recommended-simulators" class="nav-link active" data-scroll-target="#recommended-simulators">Recommended Simulators</a></li>
+  <li><a href="#recommended-datasets" id="toc-recommended-datasets" class="nav-link" data-scroll-target="#recommended-datasets">Recommended datasets</a></li>
+  <li><a href="#recommended-rl-il-trajectory-optimization-and-motion-planning-libraries" id="toc-recommended-rl-il-trajectory-optimization-and-motion-planning-libraries" class="nav-link" data-scroll-target="#recommended-rl-il-trajectory-optimization-and-motion-planning-libraries">Recommended RL, IL, trajectory optimization, and motion planning libraries</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/csc2626/website/edit/main/course-links.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/csc2626/website/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Useful links</h1>
+<h1 class="title">Useful Resources and Links</h1>
 </div>
 
 
@@ -204,36 +214,198 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="recommended-simulators" class="level3">
+<h3 class="anchored" data-anchor-id="recommended-simulators">Recommended Simulators</h3>
+<p>You are encouraged to use the simplest possible simulator to accomplish the task you are interested in. You can submit links to simulators not included here by <a href="https://github.com/csc2626/website/issues/new">opening a github issue</a>.</p>
 <table class="table">
 <tbody>
 <tr class="odd">
-<td>RStudio containers</td>
-<td>🔗 on <a href="https://cmgr.oit.duke.edu/containers">Duke Container Manager</a></td>
+<td><a href="https://simulately.wiki/docs/comparison">Simulately</a></td>
+<td>A detailed wiki comparing various widely-used robotics simulators. Read this first. The rest of this table shows simulators and environments not mentioned by Simulately.</td>
 </tr>
 <tr class="even">
-<td>Course GitHub organization</td>
-<td>🔗 on <a href="https://github.com/sta210-s22">GitHub</a></td>
+<td><a href="https://isaac-sim.github.io/IsaacLab/">Isaac Lab (formerly Isaac Orbit / Isaac Gym)</a></td>
+<td>Layer of abstraction and tools to make using Isaac Sim easier.</td>
 </tr>
 <tr class="odd">
-<td>Discussion forum</td>
-<td>🔗 on <a href="https://sakai.duke.edu/portal/site/779c3ebe-3b88-4bcc-bd01-1813e8396a23/tool/13b6446a-a6c6-4222-8cfb-c36d1f70802b">Sakai</a></td>
+<td><a href="https://drake.mit.edu/">Drake Simulator</a></td>
+<td>A framework of simulation, analysis and control tools for robotics.</td>
 </tr>
 <tr class="even">
-<td>Lecture streaming and recordings</td>
-<td>🔗 on <a href="https://duke.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%22d6c1d58a-cb6d-4732-9d4b-ae0c011bf767%22">Panopto</a></td>
+<td><a href="https://github.com/deepmind/dm_control">Deepmind Control Suite</a></td>
+<td>Set of robotics environments on top of Mujoco.</td>
 </tr>
 <tr class="odd">
-<td>Gradebook</td>
-<td>🔗 on <a href="https://sakai.duke.edu/portal/site/779c3ebe-3b88-4bcc-bd01-1813e8396a23/tool/69078433-67a6-4054-a2e7-9e6c202ecdc3/">Sakai</a></td>
+<td><a href="https://github.com/google-deepmind/mujoco_menagerie">Mujoco Menagerie</a></td>
+<td>High-quality description files and assets for robots, built on top of Mujoco.</td>
 </tr>
 <tr class="even">
-<td>Virtual meetings</td>
-<td>🔗 on <a href="https://sakai.duke.edu/portal/site/779c3ebe-3b88-4bcc-bd01-1813e8396a23/page/d5eef508-07a4-4c6d-b7bd-4614a9631562">Sakai</a></td>
+<td><a href="https://www.gymlibrary.dev/index.html">OpenAI Gym</a></td>
+<td>Atari, Mujoco, classic control, and third-party environments for RL.</td>
+</tr>
+<tr class="odd">
+<td><a href="https://robosuite.ai/">RoboSuite</a></td>
+<td>Robotics simulation environments on top of Mujoco. Also a benchmark.</td>
+</tr>
+<tr class="even">
+<td><a href="http://motion.pratt.duke.edu/klampt/">Klampt</a></td>
+<td>Modeling, simulating, planning, and optimization for complex robots, particularly for manipulation and locomotion tasks.</td>
+</tr>
+<tr class="odd">
+<td><a href="https://dart.readthedocs.io/en/latest/">DART</a></td>
+<td>Physics simulator for robotics and animation.</td>
+</tr>
+<tr class="even">
+<td><a href="https://carla.org/">CARLA</a></td>
+<td>Self-driving environment and benchmarks on top of the Unreal simulation engine.</td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/Microsoft/AirSim/">AirSim</a></td>
+<td>Robotics simulation environments for flying and driving, built on top of Unreal engine.</td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/utiasDSL/gym-pybullet-drones">gym-pybullet-drones</a></td>
+<td>Robotics simulation environments and tools for quadrotors on top of PyBullet.</td>
+</tr>
+<tr class="odd">
+<td><a href="https://aihabitat.org/habitat3/">Habitat 3.0</a></td>
+<td>Simulation of indoor scenes, humans, and robots. Good for visual navigation and social navigation tasks.</td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/Emerge-Lab/gpudrive">GPUDrive</a></td>
+<td>GPU-accelerated multi-agent driving simulator.</td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/openai/procgen">ProcGen</a></td>
+<td>Procedurally generated simulation environments (not robotics, but useful).</td>
+</tr>
+<tr class="even">
+<td><a href="https://raisim.com/">RaiSim</a></td>
+<td>Rigid body physics engine. Supports biomechanics of human motion, as well as quadrupeds.</td>
+</tr>
+<tr class="odd">
+<td><a href="https://uzh-rpg.github.io/flightmare/">Flightmare</a></td>
+<td>Simulation environment for flying vehicles built on top of the Unity simulation engine.</td>
+</tr>
+<tr class="even">
+<td><a href="https://clvrai.github.io/furniture/">IKEA Furniture Assembly</a></td>
+<td>IKEA furniture assembly environment.</td>
+</tr>
+<tr class="odd">
+<td><a href="https://clvrai.github.io/furniture-bench/">FurnitureBench</a></td>
+<td>Simulators, datasets, and real environments for furniture assembly</td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/stepjam/RLBench">RLBench</a></td>
+<td>Simulation environments for manipulation, built on top of the CoppeliaSim simulator.</td>
+</tr>
+<tr class="odd">
+<td><a href="https://askforalfred.com/">ALFRED</a></td>
+<td>Simulation environments for visual and language-based navigation and manipulation tasks.</td>
+</tr>
+<tr class="even">
+<td><a href="https://sites.google.com/view/myosuite/">MyoSuite</a></td>
+<td>Muscosceletal simulation environments for biomechanics, based on Mujoco.</td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/Farama-Foundation/Metaworld?tab=readme-ov-file">MetaWorld</a></td>
+<td>Multi-task RL environments and benchmarks.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="recommended-datasets" class="level3">
+<h3 class="anchored" data-anchor-id="recommended-datasets">Recommended datasets</h3>
+<table class="table">
+<tbody>
+<tr class="odd">
+<td><a href="https://simulately.wiki/docs/dataset">Simulately</a></td>
+<td>A detailed wiki comparing various widely-used robotics datasets. Read this first. The rest of this table shows datasets not mentioned by Simulately.</td>
+</tr>
+<tr class="even">
+<td><a href="https://sites.google.com/view/d4rl/home">D4RL</a></td>
+<td>Manipulation and navigation datasets for offline RL</td>
+</tr>
+<tr class="odd">
+<td><a href="https://robomimic.github.io/">RoboMimic</a></td>
+<td>Manipulation datasets and imitation learning algorithms</td>
+</tr>
+<tr class="even">
+<td><a href="https://mimicgen.github.io/">MimicGen</a></td>
+<td>Automatic augmentation of manipulation datasets starting from human demonstrations</td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/NVlabs/Optimus/">Optimus</a></td>
+<td>Automatically generating long-horizon manipulation dataset from Task and Motion Planners.</td>
+</tr>
+<tr class="even">
+<td><a href="https://droid-dataset.github.io/">DROID</a></td>
+<td>Manipulation dataset across various labs and robots</td>
+</tr>
+<tr class="odd">
+<td><a href="https://sites.google.com/view/d4rl/home">D4RL</a></td>
+<td>Manipulation and navigation datasets for offline RL</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="recommended-rl-il-trajectory-optimization-and-motion-planning-libraries" class="level3">
+<h3 class="anchored" data-anchor-id="recommended-rl-il-trajectory-optimization-and-motion-planning-libraries">Recommended RL, IL, trajectory optimization, and motion planning libraries</h3>
+<table class="table">
+<tbody>
+<tr class="odd">
+<td><a href="https://simulately.wiki/docs/toolkits/ReinforcementLearning">Simulately</a></td>
+<td>A detailed wiki comparing various widely-used RL libaries. Read this first. The rest of this table shows libraries not mentioned by Simulately.</td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/leggedrobotics/rsl_rl">RSL RL</a></td>
+<td>RL library used for training quadrupeds at the <a href="https://github.com/leggedrobotics/rsl_rl">RSL lab</a> at ETHZ. Used in Isaac Lab.</td>
+</tr>
+<tr class="odd">
+<td><a href="https://sites.google.com/view/manipulation-mpc/home">STORM</a></td>
+<td>MPC motion planner on the GPU</td>
+</tr>
+<tr class="even">
+<td><a href="https://ompl.kavrakilab.org/">OMPL</a></td>
+<td>Open motion planning library</td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/kevinzakka/mink">Mink</a></td>
+<td>Inverse kinematics library, built on top of <a href="https://github.com/stephane-caron/pink">pink</a> and <a href="https://github.com/stack-of-tasks/pinocchio">pinocchio</a></td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/luchris429/purejaxrl">PureJaxRL</a></td>
+<td>RL library in JAX, with training and environments running fully on GPU</td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/vwxyzjn/cleanrl">CleanRL</a></td>
+<td>Clean implementations of Online RL baselines</td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/corl-team/CORL">Clean Offline RL</a></td>
+<td>Clean implementations of Offline RL baselines</td>
+</tr>
+<tr class="odd">
+<td><a href="https://agarwl.github.io/rliable/">rliable</a></td>
+<td>Method and library for reliable evaluation of RL algorithms</td>
+</tr>
+<tr class="even">
+<td><a href="https://diffusion-policy.cs.columbia.edu/">Diffusion policy</a></td>
+<td>Implementation of diffusion policy in action space for imitation learning</td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/google-research/ibc">Implicit behavior cloning</a></td>
+<td>Implementation of behavior cloning with energy based models</td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/opendilab/awesome-model-based-RL">Model-based RL algorithms</a></td>
+<td>List of model-based RL algorithms</td>
 </tr>
 </tbody>
 </table>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -809,7 +981,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/csc2626/website/edit/main/course-links.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/csc2626/website/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/csc2626/website/edit/main/course-links.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/csc2626/website/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
