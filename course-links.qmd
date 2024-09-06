@@ -31,7 +31,7 @@ You are encouraged to use the simplest possible simulator to accomplish the task
 | [ALFRED](https://askforalfred.com/) | Simulation environments for visual and language-based navigation and manipulation tasks. |
 | [MyoSuite](https://sites.google.com/view/myosuite/) | Muscosceletal simulation environments for biomechanics, based on Mujoco. |
 | [MetaWorld](https://github.com/Farama-Foundation/Metaworld?tab=readme-ov-file) | Multi-task RL environments and benchmarks. |
-
+| [Bimanual Manipulation Gym](https://chernyadev.github.io/bigym/) | Bimanual manipulation environments |
 
 
 
