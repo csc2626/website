@@ -56,29 +56,317 @@ Note that this schedule will be updated as the semester progresses, with all cha
 
 ### Week 1
 
+**Imitation learning vs supervised learning**  
+[An invitation to imitation](https://www.ri.cmu.edu/pub_files/2015/3/InvitationToImitation_3_1415.pdf)  
+[ALVINN: An autonomous land vehicle in a neural network](https://papers.nips.cc/paper/95-alvinn-an-autonomous-land-vehicle-in-a-neural-network)
+
+**Mitigating compunding errors via dataset aggregation**  
+[DAgger: A reduction of imitation learning and structured prediction to no-regret online learning](https://arxiv.org/abs/1011.0686)
+
+**Mitigating compounding errors by choosing loss functions**  
+[Is Behavior Cloning All You Need? Understanding Horizon in Imitation Learning](https://arxiv.org/abs/2407.15007)
+
+**Imitation via multi-modal generative models**   
+[Diffusion policy](https://diffusion-policy.cs.columbia.edu/)  
+
+<details>
+<summary>Teleoperation interfaces for manipulation [optional]</summary>
+[UMI: Universal Manipulator Interface](https://umi-gripper.github.io/)  
+[ALOHA: Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware](https://tonyzhaozh.github.io/aloha/)  
+[Real-Time Bimanual Dexterous Teleoperation for Imitation Learning](https://dingry.github.io/projects/bunny_visionpro.html)  
+[Teleoperation with Immersive Active Visual Feedback](https://robot-tv.github.io/)  
+[ACE: A Cross-platform Visual-Exoskeleton for Low-Cost Dexterous Teleoperation](https://ace-teleop.github.io/)  
+</details>
+
+
+<details>
+<summary>Querying experts only when necessary [optional]</summary>
+[Maximum mean discrepancy imitation learning](http://www.roboticsproceedings.org/rss09/p38.pdf)  
+[DropoutDAgger: A Bayesian approach to safe imitation learning](https://arxiv.org/abs/1709.06166)  
+[SHIV: Reducing supervisor burden in DAgger using support vectors](https://ieeexplore.ieee.org/document/7487167/)  
+[Query-efficient imitation learning for end-to-end autonomous driving](https://arxiv.org/abs/1605.06450)  
+[Consistent estimators for learning to defer to an expert](https://arxiv.org/abs/2006.01862)  
+</details>
+
+<details>
+<summary>Imitation for visual navigation and autonomous driving [optional]</summary>
+[Visual path following on a manifold in unstructured three-dimensional terrain](https://ieeexplore.ieee.org/document/5509140/)  
+[End-to-end learning for self-driving cars](https://arxiv.org/abs/1604.07316)  
+[A machine learning approach to visual perception of forest trails for mobile robots](https://ieeexplore.ieee.org/document/7358076/)  
+[Learning monocular reactive UAV control in cluttered natural environments](https://arxiv.org/abs/1211.1690)
+</details>
+
+   
+
+
 ### Week 2
+
+**Intro to Optimal Control**  
+[Linear Quadratic Regulator](http://people.eecs.berkeley.edu/~somil/Papers/lqrlecture.pdf) and [some examples](https://web.archive.org/web/20210613114312/https://stanford.edu/class/engr108/lectures/control_slides.pdf)  
+[Iterative Linear Quadratic Regulator](https://homes.cs.washington.edu/~todorov/papers/LiICINCO04.pdf)  
+[Model Predictive Control](https://ieeexplore.ieee.org/document/845037)  
+[Ben Recht: An outsider's tour of RL](http://www.argmin.net/2018/06/25/outsider-rl/) (watch his [ICML'18 tutorial](https://people.eecs.berkeley.edu/~brecht/l2c-icml2018/), too)  
+
+<details>
+<summary>Intro to model-based RL [optional]</summary>
+[PILCO: Probabilistic inference for learning control](http://mlg.eng.cam.ac.uk/pilco/)  
+[Deep reinforcement learning in a handful of trials using probabilistic dynamics models](https://arxiv.org/abs/1805.12114)  
+[Learning particle dynamics for manipulating rigid bodies, deformable objects, and fluids](https://arxiv.org/abs/1810.01566)  
+[End-to-end differentiable physics for learning and control](https://papers.nips.cc/paper/7948-end-to-end-differentiable-physics-for-learning-and-control)  
+[Synthesizing neural network controllers with probabilistic model based reinforcement learning](https://arxiv.org/abs/1803.02291)  
+[A survey on policy search algorithms for learning robot controllers in a handful of trials](https://arxiv.org/abs/1807.02303)  
+[Reinforcement learning in robotics: a survey](https://journals.sagepub.com/doi/abs/10.1177/0278364913495721)  
+[DeepMPC: Learning deep latent features for model predictive control](http://deepmpc.cs.cornell.edu/)    
+[Learning latent dynamics for planning from pixels](https://planetrl.github.io/)  
+</details>
+
+<details>
+<summary>Monotonic improvement of the value function [optional]</summary>
+[Algorithmic framework for model-based deep reinforcement learning with theoretical guarantees](https://arxiv.org/abs/1807.03858)  
+[When to Trust Your Model: Model-Based Policy Optimization](https://arxiv.org/abs/1906.08253)
+</details>
+
+<details>
+<summary>Learning dynamics where it matters for the value function [optional]</summary>
+[Value Gradient Weighted Model-Based Reinforcement Learning](https://arxiv.org/abs/2204.01464)
+</details>
+
+<details>
+<summary>Parallelizing MPC on the GPU [optional]</summary>
+[MPCGPU: Real-Time Nonlinear Model Predictive Control through Preconditioned Conjugate Gradient on the GPU](https://arxiv.org/abs/2309.08079)  
+[STORM: An Integrated Framework for Fast Joint-Space Model-Predictive Control for Reactive Manipulation](https://arxiv.org/abs/2104.13542)
+</details>
+
 
 ### Week 3
 
+**Offline / Batch Reinforcement Learning**    
+[Scaling data-driven robotics with reward sketching and batch reinforcement learning](https://arxiv.org/abs/1909.12200)  
+[Off-policy deep reinforcement learning without exploration](https://arxiv.org/abs/1812.02900)  
+[Conservative Q-Learning for offline reinforcement learning](https://arxiv.org/abs/2006.04779)  
+[D4RL: Datasets for deep data-driven reinforcement learning](https://arxiv.org/abs/2004.07219)  
+[What matters in learning from offline human demonstrations for robot manipulation](https://arxiv.org/abs/2108.03298)  
+[NeurIPS 2020 tutorial on offline RL](https://sites.google.com/view/offlinerltutorial-neurips2020/home)  
+[IQ-Learn: inverse soft-Q learning for imitation](https://arxiv.org/abs/2106.12142)
+
+
+**Transitioning from offline to online RL**  
+
+**Imperfect demonstrations and improving upon them**  
+
+
+<details>
+<summary>Optional reading</summary>
+Offline reinforcement learning: tutorial, review, and perspectives on open problems
+Should I run offline reinforcement learning or behavioral cloning?
+Why should I trust you, Bellman? The Bellman error is a poor replacement for value error
+A minimalist approach to offline reinforcement learning
+Benchmarking batch deep reinforcement learning algorithms
+Stabilizing off-policy Q-Learning via bootstrapping error reduction
+An optimistic perspective on offline reinforcement learning
+COG: Connecting new skills to past experience with offline reinforcement learning
+IRIS: Implicit reinforcement without interaction at scale for learning control from offline robot manipulation data
+(Batch) reinforcement learning for robot soccer
+Instabilities of offline RL with pre-trained neural representation
+Targeted environment design from offline data
+</details>
+
+
 ### Week 4
+
+**Imitation learning combined with RL and planning**  
+[Learning neural network policies with guided policy search under unknown dynamics](https://papers.nips.cc/paper_files/paper/2014/hash/6766aa2750c19aad2fa1b32f36ed4aee-Abstract.html)  
+[Planning with diffusion for flexible behavior synthesis](https://diffusion-planning.github.io/)
+
+**Expert iteration**  
+[Thinking fast and slow with deep learning and tree search](https://arxiv.org/abs/1705.08439)  
+[Dual policy iteration](https://arxiv.org/abs/1805.10755)    
+
+**Learning from experts that have privileged information**  
+[PLATO: Policy learning using adaptive trajectory optimization](https://arxiv.org/abs/1603.00622)    
+
+<details>
+<summary>Making cost-to-go queries to experts (optional)</summary>
+[AggreVaTe: Reinforcement and imitation learning via interactive no-regret learning](https://arxiv.org/abs/1406.5979)  
+[Deeply AggreVaTeD: Differentiable Imitation Learning for Sequential Prediction](https://arxiv.org/abs/1703.01030)  
+[Truncated Horizon Policy Search: Combining RL & Imitation Learning](https://arxiv.org/abs/1805.11240)  
+</details>
+
+<details>
+<summary>Imitation can improve search and exploration strategies (optional)</summary>
+[Learning to gather information via imitation](https://arxiv.org/abs/1611.04180)  
+[Learning to search via retrospective imitation](https://arxiv.org/abs/1804.00846)  
+[Overcoming exploration in reinforcement learning with demonstrations](https://arxiv.org/abs/1709.10089)  
+[Data-driven planning via imitation learning](https://arxiv.org/abs/1711.06391)  
+</details>
+
 
 ### Week 5
 
+**Dynamic movement primitives**  
+[Dynamic Movement Primitives in robotics: a tutorial survey](https://arxiv.org/abs/2102.03861)  
+[Using probabilistic movement primitives in robotics](https://link.springer.com/article/10.1007/s10514-017-9648-7)  
+
+
+**Using optimal control solvers as experts**
+
+
+
 ### Week 6
+Thanksgiving week. No lecture on Monday.
+
 
 ### Week 7
+  
+**Imitation as program induction**   
+[Neural programmer-interpreters](https://arxiv.org/abs/1511.06279)  
+[Neural Task Programming: Learning to generalize across hierarchical tasks](https://arxiv.org/abs/1710.01813)  
+
+
+**Modular decomposition of demonstrations into skills**    
+[TACO: Learning task decomposition via temporal alignment for control](https://arxiv.org/abs/1803.01840)  
+
+**(Hierarchical) imitation of multi-goal tasks**    
+[Learning to generalize across long-horizon tasks from human demonstrations](https://arxiv.org/abs/2003.06085)  
+
+**Inferring grammars and planning domains**  
+[The motion grammar: analysis of a linguistic method for robot control](https://ieeexplore.ieee.org/document/6457507/)  
+
+
+<details>
+<summary>Optional reading</summary>
+[Action understanding as inverse planning](https://www.sciencedirect.com/science/article/pii/S0010027709001607?via%3Dihub)  
+[Incremental learning of subtasks from unsegmented demonstration](https://ieeexplore.ieee.org/document/5650500/)  
+[Inducing probabilistic context-free grammars for the sequencing of movement primitives](https://www.ias.informatik.tu-darmstadt.de/uploads/Team/RudolfLioutikov/lioutikov_movement_pcfg_icra2018.pdf)  
+[Neural Task Graphs: Generalizing to unseen tasks from a single video demonstration](https://arxiv.org/abs/1807.03480)  
+[Neural program synthesis from diverse demonstration videos](https://shaohua0116.github.io/demo2program/)  
+[Automata guided reinforcement learning with demonstrations](https://arxiv.org/abs/1809.06305)  
+[A syntactic approach to robot imitation learning using probabilistic activity grammars](https://www.sciencedirect.com/science/article/pii/S0921889013001449)  
+[Robot learning from demonstration by constructing skill trees](http://journals.sagepub.com/doi/abs/10.1177/0278364911428653)  
+[Learning to sequence movement primitives from demonstrations](https://ieeexplore.ieee.org/document/6943187)  
+[Imitation-projected programmatic reinforcement learning](https://arxiv.org/abs/1907.05431)  
+[Reinforcement and imitation learning for diverse visuomotor skills](https://arxiv.org/abs/1802.09564)  
+[Inferring task goals and constraints using Bayesian nonparametric inverse reinforcement learning](https://arxiv.org/abs/1802.09564)  
+[You only demonstrate once: category-level manipulation from single visual demonstration](https://arxiv.org/abs/2201.12716)  
+[Bottom-up skill discovery from unsegmented demonstrations for long-horizon robot manipulation](https://ieeexplore.ieee.org/abstract/document/9695333)  
+</details>
+
 
 ### Week 8
+Fall reading week. No lecture.
 
 ### Week 9
 
+**Inverse reinforcement learning**  
+[Maximum entropy inverse reinforcement learning](https://www.aaai.org/Papers/AAAI/2008/AAAI08-227.pdf)  
+[Guided Cost Learning: Deep inverse optimal control via policy optimization](https://arxiv.org/abs/1603.00448)  
+[Bayesian inverse reinforcement learning](https://www.aaai.org/Papers/IJCAI/2007/IJCAI07-416.pdf)  
+			  
+			  
+**Inferring rewards from preferences**  
+[Active preference-based learning of reward functions](http://rss2017.lids.mit.edu/program/papers/04/)  
+[Extrapolating beyond suboptimal demonstrations via inverse reinforcement learning from observations](https://arxiv.org/abs/1904.06387)  
+			  
+**Inferring constraints from demonstrations**  
+[Inverse KKT: Learning cost functions of manipulation tasks from demonstrations](http://journals.sagepub.com/doi/abs/10.1177/0278364917745980)  
+			  
+
+**Task specification and human-robot dialog**  
+KnowNo  
+
+**Value alignment**  
+[Inverse reward design](https://arxiv.org/abs/1711.02827)  
+			  
+
+
+<details>
+<summary>Optional reading</summary>
+[Nonlinear inverse reinforcement learning with gaussian processes](https://papers.nips.cc/paper/4420-nonlinear-inverse-reinforcement-learning-with-gaussian-processes)  
+[Maximum margin planning](https://dl.acm.org/citation.cfm?id=1143936)  
+[Compatible reward inverse reinforcement learning](https://papers.nips.cc/paper/6800-compatible-reward-inverse-reinforcement-learning.pdf)  
+[Learning the preferences of ignorant, inconsistent agents](https://arxiv.org/abs/1512.05832)  
+[Imputing a convex objective function](https://ieeexplore.ieee.org/abstract/document/6045410)  
+[Better-than-demonstrator imitation learning via automatically-ranked demonstrations](https://arxiv.org/abs/1907.03976)  
+			  
+</details>
+
+<details>
+<summary>Applications of Inverse RL (optional)</summary>
+[Socially compliant mobile robot navigation via inverse reinforcement learning](http://journals.sagepub.com/doi/10.1177/0278364915619772)  
+[Model-based probabilistic pursuit via inverse reinforcement learning](http://www.cim.mcgill.ca/~florian/pdfs/pursuit-icra2018.pdf)  
+[First-person activity forecasting with online inverse reinforcement learning](https://arxiv.org/abs/1612.07796)  
+[Learning strategies in table tennis using inverse reinforcement learning](https://www.ias.informatik.tu-darmstadt.de/uploads/Site/EditPublication/Muelling_BICY_2014.pdf)  
+[Planning-based prediction for pedestrians](https://www.ri.cmu.edu/pub_files/2009/10/planning-based-prediction-pedestrians.pdf)  
+[Activity forecasting](http://www.cs.cmu.edu/~kkitani/pdf/KZBH-ECCV12.pdf)  
+[Large-scale cost function learning for path planning using deep inverse reinforcement learning](https://journals.sagepub.com/doi/abs/10.1177/0278364917722396)  
+</details>
+
+
+
 ### Week 10
+
+[RelaxedIK: Real-time synthesis of accurate and feasible robot arm motion](http://www.roboticsproceedings.org/rss14/p43.html)  
+[Error-aware imitation learning from teleoperation data for mobile manipulation](https://proceedings.mlr.press/v164/wong22a.html)  
+[Controlling assistive robots with learned latent actions](https://ieeexplore.ieee.org/abstract/document/9197197)  
+			  
+
+**Shared autonomy**  
+[Shared autonomy via deep reinforcement learning](http://bair.berkeley.edu/blog/2018/04/18/shared-autonomy/)  
+[Shared autonomy via hindsight optimization](https://www.ri.cmu.edu/pub_files/2015/7/Javdani15Hindsight.pdf)  
+
+
+**Imitation with a human in the loop**  
+[Learning models for shared control of human-machine systems with unknown dynamics](https://arxiv.org/abs/1808.08268)  
+[Human-in-the-loop imitation learning using remote teleoperation](https://arxiv.org/abs/2012.06733)  
+
+
+<details>
+<summary>Optional reading</summary>
+
+<b>Optional Reading</b><br/>
+[Designing robot learners that ask good questions](https://www.cc.gatech.edu/social-machines/papers/cakmak12_hri_active.pdf)  
+[Blending human and robot inputs for sliding scale autonomy](https://ieeexplore.ieee.org/document/1513835/)  
+[Inferring and assisting with constraints in shared autonomy](https://ieeexplore.ieee.org/document/7799299/)  
+[Collaborative control for a robotic wheelchair: evaluation of performance, attention, and workload](https://ieeexplore.ieee.org/document/6135817/)  
+[Director: A user interface designed for robot operation with shared autonomy](https://onlinelibrary.wiley.com/doi/full/10.1002/rob.21681)  
+[Learning multi-arm manipulation through collaborative teleoperation](https://ieeexplore.ieee.org/abstract/document/9561491)  
+[Interactive autonomous driving through adaptation from participation](http://www.cim.mcgill.ca/~mrl/pubs/anqixu/icius2014_apexcommander.pdf)  			  
+</details>
+
 
 ### Week 11
 
+**Imitation learning from videos**  
+
+**Motion Retargeting**  
+
+**Causal confusion in imitation learning**  
+
+
+<details>
+<summary>Adversarial imitation learning [optional]</summary>
+[GAIL: Generative adversarial imitation learning](https://arxiv.org/abs/1606.03476)  
+[Learning robust rewards with adversarial inverse reinforcement learning](https://arxiv.org/abs/1710.11248)  
+[InfoGAIL: interpretable imitation learning from visual demonstrations](https://arxiv.org/abs/1703.08840)  
+[Model-free imitation learning with policy optimization](https://arxiv.org/abs/1605.08478)  
+[Imitation learning via off-policy distribution matching](https://openreview.net/forum?id=Hyg-JC4FDr)  
+[Domain adaptive imitation learning](https://arxiv.org/abs/1910.00105)  
+[What matters for adversarial imitation learning?](https://arxiv.org/abs/2106.00672)  
+</details>
+
+
 ### Week 12
+
+**Representation learning for imitation**  
+
+**Generalization and safety guarantees for imitation**  
+
 
 ### Week 13
 
+Project presentations
+
 ### Week 14
+
+Final project submission 
 
