@@ -1,6 +1,6 @@
-# Website for STA 210 at Duke University (Spring 2022)
+# Website for CSC 2626 at the University of Toronto (Fall 2024)
 
-🔗 https://sta210-s22.github.io/website/
+🔗 https://csc2626.github.io/website/
 
 ## Colors
 
@@ -9,7 +9,7 @@
 
 ## Attribution
 
-Much of the content is based on [STA 210 - Fall 2021](https://github.com/sta210-fa21/) by Dr. Maria Tackett.
+Much of the content is based on [STA 210 - Fall 2021](https://github.com/sta210-fa21/) by Dr. Maria Tackett and [STA210](https://sta210-s22.github.io/website/) by Dr. Mine Çetinkaya-Rundel. 
 
 <hr> 
 
