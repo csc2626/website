@@ -21,8 +21,8 @@ Note that this schedule will be updated as the semester progresses, with all cha
 |                           |             | Intro to model-based reinforcement learning                                                                               |  📖   |  🖥️ |   📋       |                                                                                 |                          |
 |                           |             | Intro to model-free reinforcement learning                                                                                |  📖   |  🖥️  |   📋       |                                                                                 |                         |
 |                           |             | Monotonic improvement of the value function (optional)                                                                    |  📖   |  🖥️  |   📋        |                                                                              |                         |
-|                           |             | Learning dynamics well only where it matters for the value function (optional)                                            |  📖   |  🖥️  |   📋       |    📂   |                         |
-|                           |             | Parallelizing MPC on the GPU (optional)                                            |  📖   |  🖥️  |   📋       |    📂   |                         |
+|                           |             | Learning dynamics well only where it matters for the value function (optional)                                            |  📖   |  🖥️  |   📋       |    📂    |                         |
+|                           |             | Parallelizing MPC on the GPU (optional)                                            |  📖   |  🖥️  |   📋       |       |                         |
 |  [3](#week-3)             | Mon, Sep 23 | Offline / batch reinforcement learning                                                                                    |  📖   |  🖥️         |   📋        |    ✍️   |                          |
 |                           |             | Transitioning from offline to online RL                                                                                   |  📖   |  🖥️ |   📋      |                                                                                |                          |
 |  [4](#week-4)             | Mon, Sep 30 | Imitation learning combined with RL and planning                                                                          |  📖   |  🖥️          |   📋       |                                    |                                           |                          |
@@ -30,6 +30,7 @@ Note that this schedule will be updated as the semester progresses, with all cha
 |                           |             | Expert iteration                                                                                                          |  📖   | 🖥️ |   📋      |                                                                                |                          |
 |                           |             | Imitation can improve search and exploration strategies                                                                   |  📖  | 🖥️           |   📋      |                                                                                |                          |
 |                           |             | Learning from experts that have privileged information                                                                    |  📖  | 🖥️           |   📋        |   📂   |  ✍️                         |
+|                           |             | Dynamic movement primitives                                                                    |  📖  | 🖥️           |   📋        |   📂   |  ✍️                         |
 |  [5](#week-5)             | Mon, Oct 7  | Inverse reinforcement learning                                                                                               |  📖  |  🖥️       |   📋       |                                                                                |                           |
 |                           |             | Inferring rewards from preferences                                                                                  |  📖  |  🖥️  |   📋       |                                                                                |                          |
 |                           |             | Task specification and human-robot dialog                                                                                 |  📖   | 🖥️ |   📋     |                                                                          |                             |
@@ -44,10 +45,10 @@ Note that this schedule will be updated as the semester progresses, with all cha
 |  [8](#week-8)             | Mon, Oct 28 | Fall Reading Week                                                                                                         |                                                                  |                                                                            |                                                                                                                |                                                                            |                            |
 |                           |             | No lecture                                                                                                                |                                                                  |                                                                            |                           |                                                                                    |                                                                            |                            |
 |                           |             | No office hours                                                                                                           |                                                                  |                                                                            |                                                                                                                 |                                                                           |                            |
-|  [9](#week-9)             | Mon, Nov 4  | Dynamic movement primitives                                                                                            |  📖   | 🖥️ |   📋          |                                                                           |                             |
-|                           |             | Adversarial imitation learning                                                                                        |  📖   | 🖥️ |   📋           |                                                                          |                             |
+|  [9](#week-9)             | Mon, Nov 4  | Adversarial imitation learning                                                                                            |  📖   | 🖥️ |   📋          |                                                                           |                             |
 | [10](#week-10)            | Mon, Nov 11 | Shared autonomy                                                                                                           |  📖   | 🖥️  |  📋            |                                                                          |                             |
 |                           |             | Imitation with a human in the loop                                                                                        |  📖   |  🖥️ |  📋            |                                                                           |                            |
+|                           |             | Teleoperation                                                                                        |  📖   |  🖥️ |  📋            |                                                                           |                            |
 | [11](#week-11)            | Mon, Nov 18 | Imitation learning from videos                                                                                            |  📖   |  🖥️ |  📋           |                                                                           |                            |
 |                           |             | Causal confusion in imitation learning                                                                                    |  📖  | 🖥️ |  📋            |                                                                           |                            |
 | [12](#week-12)            | Mon, Nov 25 | Representation learning for imitation                                                                                     |  📖   | 🖥️ |  📋            |                                                                          |                             |
@@ -156,8 +157,8 @@ Note that this schedule will be updated as the semester progresses, with all cha
 
 **Offline / Batch Reinforcement Learning**    
 [Conservative Q-Learning for offline reinforcement learning](https://arxiv.org/abs/2006.04779)  
-[IQ-Learn: inverse soft-Q learning for imitation](https://arxiv.org/abs/2106.12142)
-[Scaling data-driven robotics with reward sketching and batch reinforcement learning](https://arxiv.org/abs/1909.12200)  
+[IQ-Learn: inverse soft-Q learning for imitation](https://arxiv.org/abs/2106.12142)  
+[Scaling data-driven robotics with reward sketching and batch reinforcement learning](https://arxiv.org/abs/1909.12200)    
 [Off-policy deep reinforcement learning without exploration](https://arxiv.org/abs/1812.02900)  
 [D4RL: Datasets for deep data-driven reinforcement learning](https://arxiv.org/abs/2004.07219)  
 [What matters in learning from offline human demonstrations for robot manipulation](https://arxiv.org/abs/2108.03298)  
@@ -167,21 +168,20 @@ Note that this schedule will be updated as the semester progresses, with all cha
 [Cal-QL: calibrated offline RL pre-training for efficient online fine-tuning](https://arxiv.org/abs/2303.05479)  
 
 
-<details>
-<summary>Optional reading</summary>
-Offline reinforcement learning: tutorial, review, and perspectives on open problems
-Should I run offline reinforcement learning or behavioral cloning?
-When should we prefer offline reinforcement learning over behavioral cloning?
-Why should I trust you, Bellman? The Bellman error is a poor replacement for value error
-A minimalist approach to offline reinforcement learning
-Benchmarking batch deep reinforcement learning algorithms
-Stabilizing off-policy Q-Learning via bootstrapping error reduction
-An optimistic perspective on offline reinforcement learning
-COG: Connecting new skills to past experience with offline reinforcement learning
-IRIS: Implicit reinforcement without interaction at scale for learning control from offline robot manipulation data
-(Batch) reinforcement learning for robot soccer
-Instabilities of offline RL with pre-trained neural representation
-Targeted environment design from offline data
+<details>  
+<summary>Optional reading</summary>  
+[Offline reinforcement learning: tutorial, review, and perspectives on open problems](https://arxiv.org/abs/2005.01643)    
+[Should I run offline reinforcement learning or behavioral cloning?](https://openreview.net/forum?id=AP1MKT37rJ)  
+[Why should I trust you, Bellman? The Bellman error is a poor replacement for value error](https://arxiv.org/abs/2201.12417)  
+[A minimalist approach to offline reinforcement learning](https://arxiv.org/abs/2106.06860)  
+[Benchmarking batch deep reinforcement learning algorithms](https://arxiv.org/abs/1910.01708)  
+[Stabilizing off-policy Q-Learning via bootstrapping error reduction](https://arxiv.org/abs/1906.00949)  
+[An optimistic perspective on offline reinforcement learning](https://arxiv.org/abs/1907.04543)  
+[COG: Connecting new skills to past experience with offline reinforcement learning](https://arxiv.org/abs/2010.14500)  
+[IRIS: Implicit reinforcement without interaction at scale for learning control from offline robot manipulation data](https://arxiv.org/abs/1911.05321)  
+[(Batch) reinforcement learning for robot soccer](https://link.springer.com/article/10.1007/s10514-009-9120-4)  
+[Instabilities of offline RL with pre-trained neural representation](https://arxiv.org/abs/2103.04947)  
+[Targeted environment design from offline data](https://openreview.net/forum?id=Is5Hpwg2R-h)  
 </details>
 
 
@@ -198,6 +198,10 @@ Targeted environment design from offline data
 
 **Learning from experts that have privileged information**  
 [PLATO: Policy learning using adaptive trajectory optimization](https://arxiv.org/abs/1603.00622)    
+
+**Dynamic movement primitives**  
+[Dynamic Movement Primitives in robotics: a tutorial survey](https://arxiv.org/abs/2102.03861)  
+[Using probabilistic movement primitives in robotics](https://link.springer.com/article/10.1007/s10514-017-9648-7)  
 
 
 <details>
@@ -307,18 +311,13 @@ Fall reading week. No lecture.
 
 ### Week 9
 
-**Dynamic movement primitives**  
-[Dynamic Movement Primitives in robotics: a tutorial survey](https://arxiv.org/abs/2102.03861)  
-[Using probabilistic movement primitives in robotics](https://link.springer.com/article/10.1007/s10514-017-9648-7)  
-
-
 **Adversarial imitation learning**  
 [GAIL: Generative adversarial imitation learning](https://arxiv.org/abs/1606.03476)    
 [Learning robust rewards with adversarial inverse reinforcement learning](https://arxiv.org/abs/1710.11248)    
 [InfoGAIL: interpretable imitation learning from visual demonstrations](https://arxiv.org/abs/1703.08840)  
 [What matters for adversarial imitation learning?](https://arxiv.org/abs/2106.00672)  
 [A divergence minimization perspective on imitation learning methods](https://proceedings.mlr.press/v100/ghasemipour20a.html)  
-
+[Multi-agent generative adversarial imitation learning](https://arxiv.org/abs/1807.09936)  
 
 <details>
 <summary>Optional reading</summary>
@@ -332,6 +331,7 @@ Fall reading week. No lecture.
 
 ### Week 10
 
+**Teleoperation** 
 [RelaxedIK: Real-time synthesis of accurate and feasible robot arm motion](http://www.roboticsproceedings.org/rss14/p43.html)  
 [Error-aware imitation learning from teleoperation data for mobile manipulation](https://proceedings.mlr.press/v164/wong22a.html)  
 [Controlling assistive robots with learned latent actions](https://ieeexplore.ieee.org/abstract/document/9197197)  
@@ -363,12 +363,45 @@ Fall reading week. No lecture.
 
 ### Week 11
 
-**Imitation learning from videos**  
+**Imitation learning from videos** 
+
+[K-VIL: Keypoints-based visual imitation learning](https://arxiv.org/abs/2209.03277)    
+[Track2Act: Predicting point tracks from internet videos enables generalizable robot manipulation](https://arxiv.org/abs/2405.01527)    
+[VideoDex: Learning dexterity from internet videos](https://arxiv.org/abs/2212.04498)    
+
 
 **Motion Retargeting**  
+[Robotic Telekinesis: Learning a robotic hand imitator by watching humans on YouTube](https://robotic-telekinesis.github.io/)  
 
 **Causal confusion in imitation learning**  
+[Causal confusion in imitation learning](https://arxiv.org/abs/1905.11979)  
 
+<details>
+<summary>Optional reading</summary>  
+[Towards generalist robot learning from internet video: a survey](https://arxiv.org/abs/2404.19664)      
+[AVID: Learning multi-stage tasks via pixel-level translation of human videos](https://arxiv.org/abs/1912.04443)    
+[Dreamitate: Real-world visuomotor policy learning via video generation](https://arxiv.org/abs/2406.16862)  
+[Understanding Human Hands in Contact at Internet Scale](https://arxiv.org/abs/2006.06669)   
+[Zero-shot robot manipulation from passive human videos](https://arxiv.org/abs/2302.02011)    
+[SFV: Reinforcement Learning of Physical Skills from Videos](https://arxiv.org/abs/1810.03599)  
+[DexVIP: Learning Dexterous Grasping with Human Hand Pose Priors from Video](https://arxiv.org/abs/2202.00164)  
+[Diffusion Reward: Learning Rewards via Conditional Video Diffusion](https://arxiv.org/abs/2312.14134)  
+[Task Success is not Enough: Investigating the Use of Video-Language Models as Behavior Critics for Catching Undesirable Agent Behaviors](https://arxiv.org/abs/2402.04210)    
+[Video Prediction Models as Rewards for Reinforcement Learning](https://arxiv.org/abs/2305.14343)  
+[Giving Robots a Hand: Learning generalizable manipulation with eye-in-hand human video demonstrations](https://giving-robots-a-hand.github.io/)  
+[Estimating Q(s,s') with Deep Deterministic Dynamics Gradients](https://arxiv.org/abs/2002.09505)  
+[RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control](https://arxiv.org/abs/2307.15818)  
+[Human-to-robot imitation in the wild](https://human2robot.github.io/)  
+[Vision-Language Models as Success Detectors](https://arxiv.org/abs/2303.07280)  
+[Learning Generalizable Robotic Reward Functions from "In-The-Wild" Human Videos](https://arxiv.org/abs/2103.16817)  
+[Semantic Visual Navigation by Watching YouTube Videos](https://arxiv.org/abs/2006.10034)  
+[Robotic Offline RL from Internet Videos via Value-Function Pre-Training](https://arxiv.org/abs/2309.13041)  
+[HumanPlus: Humanoid Shadowing and Imitation from Humans](https://arxiv.org/abs/2406.10454)  
+[ViViDex: Learning Vision-based Dexterous Manipulation from Human Videos](https://arxiv.org/abs/2404.15709)  
+[Gen2Act: Human Video Generation in Novel Scenarios enables Generalizable Robot Manipulation](https://arxiv.org/abs/2409.16283)    
+[OK-Robot: What Really Matters in Integrating Open-Knowledge Models for Robotics](https://arxiv.org/abs/2401.12202) 
+[Unifying 3D Representation and Control of Diverse Robots with a Single Camera](https://arxiv.org/abs/2407.08722)   
+</details>  
 
 ### Week 12
 
@@ -377,6 +410,9 @@ Fall reading week. No lecture.
 [Provable representation learning for imitation with contrastive Fourier features](https://arxiv.org/abs/2105.12272)  
 [TRAIL: near-optimal imitation learning with suboptimal data](https://arxiv.org/abs/2110.14770)  
 [Representation matters: offline pretraining for sequential decision making](http://proceedings.mlr.press/v139/yang21h.html)  
+[Self-supervised correspondence in visuomotor policy learning](https://arxiv.org/abs/1909.06933)
+[The surprising effectiveness of representation learning for visual imitation](https://arxiv.org/abs/2112.01511)  
+
 
 **Generalization and safety guarantees for imitation**  
 [Provable guarantees for generative behavior cloning: bridging low-level stability and high-level behavior](https://arxiv.org/abs/2307.14619)  
