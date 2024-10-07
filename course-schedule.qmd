@@ -331,7 +331,7 @@ Fall reading week. No lecture.
 
 ### Week 10
 
-**Teleoperation** 
+**Teleoperation**   
 [RelaxedIK: Real-time synthesis of accurate and feasible robot arm motion](http://www.roboticsproceedings.org/rss14/p43.html)  
 [Error-aware imitation learning from teleoperation data for mobile manipulation](https://proceedings.mlr.press/v164/wong22a.html)  
 [Controlling assistive robots with learned latent actions](https://ieeexplore.ieee.org/abstract/document/9197197)  
@@ -363,8 +363,7 @@ Fall reading week. No lecture.
 
 ### Week 11
 
-**Imitation learning from videos** 
-
+**Imitation learning from videos**   
 [K-VIL: Keypoints-based visual imitation learning](https://arxiv.org/abs/2209.03277)    
 [Track2Act: Predicting point tracks from internet videos enables generalizable robot manipulation](https://arxiv.org/abs/2405.01527)    
 [VideoDex: Learning dexterity from internet videos](https://arxiv.org/abs/2212.04498)    
@@ -399,7 +398,7 @@ Fall reading week. No lecture.
 [HumanPlus: Humanoid Shadowing and Imitation from Humans](https://arxiv.org/abs/2406.10454)  
 [ViViDex: Learning Vision-based Dexterous Manipulation from Human Videos](https://arxiv.org/abs/2404.15709)  
 [Gen2Act: Human Video Generation in Novel Scenarios enables Generalizable Robot Manipulation](https://arxiv.org/abs/2409.16283)    
-[OK-Robot: What Really Matters in Integrating Open-Knowledge Models for Robotics](https://arxiv.org/abs/2401.12202) 
+[OK-Robot: What Really Matters in Integrating Open-Knowledge Models for Robotics](https://arxiv.org/abs/2401.12202)   
 [Unifying 3D Representation and Control of Diverse Robots with a Single Camera](https://arxiv.org/abs/2407.08722)   
 </details>  
 
@@ -409,9 +408,9 @@ Fall reading week. No lecture.
 [Generalization guarantees for imitation learning](https://arxiv.org/abs/2008.01913)  
 [Provable representation learning for imitation with contrastive Fourier features](https://arxiv.org/abs/2105.12272)  
 [TRAIL: near-optimal imitation learning with suboptimal data](https://arxiv.org/abs/2110.14770)  
-[Representation matters: offline pretraining for sequential decision making](http://proceedings.mlr.press/v139/yang21h.html)  
-[Self-supervised correspondence in visuomotor policy learning](https://arxiv.org/abs/1909.06933)
-[The surprising effectiveness of representation learning for visual imitation](https://arxiv.org/abs/2112.01511)  
+[Representation matters: offline pretraining for sequential decision making](http://proceedings.mlr.press/v139/yang21h.html)    
+[Self-supervised correspondence in visuomotor policy learning](https://arxiv.org/abs/1909.06933)  
+[The surprising effectiveness of representation learning for visual imitation](https://arxiv.org/abs/2112.01511)    
 
 
 **Generalization and safety guarantees for imitation**  
