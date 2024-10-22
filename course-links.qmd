@@ -67,6 +67,7 @@ You are encouraged to use the simplest possible simulator to accomplish the task
 | [rliable](https://agarwl.github.io/rliable/)  | Method and library for reliable evaluation of RL algorithms   |
 | [Diffusion policy](https://diffusion-policy.cs.columbia.edu/)  | Implementation of diffusion policy in action space for imitation learning  |
 | [Implicit behavior cloning](https://github.com/google-research/ibc)  | Implementation of behavior cloning with energy based models |
+| [Theseus](https://github.com/facebookresearch/theseus)  | A library for differentiable nonlinear optimization in Pytorch |
 | [Model-based RL algorithms](https://github.com/opendilab/awesome-model-based-RL)  | List of model-based RL algorithms  |
 
 
