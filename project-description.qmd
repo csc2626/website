@@ -28,8 +28,8 @@ only in rare cases provided there is good reason to do so. Email the instructor 
 
 You are expected to describe a well-defined research goal in the proposal. When choosing this goal try to identify the minimum viable objective that you think is likely to work and you can accomplish, just to get you started, some nice-to-haves that you will do provided there is time, and a short review of related work. The definition of your research project may change during the course of a month and a half that you will be working on your project, but your proposal should be as specific and well-defined as possible, otherwise we cannot provide helpful feedback. If you are unsure about your plans, contact the instructor well before the proposal due date. **Proposals should not be based only on papers covered in class by the due date. Students are encouraged to look further ahead in the schedule and to start planning their project definition well ahead of the due date.**
 
-Proposals are limited to 3 pages, with the following suggested structure: 1/4 page for abstract/introduction
-1 page for the problem, 1/2 page for related work, 1/2 page for the proposed method, 1/2 page for proposed evaluation, 1/4 page for references. Proposals should follow the template provided by the RSS conference (Robotics: Science and Systems). You will submit your proposal by uploading the pdf on Quercus. 
+Proposals are limited to 3 pages (excluding references), with the following suggested structure: 1/4 page for abstract/introduction
+1/2 page for the problem definition, 1/2 page for related work, 3/4 page for your proposed method, 1/2 page for your proposed evaluation, 1/4 page for your planned timeline, 1/4 page for anticipated risks and your mitigation plan, and as many pages for references as you need. Proposals should follow the paper template provided by the RSS conference (Robotics: Science and Systems). You will submit your proposal by uploading the pdf on Quercus. The marking scheme for the project proposal is shown in the Grading page of this website.  
 
 
 #### Project Proposal FAQ
@@ -55,7 +55,8 @@ The final report needs to have at least five pages that include: 1/4 page abstra
 page related works, 1.5+ pages describing your method, 1.5+ pages describing your results and evaluation, 1/2
 page limitations. The final report may include as many references and appendices as you need. Figures and
 tables are encouraged. Final reports should follow the same paper template as the proposal. Submit your final
-project report in pdf form, and a zip file with your code or a link to a github repository to the instructor. 
+project report in pdf form, and a zip file with your code or a link to a github repository to the instructor.
+The marking scheme for the finalproject is shown in the Grading page of this website.  
 
 
 \section*{Final remarks}
