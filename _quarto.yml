@@ -13,8 +13,7 @@ website:
   open-graph: true
 
   twitter-card:
-    creator: "@minebocek"
-    image: "images/twitter-card.png"
+    card-style: "summary" 
 
   page-footer:
     right: "This page is built with ❤️ and [Quarto](https://quarto.org/)."
