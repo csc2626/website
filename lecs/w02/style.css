@@ -1,0 +1,22 @@
+
+.small-math {
+font-size: 0.7em;
+}
+
+.red-annotation {
+    color: red;
+    font-size: 0.7em;
+}
+
+.vertical-align {
+  display: flex;
+  justify-content: space-between;
+}
+
+.vertical-align > * {
+  flex: 1;
+}
+
+.bordered-box {
+  border: 1px solid red;
+}
