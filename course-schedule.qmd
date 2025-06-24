@@ -16,7 +16,7 @@ This page contains an outline of the topics, content, and assignments for the se
 |  |  | Teleoperation interfaces for manipulation (optional) | 📖 | 🖥️ | 📋 |  |  |
 |  |  | Querying experts only when necessary (optional) | 📖 | 🖥️ | 📋 |  |  |
 |  |  | Imitation for visual navigation and autonomous driving (optional) | 📖 | 🖥️ | 📋 |  |  |
-| [2](#week-2) | Mon, Sep 16 | Intro to optimal control | 📖 | [🖥️](/lecs/w02/lec02.html) | 📋 |  |  |
+| [2](#week-2) | Mon, Sep 16 | Intro to optimal control | 📖 | [🖥️](/lecs/w02/lec02.html){.no-style target="_blank" aria-label="Lec 2 slides"} | 📋 |  |  |
 |  |  | Intro to model-based reinforcement learning | 📖 | 🖥️ | 📋 |  |  |
 |  |  | Intro to model-free reinforcement learning | 📖 | 🖥️ | 📋 |  |  |
 |  |  | Monotonic improvement of the value function (optional) | 📖 | 🖥️ | 📋 |  |  |
