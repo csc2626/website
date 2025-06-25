@@ -3,6 +3,10 @@
 font-size: 0.7em;
 }
 
+.tiny-font {
+font-size: 0.5em;
+}
+
 .red-annotation {
     color: red;
     font-size: 0.7em;
@@ -19,4 +23,9 @@ font-size: 0.7em;
 
 .bordered-box {
   border: 1px solid red;
+}
+
+
+.grey-text{
+  color: grey;
 }
