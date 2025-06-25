@@ -1,0 +1,1277 @@
+---
+title: "CSC2626 Imitation Learning for Robotics"
+subtitle: "Week 1: Imitation vs Supervised Learning"
+author: "Florian Shkurti"
+format:
+  revealjs:
+    slide-number: true
+    embed-resources: false
+    show-notes: false
+    smaller: true
+    footer: '<a href="https://csc2626.github.io/website/" target="_blank">↩ Back to Course Website</a>'
+    chalkboard:
+      src: chalkboard.json
+      buttons: true
+      boardmarker-width: 2
+      chalk-width: 2
+      chalk-effect: 1.0
+    css: ../style.css
+html-math-method:
+  method: mathjax
+  url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+---
+
+
+## Today’s agenda
+
+• Administrivia
+
+• Topics covered by the course
+
+• Behavioral cloning
+
+• Imitation learning
+
+• Teleoperation interfaces for manipulation
+
+• Imitation via multi-modal generative models (diffusion policy)
+
+• (Time permitting) Query the expert only when policy is uncertain
+
+# Administrivia
+
+## Administrivia
+
+This is a graduate level course
+
+Course website: <https://csc2626.github.io/website/>
+
+Discussion forum + announcements: <https://q.utoronto.ca> (Quercus)
+
+Request improvements anonymously: <https://www.surveymonkey.com/r/LJJV5LY>
+
+Course-related emails should have CSC2626 in the subject
+
+
+## Prerequisites
+
+::::: columns
+::: {.column width="70%"}
+Mandatory: 
+
+:::{.small-math}
+• Introductory machine learning (e.g. CSC411/ECE521 or equivalent)
+
+• Basic linear algebra + multivariable calculus
+
+• Intro to probability
+
+• Programming skills in Python or C++ (enough to validate your ideas)
+:::
+
+:::
+
+::: {.column width="30%" .red-annotation .fragment}
+<br> 
+
+If you’re missing any of these this is not the course for you.
+
+You’re welcome to audit.
+:::
+:::::
+
+
+:::: {.columns}
+::: {.column width="70%"}
+Recommended: 
+
+:::{.small-math}
+• Experience training neural networks or other function approximators
+
+• Introductory concepts from reinforcement learning or control (e.g. value function/cost-to-go)
+:::
+
+::: 
+
+::: {.column width="30%" .red-annotation .fragment}
+
+<br> 
+
+If you’re missing this we can organize tutorials to help you.
+::: 
+::::
+
+
+## Grading
+
+Two assignments: 30%
+
+Course project: 60%
+
+:::{.small-math}
+• Project proposal: 10% 
+
+• Project presentation: 25% 
+
+• Final project report (6-8 pages) + code: 25%
+
+Project guidelines <https://csc2626.github.io/website/project-description.html>
+:::
+
+In-class panel discussions: 10%
+
+:::{.red-annotation .fragment}
+[$\leftarrow$ Individual submissions]{style="position: absolute; top: 95px; left: 300px;"}
+
+[$\leftarrow$ Individual submissions]{style="position: absolute; top: 145px; left: 300px;"}
+:::
+
+
+## Evaluation environments: simulators & real robots
+![](images/real-robots.png)
+
+## Guiding principles for this course
+
+Robots do not operate in a vacuum. They do not need to learn everything from scratch.
+
+<br>
+
+. . .
+
+Humans need to easily interact with robots and share our expertise with them.
+
+<br>
+
+. . .
+
+Robots need to learn from the behavior and experience of others, not just their own.
+
+
+## Main questions
+
+:::: {.columns}
+::: {.column width="40%"}
+
+How can robots incorporate others’ decisions into their own?
+
+<br>
+
+How can robots easily understand our objectives from demonstrations?
+
+<br>
+
+How do we balance autonomous control and human control in the same system?
+
+::: 
+
+::: {.column width="10%" .fragment}
+
+<br>
+
+<br>
+
+$\quad \color{blue}\Rightarrow$
+
+:::
+
+::: {.column width="40%" .fragment}
+
+Learning from demonstrations Apprenticeship learning Imitation learning
+
+<br>
+
+Reward/cost learning Task specification Inverse reinforcement learning Inverse optimal control Inverse optimization
+
+<br>
+
+Shared or sliding autonomy
+
+::: 
+::::
+
+
+## Applications
+
+:::: {.columns}
+::: {.column width="50%"}
+
+Any control problem where:
+
+-   **writing down a dense cost function is difficult**
+
+-   there is a hierarchy of decision-making processes
+
+-   our engineered solutions might not cover all cases
+
+-   unrestricted exploration during learning is slow or dangerous
+::: 
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="40%"}
+
+{{< video https://www.youtube.com/watch?v=M8r0gmQXm1Y width="400" height="300" >}}
+
+[<https://www.youtube.com/watch?v=M8r0gmQXm1Y>]{.small-math}
+
+::: 
+::::
+
+
+## Applications
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+Any control problem where:
+
+-   **writing down a dense cost function is difficult**
+
+-   there is a hierarchy of interacting decision-making processes
+
+-   our engineered solutions might not cover all cases
+
+-   unrestricted exploration during learning is slow or dangerous
+
+::: 
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="40%"}
+{{< video https://www.youtube.com/watch?v=Q3LXJGha7Ws width="400" height="300" >}}
+
+[<https://www.youtube.com/watch?v=Q3LXJGha7Ws>]{.small-math}
+::: 
+::::
+
+
+## Applications
+
+:::: {.columns}
+::: {.column width="50%"}
+Any control problem where:
+
+-   **writing down a dense cost function is difficult**
+
+-   there is a hierarchy of interacting decision-making processes
+
+-   our engineered solutions might not cover all cases
+
+-   unrestricted exploration during learning is slow or dangerous
+::: 
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="40%"}
+{{< video https://www.youtube.com/watch?v=RjGe0GiiFzw width="400" height="300" >}}
+
+[<https://www.youtube.com/watch?v=RjGe0GiiFzw>]{.small-math}
+::: 
+::::
+
+
+
+## Applications
+
+:::: {.columns}
+::: {.column width="50%"}
+Any control problem where:
+
+-   **writing down a dense cost function is difficult**
+
+-   there is a hierarchy of interacting decision-making processes
+
+-   our engineered solutions might not cover all cases
+
+-   unrestricted exploration during learning is slow or dangerous
+::: 
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="40%"}
+
+![](images/robot-explorer.png){width="400" height="300"}
+
+[Robot Explorer]{.small-math}
+
+::: 
+::::
+
+
+## Applications
+
+:::: {.columns}
+::: {.column width="50%"}
+Any control problem where:
+
+-   **writing down a dense cost function is difficult**
+
+-   there is a hierarchy of interacting decision-making processes
+
+-   our engineered solutions might not cover all cases
+
+-   unrestricted exploration during learning is slow or dangerous
+::: 
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="45%"}
+{{< video https://www.youtube.com/watch?v=0XdC1HUp-rU width="400" height="300" >}}
+
+[<https://www.youtube.com/watch?v=0XdC1HUp-rU>]{.small-math}
+::: 
+::::
+
+
+## Back to the future
+
+<br>
+
+:::: {.columns}
+::: {.column width="33%" .small-math}
+{{< video https://www.youtube.com/watch?v=I39sxwYKlEE width="500" height="200" >}}
+
+[<https://www.youtube.com/watch?v=I39sxwYKlEE>]{.tiny-font}
+
+Ernst Dickmans + Mercedes (1986-2003)
+::: 
+
+
+::: {.column width="33%" .small-math}
+{{< video https://www.youtube.com/watch?v=2KMAAmkz9go start="2:02" width="500" height="200" >}}
+
+[<https://www.youtube.com/watch?v=2KMAAmkz9go>]{.tiny-font}
+
+Navlab 1 (1986-1989)
+
+::: 
+
+
+::: {.column width="33%" .small-math}
+{{< video https://www.youtube.com/watch?v=ilP4aPDTBPE width="500" height="200" >}}
+
+[<https://www.youtube.com/watch?v=ilP4aPDTBPE>]{.tiny-font}
+
+
+Navlab 2 + ALVINN, Dean Pomerleau’s PhD thesis (1989-1993)
+
+30 x 32 pixels, 3-layer network, outputs steering command, \~5 minutes of training per road type
+
+::: 
+::::
+
+
+
+## ALVINN: architecture
+
+:::: {.columns}
+::: {.column width="70%"}
+
+:::{style="width:400px; height:300px"}
+![https://drive.google.com/file/d/0Bz9namoRlUKMa0pJYzRGSFVwbm8/view Dean Pomerleau’s PhD thesis](./images/architecture.png)
+:::
+
+::: 
+
+
+::: {.column width="30%"}
+![](./images/architecture-thesis.png)
+
+::: 
+::::
+
+
+## ALVINN: training set
+
+![](./images/training-set.png)
+
+[Online updates via backpropagation]{.red-annotation}
+
+## Problems Identified by Pomerleau
+
+:::: {.columns}
+::: {.column width="50%"}
+
+:::{style="height:500px; width:300px;"}
+![](images/covariate-shift.png)
+:::
+
+1.  Test distribution is different from training distribution (covariate shift)
+
+::: 
+
+::: {.column width="50%"}
+
+
+![](images/catastrophic-forgetting.png)
+
+2.  Catastrophic forgetting
+::: 
+
+::::
+
+
+## (Partially) Addressing Covariate Shift
+
+![](images/covariate-shift2.png)
+
+
+## (Partially) Addressing Catastrophic Forgetting
+
+<br><br>
+
+1.  Maintains a buffer of old (image, action) pairs
+
+2.  Experiments with different techniques to ensure diversity and avoid outliers
+
+
+## Behavioral Cloning = Supervised Learning
+
+
+## 25 years later: what has changed?
+
+{{< video https://www.youtube.com/watch?v=qhUvQiKec2U width="700" height="400" >}}
+
+[<https://www.youtube.com/watch?v=qhUvQiKec2U>]{.small-math}
+
+
+## What has changed?
+
+:::: {.columns}
+::: {.column width="50%"}
+
+![](images/fig2-offline.png)
+
+::: 
+
+::: {.column width="40%"}
+
+![](images/fig4-highlight.png)
+
+![](images/fig3.png)
+
+::: 
+::::
+
+[End to End Learning for Self-Driving Cars, Bojarski et al, 2016]{.small-math}
+
+
+## What has changed?
+
+:::: {.columns}
+::: {.column width="50%"}
+
+![](images/fig2-offline.png)
+
+[“Our collected data is labeled with road type, weather condition, and the driver’s activity (staying in a lane, switching lanes, turning, and so forth).”]{.small-math}
+
+::: 
+
+::: {.column width="40%"}
+
+![](images/fig4-highlight.png)
+
+![](images/fig3.png)
+::: 
+::::
+
+
+[End to End Learning for Self-Driving Cars, Bojarski et al, 2016]{.small-math}
+
+
+## What has changed?
+
+![](images/fig5.png)
+
+## How much has changed?
+
+{{< video https://www.youtube.com/watch?v=umRdt3zGgpU width="700" height="400" >}}
+
+
+:::{.small-math}
+A Machine Learning Approach to Visual Perception of Forest Trails for Mobile Robots, Giusti et al., 2016
+
+<https://www.youtube.com/watch?v=umRdt3zGgpU>
+:::
+
+## How much has changed?
+
+<br><br>
+
+Not a lot for learning lane following with neural networks.
+
+<br>
+
+But, there are a few other beautiful ideas that do not involve end-to-end learning.
+
+## Visual Teach & Repeat
+
+Human Operator or Planning Algorithm
+
+![](images/visual-teach.png)
+
+Visual Path Following on a Manifold in Unstructured Three-Dimensional Terrain, Furgale & Barfoot, 2010
+
+
+## Visual Teach & Repeat
+
+:::: {.columns}
+::: {.column width="50%" .red-annotation}
+Key Idea #1: Manifold Map
+
+Build local maps relative to the \
+path. No global coordinate frame.
+
+![](images/visual-fig5.png)
+
+:::
+
+::: {.column width="40%" .fragment}
+
+![](images/visual-fig6.png)
+
+:::{.absolute top=90 left=300 .red-annotation}
+Key Idea #2: Visual Odometry 
+
+Given two consecutive images, \
+how much has the camera \
+moved? Relative motion.
+:::
+
+:::
+::::
+
+
+*[Visual Path Following on a Manifold in Unstructured Three-Dimensional Terrain, Furgale & Barfoot, 2010]{.small-math}*
+
+## Visual Teach & Repeat
+
+:::: {.columns}
+::: {.column width="50%"}
+{{< video https://www.youtube.com/watch?v=_ZdBfU4xJnQ width="400" height="300" >}}
+[<https://www.youtube.com/watch?v=_ZdBfU4xJnQ>]{.small-math}
+:::
+
+::: {.column width="50%"}
+{{< video https://www.youtube.com/watch?v=9dN0wwXDuqo width="400" height="300" >}}
+[<https://www.youtube.com/watch?v=9dN0wwXDuqo>]{.small-math}
+:::
+::::
+
+Centimeter-level precision in tracking the demonstrated path over kilometers-long trails.
+
+## Today’s agenda
+
+:::{.grey-text}
+• Administrivia 
+
+• Topics covered by the course 
+
+• Behavioral cloning 
+:::
+
+• Imitation learning 
+
+• Teleoperation interfaces for manipulation 
+
+• Imitation via multi-modal generative models (diffusion policy) 
+
+• (Time permitting) Query the expert only when policy is uncertain
+
+## Nomenclature
+
+| • Offline imitation learning:
+
+|      Learn from a fixed dataset (eg behavioral cloning). 
+|      Cannot interact with the environment.
+
+<br> 
+
+| • Online imitation learning:
+
+|      Learn from a dataset that is not fixed. 
+|      Gather new data by interacting with the environment.
+
+## Back to Pomerleau
+:::: {.columns}
+
+::: {.column width="30%" .small-math}
+![](images/covariate-shift.png)
+
+Test distribution is different from training distribution (covariate shift)
+
+:::
+
+
+::: {.column width="70%"}
+(Ross & Bagnell, 2010): How are we sure these errors are not due to overfitting or underfitting?
+
+1.  Maybe the network was too small (underfitting)
+2.  Maybe the dataset was too small and the network overfit it
+
+
+:::: {.columns}
+::: {.column width="40%"}
+![](images/pormerleau.png) 
+:::
+
+::: {.column width="5%"}
+<br><br>
+
+$\Rightarrow$
+:::
+
+::: {.column width="50%" .small-math}
+
+<br><br>
+
+Steering commands $\pi_\theta (s) = \theta^\top s$ where s are image features
+:::
+::::
+
+:::{.small-math .fragment .fade-out}
+Efficient reductions for imitation learning. Ross & Bagnell, AISTATS 2010.
+:::
+
+:::{.red-annotation .fragment}
+It was not 1: they showed that even a linear policy can work well. \
+It was not 2: their error on held-out data was close to training error.
+:::
+
+:::
+:::: 
+
+
+
+## Imitation learning $\neq$ Supervised learning
+
+:::: {.columns}
+
+::: {.column width="25%" .small-math}
+![](images/covariate-shift.png)
+
+Test distribution is different from training distribution (covariate shift)
+
+:::
+
+:::{.column width="70%"}
+(Ross & Bagnell, 2010): IL is a sequential decision-making problem.
+
+• Your actions affect future observations/data. \
+• This is not the case in supervised learning
+
+:::: {.columns}
+::: {.column width="50%" .small-math .fragment}
+
+**Imitation Learning** $\qquad \qquad \LARGE \longleftarrow$
+
+Train/test data are not i.i.d.
+
+If expected training error $\delta$ is $\epsilon$ \
+Expected test error after T \
+decisions is up to
+$$
+T^2 \epsilon 
+$$
+
+Errors compound 
+:::
+
+::: {.column width="45%" .small-math}
+
+**Supervised Learning**
+
+Assumes train/test data are i.i.d.
+
+If expected training error $\delta$ is $\epsilon$ \
+Expected test error after T decisions 
+$$
+T \epsilon 
+$$
+
+<br>
+
+Errors are independent
+:::
+::::
+
+:::
+
+::::
+
+
+
+## Why do errors accumulate quadratically if we use a behavioral cloning policy?
+
+![](images/efficient-reduction.png)
+
+Efficient reductions for imitation learning. Ross & Bagnell, AISTATS 2010.
+
+
+## DAgger
+
+:::: {.columns}
+
+::: {.column width="30%" .small-math}
+![](images/convex-loss.png){height=450}
+::: 
+
+::: {.column width="70%" .small-math}
+
+(Ross & Gordon & Bagnell, 2011): DAgger, or Dataset Aggregation
+
+**• Imitation learning as interactive supervision**
+
+**• Aggregate training data from expert with test data from execution**
+
+<br>
+
+![](images/Dagger-algo.png)
+
+A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning. Ross, Gordon, Bagnell, AISTATS 2010.
+::: 
+::::
+
+
+## DAgger
+
+:::: {.columns}
+
+::: {.column width="30%" .small-math}
+![](images/convex-loss.png){height=450}
+::: 
+
+::: {.column width="70%" .small-math}
+
+(Ross & Gordon & Bagnell, 2011): DAgger, or Dataset Aggregation
+
+**• Imitation learning as interactive supervision**
+
+**• Aggregate training data from expert with test data from execution**
+
+<br>
+
+:::: {.columns}
+::: {.column width="45%"}
+**Imitation Learning via DAgger**
+
+Train/test data are not i.i.d.
+
+If expected training error on aggr. dataset is $\epsilon$ \
+Expected test error after T decisions is
+
+$$
+O(T\epsilon)
+$$
+
+Errors do not compound
+:::
+
+::: {.column width="45%"}
+**Supervised Learning**
+
+Assumes train/test data are i.i.d.
+
+If expected training error is $\epsilon$ \
+Expected test error after T decisions
+
+$$
+T\epsilon
+$$
+
+Errors are independent
+:::
+:::: 
+
+
+::: 
+::::
+
+
+
+## DAgger
+
+<br><br>
+
+:::: {.columns}
+::: {.column width="33%" .small-math}
+
+{{< video https://www.youtube.com/watch?v=V00npNnWzSU width="300" height="200" >}}
+
+Initial expert trajectories
+
+:::
+
+::: {.column width="33%" .small-math}
+
+{{< video https://www.youtube.com/watch?v=V00npNnWzSU width="300" height="200" >}}
+
+Supervised learning
+:::
+
+::: {.column width="33%" .small-math}
+
+{{< video https://www.youtube.com/watch?v=V00npNnWzSU width="300" height="200" >}}
+
+DAgger
+:::
+::::
+
+[<https://www.youtube.com/watch?v=V00npNnWzSU>]{.small-math}
+
+## DAgger
+
+![](images/dagger.png)
+
+## DAgger
+
+<br><br>
+
+**Q: Any drawbacks of using it in a robotics setting?**
+
+
+## DAgger
+
+{{< video https://www.youtube.com/watch?v=hNsP6-K3Hn4 width="700" height="400" >}}
+
+:::{.small-math}
+<https://www.youtube.com/watch?v=hNsP6-K3Hn4>
+
+Learning Monocular Reactive UAV Control in Cluttered Natural Environments, Ross et al, 2013
+:::
+
+## DAgger: Assumptions for theoretical guarantees
+
+:::: {.columns}
+::: {.column width="30%" .red-annotation}
+![](images/convex-loss.png){height="400"}
+
+Strongly convex loss \
+No-regret online learner
+
+:::
+
+::: {.column width="70%" .small-math}
+(Ross & Gordon & Bagnell, 2011): DAgger, or Dataset Aggregation
+
+• Imitation learning as interactive supervision
+
+• Aggregate training data from expert with test data from execution
+
+<br>
+
+:::: {.columns}
+::: {.column width="45%"}
+
+**Imitation Learning via DAgger**
+
+Train/test data are not i.i.d.
+
+If expected training error on aggr. dataset is $\epsilon$ \
+Expected test error after T decisions is
+
+$$
+O(T\epsilon)
+$$
+
+Errors do not compound
+:::
+
+::: {.column width="45%"}
+**Supervised Learning**
+
+Assumes train/test data are i.i.d.
+
+If expected training error is $\epsilon$ \
+Expected test error after T decisions 
+
+$$
+T\epsilon
+$$
+
+Errors are independent
+:::
+::::
+
+:::
+::::
+
+
+## No-Regret Online Learners
+
+Intuition: No matter what the distribution of input data, your online policy/classifier will do asymptotically as well as the best-in-hindsight policy/classifier.
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="60%"}
+
+$$
+r_N = \frac{1}{N} \sum_{i=1}^{N} L_i(\theta_i) - \min_{\theta \in \Theta} \left[ \frac{1}{N} \sum_{i=1}^{N} L_i(\theta) \right]
+$$
+
+:::{.red-annotation .absolute top=330 left=435}
+$\qquad \qquad \quad \big\uparrow$ \
+Policy has access to \
+data up to round N
+:::
+
+:::{.red-annotation .absolute top=330 left=180}
+$\qquad \quad \big\uparrow$ \
+Policy has access to \
+data up to round i
+:::
+
+<br><br>
+
+**No-regret:** $\lim_{N \to \infty} r_N = 0$
+
+:::
+
+::: {.column width="40%"}
+
+::: {.fragment}
+**Another way to say this:** a no-regret online algorithm is one that outputs a sequence of policies $\pi_1, \ldots, \pi_N$ such that the average loss with respect to the best-in-hindsight policy goes to 0 as $N \to \infty$
+
+**DAgger** is a no-regret online learning algorithm
+:::
+:::
+
+::::
+
+
+## No-Regret Online Learners
+
+Intuition: No matter what the distribution of input data, your online policy/classifier will do asymptotically as well as the best-in-hindsight policy/classifier.
+
+<br>
+
+:::: {.columns}
+
+::: {.column width="60%"}
+
+$$
+r_N = \frac{1}{N} \sum_{i=1}^{N} L_i(\theta_i) - \min_{\theta \in \Theta} \left[ \frac{1}{N} \sum_{i=1}^{N} L_i(\theta) \right]
+$$
+
+:::{.red-annotation .absolute top=330 left=435}
+$\qquad \qquad \quad \big\uparrow$ \
+Policy has access to \
+data up to round N
+:::
+
+:::{.red-annotation .absolute top=330 left=180}
+$\qquad \quad \big\uparrow$ \
+Policy has access to \
+data up to round i
+:::
+
+<br><br>
+
+**No-regret:** $\lim_{N \to \infty} r_N = 0$
+
+:::
+
+::: {.column width="40%" .small-math}
+
+We can see Dagger as an adversarial game between the imitation learner (policy) and an adversary (environment):
+
+![](images/handnote.png){width="400" height="300"}
+
+:::
+::::
+
+
+## [Is the quadratic regret in horizon unavoidable for behavioral cloning? [No]{style="color:red;"}]{style="font-size:0.8em;"}
+
+![](images/behavior-cloning.png)
+
+
+## [Is the quadratic regret in horizon unavoidable for behavioral cloning? [No]{style="color:red;"}]{style="font-size:0.8em;"}
+
+:::: {.columns}
+::: {.column width="50%"}
+![](images/behavior-cloning.png) 
+
+:::{.fragment}
+![](images/mujoco-graph.png){height=300}
+:::
+:::
+
+::: {.column width="50%" .small-math}
+
+• Dagger’s analysis uses 0-1 loss to show quadratic regret in horizon for BC. It also only considers deterministic and linear policies. 
+
+<br>
+
+• If instead we use log-loss BC:
+
+$$
+\hat{\pi} = \arg\min_{\pi \in \Pi} \left[ -\sum_{i=1}^{N} \sum_{t=1}^{T} \log \pi(a_t^i | x_t^i) \right]
+$$
+
+and we normalize the reward then
+
+<br>
+
+• BC can be shown to have linear regret in horizon, even for neural network policies.
+
+:::
+::::
+
+
+
+## Today’s agenda
+
+:::{.grey-text}
+• Administrivia 
+
+• Topics covered by the course 
+
+• Behavioral cloning 
+
+• Imitation learning 
+:::
+
+• Teleoperation interfaces for manipulation 
+
+• Imitation via multi-modal generative models (diffusion policy) 
+
+• (Time permitting) Query the expert only when policy is uncertain
+
+
+
+## [Appendix 2: Why do behavioral cloning errors accumulate quadratically?]{style="font-size:0.8em;"}
+
+:::: {.columns}
+::: {.column width="60%"}
+![](images/appdx2-1.png)
+:::
+
+::: {.column width="10%"}
+:::
+
+::: {.column width="30%"}
+![](images/appdx2-2.png){height=400}
+:::
+::::
+
+[Efficient reductions for imitation learning. Ross & Bagnell, AISTATS 2010.]{.small-math}
+
+
+## Appendix 3: Types of Uncertainty & Query-Efficient Imitation
+
+Let’s revisit the two main ideas from query-efficient imitation:
+
+<br>
+
+| 1.  DropoutDAgger:
+|           Keep an ensemble of learner policies, and only query the expert when they significantly disagree
+
+<br>
+
+| 2.  SHIV, SafeDagger, MMD-IL:
+|           (Roughly) Query expert only if input is too close to the decision boundary of  the learner’s policy
+| 
+
+<br>
+
+Need to review a few concepts about different types of uncertainty.
+
+
+## Biased Coin
+
+![](images/coin.png){width=150 height=150}
+
+$$
+p(\text{heads}_3 \mid \underbrace{\text{heads}_1, \text{heads}_2}_{\textbf{observations}}) = ?
+$$
+
+
+## Biased Coin
+
+![](images/coin.png){width=150 height=150}
+
+$$
+p(\text{heads}_3 \mid \text{heads}_1, \text{heads}_2) = \int p(\text{heads}_3 \mid \theta) \underbrace{p(\theta \mid \text{heads}_1, \text{heads}_2)}_{\textbf{how biased is the coin?}} d\theta
+$$
+
+::: {.red-annotation style="text-align:right;" .fragment}
+Induces uncertainty in the model, or epistemic uncertainty, \
+which asymptotically goes to 0 with infinite observations
+:::
+
+
+
+## Biased Coin
+
+![](images/coin.png){width=150 height=150}
+
+$$
+p(\text{heads}_3 \mid \text{heads}_1, \text{heads}_2) = \int p(\text{heads}_3 \mid \theta) p(\theta \mid \text{heads}_1, \text{heads}_2) d\theta
+$$
+
+
+Q: Even if you eventually discover the true model, can you predict if the next flip will be heads?
+
+. . .
+
+[A: No, there is irreducible uncertainty / observation noise in the system. This is called aleatoric uncertainty.]{style="color:red;"}
+
+## Gaussian Process Regression
+
+![ <http://pyro.ai/examples/gp.html> ](images/gaussian.png){height=350 fig-align="left"}
+
+$p(\text{y} \mid \text{x}, \text{D}) = ?$
+
+
+## Gaussian Process Regression
+
+![ <http://pyro.ai/examples/gp.html> ](images/gaussian.png){height=350 fig-align="left"}
+
+:::: {.columns .small-math}
+::: {.column width="40%"}
+$$
+p(\text{y} \mid \text{x}, \text{D}) = \int p(\text{y} \mid f) {p(f \mid x, D)} df
+$$
+:::
+
+::: {.column width="10%"}
+:::
+
+::: {.column width="50%"}
+$f \mid x, D \sim \mathcal{N}(f; 0, K) \qquad$ Zero mean prior over functions
+
+$y \mid f \sim \mathcal{N}(y; f, \sigma^2) \qquad \quad$ Noisy observations
+
+:::
+:::: 
+
+
+
+## Gaussian Process Regression
+
+![ <http://pyro.ai/examples/gp.html> ](images/gaussian2.png){height=350}
+
+:::: {.columns .small-math}
+::: {.column width="40%"}
+$$
+p(\text{y} \mid \text{x}, \text{D}) = \int p(\text{y} \mid f) {p(f \mid x, D)} df
+$$
+:::
+
+::: {.column width="10%"}
+:::
+
+::: {.column width="50%"}
+$f \mid x, D \sim \mathcal{N}(f; 0, K) \qquad$ Zero mean prior over functions
+
+$y \mid f \sim \mathcal{N}(y; f, \sigma^2) \qquad \quad$ Noisy observations
+
+:::
+:::: 
+
+
+## Gaussian Process Regression
+
+![ <http://pyro.ai/examples/gp.html> ](images/gaussian3.png){height=350}
+
+:::: {.columns .small-math}
+::: {.column width="40%"}
+$$
+p(\text{y} \mid \text{x}, \text{D}) = \int p(\text{y} \mid f) {p(f \mid x, D)} df
+$$
+:::
+
+::: {.column width="10%"}
+:::
+
+::: {.column width="50%"}
+$f \mid x, D \sim \mathcal{N}(f; 0, K) \qquad$ Zero mean prior over functions
+
+$y \mid f \sim \mathcal{N}(y; f, \sigma^2) \qquad \quad$ Noisy observations
+
+:::
+:::: 
+
+
+## Gaussian Process Classification
+
+![Gaussian Processes for Machine Learning, chapter 2](images/gaussian-process.png){height=350 fig-align="left"}
+
+
+:::{.fragment .red-annotation style="text-align:right;"}
+GP handles uncertainty in f by averaging \
+while SVM considers only best f for classification.
+:::
+
+
+## Model Uncertainty in Neural Networks
+
+Want $( p(y|x, D) = \int p(y|x, f) \, p(f|D) \, df )$ 
+
+<br>
+
+But easier to control network weights $( p(y|x, D) = \int p(y|x, w) \, \underline{\color{red} p(w|D)} \, dw )$
+
+:::: {.columns}
+
+::: {.column width="60%"}
+
+:::{style="text-align:center;" .fragment fragment-index=5}
+$\LARGE \color{red}\nearrow$ [approximates]{.red-annotation}
+:::
+
+
+:::{.fragment fragment-index=4}
+$$
+q(y|x) = \int p(y|x, w) q_{\theta^*}(w) dw
+$$
+
+:::{style="text-align:center;"}
+$\color{red} \LARGE \big\uparrow$ [Variational inference]{.red-annotation}
+
+:::
+:::
+
+:::{.fragment fragment-index=3}
+$$
+\theta^* = \arg\min_{\theta} KL(q_{\theta}(w) || p(w|D)) \quad \color{red} \LARGE \longleftarrow
+$$
+:::
+
+:::
+
+
+::: {.column width="40%" .red-annotation}
+
+:::{.fragment fragment-index=1}
+How do we represent posterior over network weights? \
+How do we quickly sample from it?
+:::
+
+<br>
+
+:::{.fragment fragment-index=2}
+Main ideas:
+
+1.  Use an ensemble of networks trained on different copies of D (bootstrap method) 
+
+2.  Use an approximate distribution over weights (Dropout, Bayes by Backprop, …)
+
+3.  Use MCMC to sample weights
+
+:::
+:::
+
+:::: 
+
+
+
