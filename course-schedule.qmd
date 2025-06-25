@@ -8,7 +8,7 @@ This page contains an outline of the topics, content, and assignments for the se
 ::: column-screen-inset-right
 | Week | Date | Topic | Prepare | Slides | Notebooks | Assignments | Project |
 |:-------:|---------|---------|:-------:|:-------:|:-------:|:-------:|:-------:|
-| [1](#week-1) | Mon, Sep 9 | Imitation learning vs supervised learning | 📖 | 🖥️ | 📋 | ✍️ |  |
+| [1](#week-1) | Mon, Sep 9 | Imitation learning vs supervised learning | 📖 | 🖥️(/lecs/w01/lec01.html){.no-style target="_blank" aria-label="Lec 1 slides"} | 📋 | ✍️ |  |
 |  |  | Mitigating compunding errors via dataset aggregation | 📖 | 🖥️ | 📋 |  |  |
 |  |  | Mitigating compounding errors by choosing loss functions | 📖 | 🖥️ | 📋 |  |  |
 |  |  | Imitation via multi-modal generative models | 📖 | 🖥️ | 📋 |  |  |
