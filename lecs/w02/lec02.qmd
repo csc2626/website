@@ -15,7 +15,7 @@ format:
       boardmarker-width: 2
       chalk-width: 2
       chalk-effect: 1.0
-    css: style.css
+    css: ../style.css
 html-math-method:
   method: mathjax
   url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
