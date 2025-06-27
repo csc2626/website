@@ -25,7 +25,38 @@ font-size: 0.5em;
   border: 1px solid red;
 }
 
+.red{
+    color: red;
+}
+
+.green{
+    color: green;
+}
+
+.light-orange{
+    color: #f0a170;
+}
 
 .grey-text{
   color: grey;
+}
+
+.blue-text{
+  color: blue;
+}
+
+.orange{
+    color: #FF8C00;
+}
+
+.left-align {
+    text-align: left;
+}
+
+.right-align {
+    text-align: right;
+}
+
+.center-align{
+    text-align: center; 
 }

@@ -458,6 +458,265 @@
     "text": "LQR examples: code to replicate these results\n• https://github.com/florianshkurti/comp417.git\n• Look under comp417/lqr_examples/python"
   },
   {
+    "objectID": "lecs/w03/lec03.html#todays-agenda",
+    "href": "lecs/w03/lec03.html#todays-agenda",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Today’s agenda",
+    "text": "Today’s agenda\n\n\n• Reinforcement Learning Terminology\n• Distribution Shift in Offline RL\n• Offline RL with Policy Constraints\n• Offline RL with Conservative Q-Estimates\n\n\n\n\n\nAcknowledgments\nToday’s slides borrow very heavily from: Sergey Levine & Aviral Kumar (CSC285 and NeurIPS Offline RL workshop), Joelle Pineau (DLSS’16)"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#rl-terminology",
+    "href": "lecs/w03/lec03.html#rl-terminology",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "RL Terminology",
+    "text": "RL Terminology\n• Episodic vs Non-episodic\n• Tabular vs Function Approximation\n• Exploration vs Exploitation\n• Model-based vs Model-free\n• Policy Optimization vs Value Function Estimation\n• On-policy vs Off-Policy\n• Batch (Offline) vs Online"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#episodic-vs-non-episodic-rl-methods",
+    "href": "lecs/w03/lec03.html#episodic-vs-non-episodic-rl-methods",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Episodic vs Non-episodic RL methods",
+    "text": "Episodic vs Non-episodic RL methods\nEpisodic: optimize expected reward-to-go for finite time horizon\n\\[\nV_T^{\\pi}(s_0) = \\mathbb{E}_{a_t \\sim \\pi_t(a|s_t), s_{t+1} \\sim p(s_{t+1}|s_t, a_t)} \\left[ \\sum_{t=0}^{T} r(s_t, a_t) \\right]\n\\]\nOften need to have a reset mechanism to bring back the system to state \\(s_0\\)\n\n\nNon-episodic: optimize expected discounted reward-to-go for infinite time horizon, i.e. a task may go on forever, no resets\n\\[\nV^{\\pi}(s_0) = \\mathbb{E}_{a_t \\sim \\pi(a|s_t), s_{t+1} \\sim p(s_{t+1}|s_t, a_t)} \\left[ \\sum_{t=0}^{\\infty} \\gamma^t r(s_t, a_t) \\right] \\qquad \\gamma \\in (0, 1)\n\\]"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#tabular-vs-function-approximation-methods",
+    "href": "lecs/w03/lec03.html#tabular-vs-function-approximation-methods",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Tabular vs Function Approximation Methods",
+    "text": "Tabular vs Function Approximation Methods\nTabular: discretize states and actions, represent them as a grid, and compute a policy or value function directly on states and actions (typically can enumerate small number of states and actions)\n\n\nFunction approximation: discrete or continuous states and actions, associate a feature representation \\(\\phi(s, a)\\) to each state action pair and compute a policy or value function in terms of features (typically useful for continuous or very large, but discrete, state-action spaces)"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#exploration-vs-exploitation-in-rl",
+    "href": "lecs/w03/lec03.html#exploration-vs-exploitation-in-rl",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Exploration vs Exploitation in RL",
+    "text": "Exploration vs Exploitation in RL\nExploitation: act by using current estimates of dynamics and value function to improve task performance in the short term\n\n\nExploration: act to improve current estimates of dynamics and value function to improve task performance in the long-term, even if it hurts short-term performance"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#model-based-vs-model-free-rl-methods",
+    "href": "lecs/w03/lec03.html#model-based-vs-model-free-rl-methods",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Model-based vs Model-free RL Methods",
+    "text": "Model-based vs Model-free RL Methods\nModel-based: estimate predictive models of the instantaneous reward as well as the dynamics model, and act by making value function predictions based on these models and optimizing the estimated value function. I.e. plan with “imagined” state transition and reward data.\nModel-free: do not try to estimate models of reward or dynamics, but interact with the environment to optimize policy. Plan with real state transition and reward data.\nMixed: only trust your dynamics and reward model (imagined data) for a few steps in the near future, and then use real data."
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#policy-optimization-vs-value-function-estimation",
+    "href": "lecs/w03/lec03.html#policy-optimization-vs-value-function-estimation",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Policy Optimization vs Value Function Estimation",
+    "text": "Policy Optimization vs Value Function Estimation\n\nCredit: John Schulman"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#on-policy-vs-off-policy-methods",
+    "href": "lecs/w03/lec03.html#on-policy-vs-off-policy-methods",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "On-policy vs Off-policy Methods",
+    "text": "On-policy vs Off-policy Methods\n\n\n\n\n\nOn-policy RL methods: improve the policy that acts on the environment using data collected from that same policy\n\n\n\n\n\n\nOff-policy RL methods: improve the policy that acts on the environment using data collected from any policy"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#batch-offline-vs-online-methods",
+    "href": "lecs/w03/lec03.html#batch-offline-vs-online-methods",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Batch (Offline) vs Online Methods",
+    "text": "Batch (Offline) vs Online Methods\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOnline RL methods: Can collect data over multiple rounds. Data distribution changes over time.\n\nBatch/Offline RL methods: Can collect data only once from any policy. Data distribution is stationary."
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#batch-offline-vs-online-methods-1",
+    "href": "lecs/w03/lec03.html#batch-offline-vs-online-methods-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Batch (Offline) vs Online Methods",
+    "text": "Batch (Offline) vs Online Methods"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#section-1",
+    "href": "lecs/w03/lec03.html#section-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "",
+    "text": "\\(\\mathbf{s} \\in \\mathcal{S}\\) – discrete or continuous state\n\\(\\mathbf{a} \\in \\mathcal{A}\\) – discrete or continuous action\n\\(\\tau = \\{s_0, a_0, s_1, a_1, \\ldots, s_T, a_T\\}\\) - trajectory\n\\(\\underbrace{\\pi(s_0, a_0, \\ldots, s_T, a_T)}_{\\pi(\\tau)} = p(s_1) \\prod_{t=0}^{T} \\pi(a_t | s_t) p(s_{t+1} | s_t, a_t)\\)\n\\(d_t^{\\pi}(s_t)\\) – state marginal of \\(\\pi(\\tau)\\) at \\(t\\)\n\\(d^{\\pi}(s) = \\frac{1}{1-\\gamma} \\sum_{t=0}^{T} \\gamma^t d_t^{\\pi}(s_t) \\quad \\text{– \"visitation frequency\"}\\)\n\n\\(Q^{\\pi}(s_t, a_t) = r(s_t, a_t) + \\gamma \\mathbb{E}_{s_{t+1} \\sim p(s_{t+1} | s_t, a_t), a_{t+1} \\sim \\pi(a_{t+1} | s_{t+1})} \\left[Q^{\\pi}(s_{t+1}, a_{t+1})\\right]\\)\n\\(V^{\\pi}(s_t) = \\mathbb{E}_{a_t \\sim \\pi(a_t | s_t)} \\left[Q^{\\pi}(s_t, a_t)\\right]\\)"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#on-policy-actor-critic-with-function-approximation",
+    "href": "lecs/w03/lec03.html#on-policy-actor-critic-with-function-approximation",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "On-policy actor-critic with function approximation",
+    "text": "On-policy actor-critic with function approximation\n\n\n\n\n\n\n\nupdate \\(Q_\\phi\\) to decrease \\(E_{s \\sim d^{\\pi_\\theta}(s), a \\sim \\pi_\\theta(a|s)} \\left[\\left(Q_\\phi(s,a) - (r(s,a) + \\gamma E_{\\pi_\\theta}[Q_\\phi(s',a')])\\right)^2\\right]\\)\n\n\n\nupdate \\(\\pi_\\theta\\) to increase \\(E_{s \\sim d^{\\pi_\\theta}(s), a \\sim \\pi_\\theta(a|s)} [Q_\\phi(s,a)]\\)"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#off-policy-actor-critic-with-function-approximation",
+    "href": "lecs/w03/lec03.html#off-policy-actor-critic-with-function-approximation",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Off-policy actor-critic with function approximation",
+    "text": "Off-policy actor-critic with function approximation\n\n\n\n\n\n\nupdate \\(Q_\\phi\\) to decrease \\(E_{s \\sim d^{\\pi_\\beta}(s), a \\sim \\pi_\\beta(a|s)} \\left[\\left(Q_\\phi(s,a) - (r(s,a) + \\gamma E_{\\pi_\\theta}[Q_\\phi(s',a')])\\right)^2\\right]\\)\n\n\n\nupdate \\(\\pi_\\theta\\) to increase \\(E_{s \\sim d^{\\pi_\\beta}(s), a \\sim \\pi_\\theta(a|s)} [Q_\\phi(s,a)]\\)"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#q-learningfitted-q-iteration-with-function-approximation-off-policy",
+    "href": "lecs/w03/lec03.html#q-learningfitted-q-iteration-with-function-approximation-off-policy",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Q-Learning/Fitted Q-Iteration with function approximation (off-policy)",
+    "text": "Q-Learning/Fitted Q-Iteration with function approximation (off-policy)\n\n\n\n\n\n\n\n\n\n\nupdate \\(Q_\\phi\\) to decrease \\(E_{s \\sim d^{\\pi_\\beta}(s), a \\sim \\pi_\\beta(a|s)} \\left[\\left(Q_\\phi(s,a) - (r(s,a) + \\gamma E_{\\pi_\\theta}[Q_\\phi(s',a')])\\right)^2\\right]\\)\n\n\n\nupdate \\(\\pi_\\theta\\) to increase \\(E_{s \\sim d^{\\pi_\\beta}(s), a \\sim \\pi_\\theta(a|s)} [Q_\\phi(s,a)]\\)\n\nchoose \\(\\pi\\) according to: \\(\\pi(a_t | s_t) = \\begin{cases} 1 & \\text{if } a_t = \\arg\\max_{a_t} Q_\\phi(s_t, a_t) \\\\ 0 & \\text{otherwise} \\end{cases}\\)"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#policy-gradients-on-policy",
+    "href": "lecs/w03/lec03.html#policy-gradients-on-policy",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Policy gradients (on-policy)",
+    "text": "Policy gradients (on-policy)\nRL objective: \\(\\max_{\\pi} \\sum_{t=0}^{T} E_{s_t \\sim d^{\\pi}(s), a_t \\sim \\pi(a|s)} [\\gamma^t r(s_t, \\mathbf{a}_t)]\\)\n\\(\\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\uparrow\\) exactly the same thing!\n\\[J(\\theta) = E_{\\tau \\sim \\pi_\\theta(\\tau)} \\left[\\sum_{t=0}^{T} \\gamma^t r(s_t, a_t)\\right] \\approx \\frac{1}{N} \\sum_{i=1}^{N} \\sum_{t=0}^{T} \\gamma^t r(s_{t,i}, a_{t,i})\\]\n\\[\\nabla_\\theta J(\\theta) = E_{\\tau \\sim \\pi_\\theta(\\tau)} \\left[\\nabla_\\theta \\log \\pi_\\theta(\\tau) \\sum_{t=0}^{T} \\gamma^t r(s_t, \\mathbf{a}_t)\\right] \\text{ simple algebraic derivation}\\]\n\\[= E_{\\tau \\sim \\pi_\\theta(\\tau)} \\left[\\left(\\sum_{t=0}^{T} \\nabla_\\theta \\log \\pi_\\theta(a_t | s_t)\\right) \\left(\\sum_{t=0}^{T} \\gamma^t r(s_t, \\mathbf{a}_t)\\right)\\right] \\text{ from definition of } \\tau\\]"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#policy-gradients-on-policy-1",
+    "href": "lecs/w03/lec03.html#policy-gradients-on-policy-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Policy gradients (on-policy)",
+    "text": "Policy gradients (on-policy)\n\n\n\nRL objective: \\(\\max_{\\pi} \\sum_{t=0}^{T} E_{s_t \\sim d^{\\pi}(s), a_t \\sim \\pi(a|s)} [\\gamma^t r(s_t, \\mathbf{a}_t)]\\)\n\\(\\qquad \\qquad \\qquad \\qquad \\qquad \\nearrow\\) exactly the same thing!\n\\(J(\\theta) = E_{\\tau \\sim \\pi_\\theta(\\tau)} \\left[\\sum_{t=0}^{T} \\gamma^t r(s_t, a_t)\\right] \\approx \\frac{1}{N} \\sum_{i=1}^{N} \\sum_{t=0}^{T} \\gamma^t r(s_{t,i}, a_{t,i})\\)\n\\(\\nabla_\\theta J(\\theta) = E_{\\tau \\sim \\pi_\\theta(\\tau)} \\left[\\nabla_\\theta \\log \\pi_\\theta(\\tau) \\sum_{t=0}^{T} \\gamma^t r(s_t, \\mathbf{a}_t)\\right] \\text{ simple algebraic derivation}\\)\n(REINFORCE gradient estimator)"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#todays-agenda-1",
+    "href": "lecs/w03/lec03.html#todays-agenda-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Today’s agenda",
+    "text": "Today’s agenda\n\n\n• Reinforcement Learning Terminology\n• Distribution Shift in Offline RL\n• Offline RL with Policy Constraints\n• Offline RL with Conservative Q-Estimates\n\n\n\n\n\nAcknowledgments\nToday’s slides borrow very heavily from: Sergey Levine & Aviral Kumar (CSC285 and NeurIPS Offline RL workshop), Joelle Pineau (DLSS’16)"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#qt-opt-roughly-continuous-action-q-learning",
+    "href": "lecs/w03/lec03.html#qt-opt-roughly-continuous-action-q-learning",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "QT-Opt (roughly: continuous-action Q-Learning)",
+    "text": "QT-Opt (roughly: continuous-action Q-Learning)"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#qt-opt-roughly-continuous-action-q-learning-1",
+    "href": "lecs/w03/lec03.html#qt-opt-roughly-continuous-action-q-learning-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "QT-Opt (roughly: continuous-action Q-Learning)",
+    "text": "QT-Opt (roughly: continuous-action Q-Learning)"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#todays-agenda-2",
+    "href": "lecs/w03/lec03.html#todays-agenda-2",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Today’s agenda",
+    "text": "Today’s agenda\n\n\n• Reinforcement Learning Terminology\n• Distribution Shift in Offline RL\n• Offline RL with Policy Constraints\n• Offline RL with Conservative Q-Estimates\n\n\n\n\n\nAcknowledgments\nToday’s slides borrow very heavily from: Sergey Levine & Aviral Kumar (CSC285 and NeurIPS Offline RL workshop), Joelle Pineau (DLSS’16)"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#addressing-distribution-shift-via-pessimism",
+    "href": "lecs/w03/lec03.html#addressing-distribution-shift-via-pessimism",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Addressing Distribution Shift via Pessimism",
+    "text": "Addressing Distribution Shift via Pessimism"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#different-types-of-policy-constraint-methods",
+    "href": "lecs/w03/lec03.html#different-types-of-policy-constraint-methods",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Different Types of Policy Constraint Methods",
+    "text": "Different Types of Policy Constraint Methods"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#note-kl-divergence-is-not-symmetric",
+    "href": "lecs/w03/lec03.html#note-kl-divergence-is-not-symmetric",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Note: KL divergence is not symmetric",
+    "text": "Note: KL divergence is not symmetric"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#how-should-we-evaluate-offline-rl-methods",
+    "href": "lecs/w03/lec03.html#how-should-we-evaluate-offline-rl-methods",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "How should we evaluate offline RL methods",
+    "text": "How should we evaluate offline RL methods"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#evaluating-offline-rl-d4rl",
+    "href": "lecs/w03/lec03.html#evaluating-offline-rl-d4rl",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Evaluating Offline RL – D4RL",
+    "text": "Evaluating Offline RL – D4RL"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#evaluating-offline-rl-d4rl-1",
+    "href": "lecs/w03/lec03.html#evaluating-offline-rl-d4rl-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Evaluating Offline RL – D4RL",
+    "text": "Evaluating Offline RL – D4RL"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#standardized-benchmark-for-offline-rl",
+    "href": "lecs/w03/lec03.html#standardized-benchmark-for-offline-rl",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Standardized Benchmark for Offline RL",
+    "text": "Standardized Benchmark for Offline RL"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#value-function-regularization-for-offline-rl",
+    "href": "lecs/w03/lec03.html#value-function-regularization-for-offline-rl",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Value Function Regularization for Offline RL",
+    "text": "Value Function Regularization for Offline RL"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#learning-lower-bounded-q-values",
+    "href": "lecs/w03/lec03.html#learning-lower-bounded-q-values",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Learning Lower-Bounded Q-values",
+    "text": "Learning Lower-Bounded Q-values"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#a-tighter-lower-bound",
+    "href": "lecs/w03/lec03.html#a-tighter-lower-bound",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "A Tighter Lower Bound",
+    "text": "A Tighter Lower Bound"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#practical-cql-algorithm",
+    "href": "lecs/w03/lec03.html#practical-cql-algorithm",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Practical CQL Algorithm",
+    "text": "Practical CQL Algorithm"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#the-need-for-safe-exploration-in-rl-for-robotics",
+    "href": "lecs/w03/lec03.html#the-need-for-safe-exploration-in-rl-for-robotics",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "The need for safe exploration in RL for robotics",
+    "text": "The need for safe exploration in RL for robotics\n   \n\nWhen applying RL to robotics we need to guarantee that the algorithm will not visit unsafe states very often during learning."
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#the-need-for-safe-exploration-in-rl-for-robotics-1",
+    "href": "lecs/w03/lec03.html#the-need-for-safe-exploration-in-rl-for-robotics-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "The need for safe exploration in RL for robotics",
+    "text": "The need for safe exploration in RL for robotics\n   \nWhen applying RL to robotics we need to guarantee that the algorithm will not visit unsafe states very often during learning."
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#the-need-for-safe-exploration-in-rl-for-robotics-2",
+    "href": "lecs/w03/lec03.html#the-need-for-safe-exploration-in-rl-for-robotics-2",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "The need for safe exploration in RL for robotics",
+    "text": "The need for safe exploration in RL for robotics\n   \nWhen applying RL to robotics we need to guarantee that the algorithm will not visit unsafe states very often during learning.\n\nOur proposed method:\nThe learned policy should be safe at each iteration, not just when optimization has converged"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#our-solution-constrained-safety-critics-csc",
+    "href": "lecs/w03/lec03.html#our-solution-constrained-safety-critics-csc",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Our solution: Constrained Safety Critics (CSC)",
+    "text": "Our solution: Constrained Safety Critics (CSC)\n\n\n\\(\\text{maximize}_{\\theta} \\mathcal{V}_{\\text{task}}^{\\pi_\\theta}(s_0)\\)\nsubject to \\(\\boxed{\\mathcal{V}_{\\text{accident}}^{\\pi_\\theta}(s_0) &lt; \\epsilon} \\qquad\\)\n\\(\\text{KL}(\\pi_\\theta || \\pi_{\\text{prev}}) &lt; \\delta \\qquad\\)\n\n\nProbability of an accident should be upper bounded\n\nProblem: estimation errors for value function \\(\\mathcal{V}_{\\text{accident}}^{\\pi_\\theta}(s_0)\\) can make the constraint falsely confident\n\n\n\n\nFix: use the CQL update rule to guarantee that the probability of an accident is overestimated\n\n\\(\\min_Q \\alpha \\mathbb{E}_{s \\sim \\mathcal{D}} \\left[\\log \\sum_a \\exp(Q(s,a)) - \\mathbb{E}_{a \\sim \\hat{\\pi}_\\beta(a|s)} [Q(s,a)]\\right] + \\frac{1}{2} \\mathbb{E}_{s,a,s' \\sim \\mathcal{D}} \\left[\\left(Q - \\hat{B}^{\\pi} \\hat{Q}^k\\right)^2\\right] \\Rightarrow \\mathcal{V}_{\\text{accident}}^{\\pi_\\theta}(s_0) \\leq \\hat{\\mathcal{V}}_{\\text{accident}}^{\\pi_\\theta}(s_0) &lt; \\epsilon\\)\n\n\n\nConservative Safety Critics for Exploration, https://arxiv.org/abs/2010.14497, Bharadhwaj, Kumar, Rhinehart, Levine, Shkurti, Garg"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#results-fewer-accidents",
+    "href": "lecs/w03/lec03.html#results-fewer-accidents",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Results: fewer accidents",
+    "text": "Results: fewer accidents\n\nConstrained Policy Optimization, https://arxiv.org/abs/1705.10528, Achiam, Held, Tamam, Abbeel"
+  },
+  {
+    "objectID": "lecs/w03/lec03.html#results-task-value-vs-safety",
+    "href": "lecs/w03/lec03.html#results-task-value-vs-safety",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Results: task value vs safety",
+    "text": "Results: task value vs safety"
+  },
+  {
     "objectID": "course-syllabus.html",
     "href": "course-syllabus.html",
     "title": "Syllabus",
@@ -7933,6 +8192,384 @@
     "title": "Computing troubleshooting",
     "section": "",
     "text": "If you’re having difficulty launching an RStudio session from your reserved container, go to status.oit.duke.edu and scroll down to Teaching and Learning Tools. Under this heading you’ll find an entry called Container Manager (CMGR Coursework Containers).\n\nIf the status shows something other than Operational, this means there is a known incident with the containers. Check back later to see if it’s been resolved. If there’s a deadline coming up soon, post on the course forum to let us know that there’s an issue. We can look into how quickly it might get resolved and decide on what to do about the deadline accordingly. Note: We don’t anticipate this to happen regularly, the systems are Operational a huge majority of the time!\nIf the status shows Operational, this means the system is expected to be working. Check your internet connection, if need be, restart your computer to ensure a fresh new connection. If your issue persists, post on the course forum with details on what you’ve tried and the errors you see (including verbatim errors and/or screenshots).\nEither way you can also fill out the form here, which will notify our the R TA for the department as well as our undergraduate coordinator. They’ll be able to help diagnose the issue."
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#todays-agenda",
+    "href": "lecs/w04/lec04.html#todays-agenda",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Today’s agenda",
+    "text": "Today’s agenda\n• Guided policy search (GPS)\n• Policy learning from adaptive MPC with privileged information (PLATO)\n• Combining behavioral cloning and RL\n• Dynamic movement primitives (DMPs)\n• Expert iteration & learning to search\n\n\nAcknowledgments\nToday’s slides are based on student presentations from 2019 by: Yuwei Chen, Jienan Yao, and Jason Rebello as well as from YouTube recordings of lectures from Gregor Schöner, for his Autonomous Robotics course:\nhttps://www.youtube.com/watch?v=IV8Eze9Hxrc&ab_channel=Dynamicfieldtheory"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#section-1",
+    "href": "lecs/w04/lec04.html#section-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "",
+    "text": "\\(\\boxed{\\begin{aligned} p(x_{t+1} | x_t, u_t) &= \\mathcal{N}(f(x_t, u_t), \\Sigma) \\\\\nf(x_t, u_t) &\\approx A_t x_t + B_t u_t \\\\\nA_t &= \\frac{df}{dx_t} \\quad B_t = \\frac{df}{du_t}\n\\end{aligned}}\\)"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#section-2",
+    "href": "lecs/w04/lec04.html#section-2",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "",
+    "text": "\\(\\boxed{\\begin{aligned} \\text{iLQR/iLQG control} \\\\\n\\mathbf{u}_t = \\mathbf{K}_t (\\mathbf{x}_t - \\hat{\\mathbf{x}}_t) + \\mathbf{k}_t + \\hat{\\mathbf{u}}_t \\\\\n\\text{is deterministic. We need it stochastic.}\n\\end{aligned}}\\)\n\n\n\\(p(u_t \\mid x_t) = \\mathcal{N}(K_t (x_t - \\hat{x}_t) + k_t + \\hat{u}_t, \\Sigma_t)\\)\n\n\\(p(\\tau) = p(x_1) \\prod_{t=1}^{T} p(u_t \\mid x_t) p(x_{t+1} \\mid x_t, u_t)\\)"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#learning-a-globally-valid-nn-policy-an-example",
+    "href": "lecs/w04/lec04.html#learning-a-globally-valid-nn-policy-an-example",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Learning a globally-valid NN policy: an example",
+    "text": "Learning a globally-valid NN policy: an example\n\nWe want to solve a stochastic version of this problem\n\n\\[\n\\begin{align}\n\\min_{\\mathbf{u}_1, \\ldots, \\mathbf{u}_T, \\mathbf{x}_1, \\ldots, \\mathbf{x}_T, \\theta} \\sum_{t=1}^{T} c(\\mathbf{x}_t, \\mathbf{u}_t) \\text{s.t.} \\mathbb{x}_t = f(x_{t-1}, u_{t-1}) \\\\\n\\text{s.t.} \\mathbf{u}_t = \\pi_\\theta (x_t)\n\\end{align}\n\\]\n\nwhere both the policy and the dynamics are stochastic. I.e. we want to learn a globally-valid policy that imitates the actions of locally-valid iLQG policies."
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#kl-divergence-constraints",
+    "href": "lecs/w04/lec04.html#kl-divergence-constraints",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "KL-Divergence Constraints",
+    "text": "KL-Divergence Constraints\n\n\n\n▶ Modified cost function\n\\[\n\\min_{p(\\tau) \\in \\mathcal{N}(\\tau)} E_p[l(\\tau)] \\text{ s.t. } D_{\\text{KL}}(p(\\tau)||\\hat{p}(\\tau)) \\leq \\epsilon\n\\]\n\n\n\n\n\\[\n\\begin{align}\n\\color{red} \\leftarrow\n\\boxed{\n    \\begin{align}\n    \\color{red}\\text{Want to solve a stochastic version of} \\\\\n    \\color{black} \\min_{u_1, \\ldots, u_T, x_1, \\ldots, x_T} \\sum_{t=1}^{T} c(x_t, u_t) \\quad \\text{s.t.} \\quad x_t = f(x_{t-1}, u_{t-1}) \\\\\n    \\color{red}\\text{with an additional trust-region inequality constraint}\n    \\end{align}\n    } \\\\\n\\end{align}\n\\]\n\n\n\\(\\color{black} \\hat{p}(\\tau)\\) is the previous trajectory\ndistribution. Same dynamics,\ndifferent policy."
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#kl-divergence-constraints-1",
+    "href": "lecs/w04/lec04.html#kl-divergence-constraints-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "KL-Divergence Constraints",
+    "text": "KL-Divergence Constraints\n\n▶ Modified cost function\n\\[\n\\min_{p(\\tau) \\in \\mathcal{N}(\\tau)} E_p[l(\\tau)] \\text{ s.t. } D_{\\text{KL}}(p(\\tau)||\\hat{p}(\\tau)) \\leq \\epsilon\n\\]\n▶ Lagrangian of this problem (\\(\\eta\\) dual variable)\n\\[\\mathcal{L}_{\\text{traj}}(p(\\tau), \\eta) = E_p[l(\\tau)] + \\eta[D_{\\text{KL}}(p(\\tau)||\\hat{p}(\\tau)) - \\epsilon]\\]\n▶ Assuming \\(p(\\mathbf{x}_{t+1}|\\mathbf{x}_t, \\mathbf{u}_t) = \\hat{p}(\\mathbf{x}_{t+1}|\\mathbf{x}_t, \\mathbf{u}_t) = \\mathcal{N}(f_{\\mathbf{x}t}\\mathbf{x}_t + f_{\\mathbf{u}t}\\mathbf{u}_t, \\mathbf{F}_t)\\)\n\\[\n\\mathcal{L}_{\\text{traj}}(p(\\tau), \\eta) = \\left[\\sum_t E_{p(\\mathbf{x}_t, \\mathbf{u}_t)}[l(\\mathbf{x}_t, \\mathbf{u}_t) - \\eta \\log p(\\mathbf{u}_t|\\mathbf{x}_t)]\\right] - \\eta H(p(\\tau)) - \\eta \\epsilon\n\\]\n\n▶ Augmented cost function\n\\[\\tilde{l}(\\mathbf{x}_t, \\mathbf{u}_t) = \\frac{1}{\\eta}l(\\mathbf{x}_t, \\mathbf{u}_t) - \\log \\hat{p}(\\mathbf{u}_t|\\mathbf{x}_t)\\]\n\n\n▶ Solved by dual gradient descent"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#dual-gradient-descent",
+    "href": "lecs/w04/lec04.html#dual-gradient-descent",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Dual Gradient Descent",
+    "text": "Dual Gradient Descent\n\n\n\\(\\min_x f(x) \\quad \\text{s.t.} \\quad C(x) = 0\\)\n\n\\(L(x, \\lambda) = f(x) + \\lambda C(x)\\)\n\n\\(g(\\lambda) = L(x^*(\\lambda), \\lambda)\\)\n\n\n\nhttp://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-13.pdf"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#general-parameterized-policies",
+    "href": "lecs/w04/lec04.html#general-parameterized-policies",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "General Parameterized Policies",
+    "text": "General Parameterized Policies\n\n▶ Objective\n\\[\n\\min_{\\theta,\\, p(\\tau)} \\mathbb{E}_{p(\\tau)}[\\ell(\\tau)] \\quad \\text{s.t.} \\quad D_{KL}(p(x_t)\\pi_\\theta(u_t|x_t)\\,\\|\\,p(x_t, u_t)) = 0,\\ \\forall t\n\\]\n▶ Lagrangian of the problem \\[\n\\begin{align}\n\\mathcal{L}_{GPS}(\\theta, p, \\lambda) &= \\mathbb{E}_{p(\\tau)}[\\ell(\\tau)] + \\sum_{t=1}^{T} \\lambda_t D_{KL}(p(x_t)\\pi_\\theta(u_t|x_t)\\,\\|\\,p(x_t, u_t)) \\\\\n\\end{align}\n\\]\n\nOR \\[\n\\qquad \\qquad \\qquad \\qquad \\qquad \\qquad = \\mathbb{E}_{p(\\tau)}[\\ell(\\tau) - \\eta\\log\\hat{p}(\\tau)] - \\eta\\mathcal{H}(p) + \\sum_{t=1}^{T} \\lambda_t D_{KL}(p(x_t)\\pi_\\theta(u_t|x_t)\\,\\|\\,p(x_t, u_t))\n\\]\nif we include the trust-region constraint"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#general-parameterized-policies-1",
+    "href": "lecs/w04/lec04.html#general-parameterized-policies-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "General Parameterized Policies",
+    "text": "General Parameterized Policies"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#experiments-conducted",
+    "href": "lecs/w04/lec04.html#experiments-conducted",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Experiments Conducted",
+    "text": "Experiments Conducted\n▶ 2D, 3D peg insertion (discontinuous dynamics)\n▶ Octopus arm control (high-dimensional state and action space)\n▶ Planar swimming (three-link snake)\n▶ Walking (seven-link biped to maintain a target velocity)"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#trajectory-optimization",
+    "href": "lecs/w04/lec04.html#trajectory-optimization",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Trajectory Optimization",
+    "text": "Trajectory Optimization"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#trajectory-optimization-1",
+    "href": "lecs/w04/lec04.html#trajectory-optimization-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Trajectory Optimization",
+    "text": "Trajectory Optimization"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#neural-network-policy-learning-with-gps",
+    "href": "lecs/w04/lec04.html#neural-network-policy-learning-with-gps",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Neural Network Policy Learning with GPS",
+    "text": "Neural Network Policy Learning with GPS"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#training-with-privileged-information",
+    "href": "lecs/w04/lec04.html#training-with-privileged-information",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Training with privileged information",
+    "text": "Training with privileged information\n\n\n\n\\[\n\\boxed{\n    \\begin{align}\n\\min_{p,\\, \\theta} \\mathbb{E}_{\\tau \\sim p(\\tau)}[c(\\tau)] \\quad \\\\\n\\text{s.t.} \\quad p(u_t \\mid x_t) = \\pi_{\\theta}(u_t \\mid x_t)\n\\end{align}\n}\n\\]\n\n\\[\n\\boxed{\n    \\begin{align}\n\\min_{p,\\, \\theta} \\mathbb{E}_{\\tau \\sim p(\\tau)}[c(\\tau)] \\quad \\\\\n\\text{s.t.} \\quad p(u_t \\mid x_t) = \\pi_{\\theta}(u_t \\mid o_t)\n\\end{align}\n}\n\\]"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#section-3",
+    "href": "lecs/w04/lec04.html#section-3",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "",
+    "text": "https://www.youtube.com/watch?v=Q4bMcUk6pcw&t=40s&ab_channel=RAIL"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#todays-agenda-1",
+    "href": "lecs/w04/lec04.html#todays-agenda-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Today’s agenda",
+    "text": "Today’s agenda\n• Guided policy search (GPS)\n• Policy learning from adaptive MPC with privileged information (PLATO)\n• Combining behavioral cloning and RL\n• Dynamic movement primitives (DMPs)\n• Expert iteration & learning to search\n\n\nAcknowledgments\nToday’s slides are based on student presentations from 2019 by: Yuwei Chen, Jienan Yao, and Jason Rebello as well as from YouTube recordings of lectures from Gregor Schöner, for his Autonomous Robotics course:\nhttps://www.youtube.com/watch?v=IV8Eze9Hxrc&ab_channel=Dynamicfieldtheory"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#section-4",
+    "href": "lecs/w04/lec04.html#section-4",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "",
+    "text": "https://www.youtube.com/watch?v=clHp6QgVyAU"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#problem-set-up",
+    "href": "lecs/w04/lec04.html#problem-set-up",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Problem Set-up",
+    "text": "Problem Set-up\n\n\nStates \\(x\\), actions \\(u\\).\n\nThe policy could only control the system from observations \\(o\\).\n\nThe policy \\(\\pi_\\theta(u \\mid o_t)\\), parametrized by \\(\\theta\\).\n\nAt test time, the agent chooses actions according to \\(\\pi_\\theta(u \\mid o_t)\\) at each time step \\(t\\), and experiences a loss \\(c(x_t \\mid o_t) \\in [0, 1]\\).\n\nThe next state is distributed by dynamics \\(p(x_{t+1} \\mid x_t, u_t)\\).\n\nThe objective is to learn policy \\(\\pi_\\theta(u \\mid o_t)\\) such that\n\\[\n\\arg\\min_\\pi J(\\pi) = \\mathbb{E}_\\pi \\left[ \\sum_{t=1}^{T} c(x_t, u_t) \\right].\n\\]\nAt the same time, let’s define expected cost from state \\(x_t\\) at time \\(t\\) as\n\\[\nJ(\\pi \\mid x_t) = \\mathbb{E}_\\pi \\left[ \\sum_{t=1}^{T} c(x_t, u_t) \\mid x_t \\right].\n\\]"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#adaptive-mpc-teacher",
+    "href": "lecs/w04/lec04.html#adaptive-mpc-teacher",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Adaptive MPC Teacher",
+    "text": "Adaptive MPC Teacher\nOne naive way is to train the policy with supervised learning from data generated from an MPC teacher. However, because the state distribution for the teacher and learner are different, the learned policy might fail.\nIn order to overcome this challenge, an adaptive MPC teacher is used which generates actions from a controller obtained by:\n\\[\n\\pi^t_\\lambda(u \\mid x_t, \\theta) \\leftarrow \\arg\\min_\\pi J_t(\\pi \\mid x_t) + \\lambda D_{KL}(\\pi(u \\mid x_t) \\,\\|\\, \\pi_\\theta(u \\mid o_t)) \\qquad \\tag{1}\n\\]\nwhere \\(\\lambda\\) determines the relative importance of matching the learner policy versus optimizing the expected return. Note that the particular MPC algorithm is based on iLQG."
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#algorithm",
+    "href": "lecs/w04/lec04.html#algorithm",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Algorithm",
+    "text": "Algorithm\nAlgorithm 1: PLATO algorithm\nInitialize data \\(D \\leftarrow \\emptyset\\)\nfor \\(i = 1\\) to \\(N\\) do\n for \\(t = 1\\) to \\(T\\) do\n  \\(\\pi_\\lambda^{t}(u_t \\mid x_t, \\theta) \\leftarrow \\arg\\min_{\\pi} J_t(\\pi \\mid x_t) + \\lambda D_{KL}(\\pi(u \\mid x_t) \\,\\|\\, \\pi_{\\theta}(u \\mid o_t))\\)\n  Sample \\(u_t \\sim \\pi_\\lambda^{t}(u \\mid x_t, \\theta)\\)\n  \\(\\pi^{*}(u_t \\mid x_t) \\leftarrow \\arg\\min_{\\pi} J(\\pi)\\)\n  Sample \\(u_t^{*} \\sim \\pi^{*}(u \\mid x_t)\\)\n  Append \\((o_t, u_t^{*})\\) to dataset \\(D\\)\n  State evolves \\(x_{t+1} \\sim p(x_{t+1} \\mid x_t, u_t)\\)\n end for\nTrain \\(\\pi_\\theta\\) on \\(D\\)\nend for"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#training-the-learners-policy",
+    "href": "lecs/w04/lec04.html#training-the-learners-policy",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Training the learner’s policy",
+    "text": "Training the learner’s policy\nDuring the supervised learning phase, we minimize the KL-divergence between the learner policy \\(\\pi_\\theta\\) and precomputed near-optimal policies \\(\\pi^*\\), which is estimated by iLQG:\n\\[\n\\theta \\leftarrow \\arg\\min_\\theta \\sum_{(x_t, o_t) \\in D} D_{KL}(\\pi_\\theta(u \\mid o_t) \\,\\|\\, \\pi^*(u \\mid x_t)).\n\\]\nSince both \\(\\pi_\\theta\\) and \\(\\pi^*\\) are conditionally Gaussian, the KL divergence can be expressed in closed form if we ignore the terms not involving the learner policy means \\(\\mu_\\theta(o_t)\\):\n\\[\n\\min_\\theta \\sum_{(x_t, o_t) \\in D} \\left\\| \\mu^*(x_t) - \\mu_\\theta(o_t) \\right\\|^2_{\\Sigma_{\\pi^*}^{-1/2}}.\n\\]\nIn this paper, \\(\\mu_\\theta\\) is represented by a NN, and solved by SGD."
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#theoretical-analysis",
+    "href": "lecs/w04/lec04.html#theoretical-analysis",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Theoretical Analysis",
+    "text": "Theoretical Analysis\nLet \\(Q_t(x, \\pi, \\tilde{\\pi})\\) denote the cost of executing \\(\\pi\\) for one time step starting from an initial state, and then executing \\(\\tilde{\\pi}\\) for the remaining \\(t - 1\\) time steps. We assume the cost-to-go difference between the learned policy and the optimal policy is bounded: \\(Q_t(x, \\pi, \\pi^*) - Q_t(x, \\pi^*, \\pi^*) \\leq \\delta\\)\n\n\n\nTheorem\nLet the cost-to-go \\(Q_t(x,\\pi,\\pi^*) - Q_t(x,\\pi^*,\\pi^*) \\leq \\delta\\) for all \\(t \\in \\{1,\\ldots,T\\}\\).\nThen for PLATO, \\(J(\\pi_\\theta) \\leq J(\\pi^*) + \\delta \\sqrt{\\epsilon_\\theta *} \\cdot O(T) + O(1)\\)\n\n\n\nTherefore, the policy learned by PLATO converges to a policy with bounded cost."
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#comparison-to-dagger",
+    "href": "lecs/w04/lec04.html#comparison-to-dagger",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Comparison to DAgger",
+    "text": "Comparison to DAgger\nPLATO could be viewed as a generalization of DAgger, which samples from mixture policy\n\\[\n\\pi_{\\text{mix},i} = \\beta_i \\pi^* + (1 - \\beta_i) \\pi_{\\theta_i}\n\\]\nDifferences with the DAgger:\n\nThe training data is labeled with actions from \\(\\pi^*\\).\n\nPLATO uses adaptive MPC policy to select actions at each time step, rather than the mixture policy \\(\\pi_{\\text{mix},i}\\) used."
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#todays-agenda-2",
+    "href": "lecs/w04/lec04.html#todays-agenda-2",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Today’s agenda",
+    "text": "Today’s agenda\n\n• Guided policy search (GPS)\n• Policy learning from adaptive MPC with privileged information (PLATO)\n\n• Combining behavioral cloning and RL\n• Dynamic movement primitives (DMPs)\n• Expert iteration & learning to search\n\n\nAcknowledgments\nToday’s slides are based on student presentations from 2019 by: Yuwei Chen, Jienan Yao, and Jason Rebello as well as from YouTube recordings of lectures from Gregor Schöner, for his Autonomous Robotics course:\nhttps://www.youtube.com/watch?v=IV8Eze9Hxrc&ab_channel=Dynamicfieldtheory"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#section-6",
+    "href": "lecs/w04/lec04.html#section-6",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "",
+    "text": "https://www.youtube.com/watch?v=vppFvq2quQ0"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#learning-complex-dexterous-manipulation-with-deep-reinforcement-learning-and-demonstrations",
+    "href": "lecs/w04/lec04.html#learning-complex-dexterous-manipulation-with-deep-reinforcement-learning-and-demonstrations",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Learning Complex Dexterous Manipulation with Deep Reinforcement Learning and Demonstrations",
+    "text": "Learning Complex Dexterous Manipulation with Deep Reinforcement Learning and Demonstrations\n\nAravind Rajeswaran , Vikash Kumar , Abhishek Gupta, Giulia Vezzani , John Schulman , Emanuel Todorov , Sergey Levine\n\nJason Rebello\nUTIAS"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#motivation",
+    "href": "lecs/w04/lec04.html#motivation",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Motivation",
+    "text": "Motivation\n\n\n• Dexterous multi-fingered hands are extremely versatile\n• Control is challenging due to high dimensionality, complex contact patterns\n• Previous methods require reward shaping\n• DRL limited to simpler manipulators and simple tasks\n• Lack of physical systems due to sample inefficiency\n\n\n\n\nObject Relocation task"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#contributions",
+    "href": "lecs/w04/lec04.html#contributions",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Contributions",
+    "text": "Contributions\n\n\n• Manipulation with 24-DOF hand\n• Model Free DRL\n• Used in complex tasks with variety of tools\n• Small number of human demonstrations reduces sample complexity\n• Reduces learning time\n• Robust and natural movements\n\n\n\n\nTool use task"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#manipulation-task-1",
+    "href": "lecs/w04/lec04.html#manipulation-task-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Manipulation Task 1",
+    "text": "Manipulation Task 1\nObject Relocation\n\n• Move Blue ball to green position\n• Task complete when ball is epsilon ball away from target\n• Positions of ball and target are randomized\n• Main challenge is exploration (reach object, grab and move to target location)"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#manipulation-task-2",
+    "href": "lecs/w04/lec04.html#manipulation-task-2",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Manipulation Task 2",
+    "text": "Manipulation Task 2\nIn-hand Manipulation\n\n• Reposition blue pen to match orientation of green target\n• Task complete when orientation is achieved\n• Base of hand is fixed\n• Large number of contacts with complex solutions\n• Used a well shaped reward for training an expert"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#manipulation-task-3",
+    "href": "lecs/w04/lec04.html#manipulation-task-3",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Manipulation Task 3",
+    "text": "Manipulation Task 3\nDoor Opening\n\n• Undo latch and swing door open\n• Task complete when door touches door stopper\n• No information of latch explicitly provided\n• A lot of hidden sub-tasks\n• Position of door is randomized"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#manipulation-task-4",
+    "href": "lecs/w04/lec04.html#manipulation-task-4",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Manipulation Task 4",
+    "text": "Manipulation Task 4\nTool Use\n\n• Pickup and hammer nail\n• Task complete when entire nail is inside the board\n• Use tool instead of just relocation\n• Multiple steps in task"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#experimental-setup",
+    "href": "lecs/w04/lec04.html#experimental-setup",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Experimental Setup",
+    "text": "Experimental Setup\n\n\n\n\n\nADROIT hand \n\n\nHTC headset \n\n\n\n\n24-DOF hand\nFirst, middle, ring – 4 DOF each\nLittle finger, thumb – 5 DOF each\nWrist – 2 DOF\nActuated with position control and has joint angle sensor\nMuJoCo physics simulation with friction\n25 demonstrations for each task\n\n\nHAPTIX Simulator\n\n\nCyberGlove 3"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#methodology-preliminaries",
+    "href": "lecs/w04/lec04.html#methodology-preliminaries",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Methodology (Preliminaries)",
+    "text": "Methodology (Preliminaries)\n\n\nStates \\(\\downarrow\\)\nRewards\n\\(\\downarrow\\)\nInitial Probability distribution\n\\(\\downarrow\\)\n\nMDP definition: \\(\\mathcal{M} = \\{S, A, R, \\mathcal{T}, \\rho_0, \\gamma\\}\\)\n\nActions \\(\\uparrow\\)\n\\(\\uparrow\\)\nTransition\ndynamics\n\\(\\uparrow\\)\nDiscount Factor\n\n\nValue function:\n\\[\nV^{\\pi}(s) = \\mathbb{E}_{\\pi,\\mathcal{M}} \\left[ \\sum_{t=0}^{\\infty} \\gamma^t r_t \\,\\big|\\, s_0 = s \\right]\n\\]\nQ function: \\(Q^{\\pi}(s, a) = \\underline{\\mathbb{E}_{\\mathcal{M}} [R(s,a)]} + \\underline{\\mathbb{E}_{s' \\sim \\mathcal{T}(s,a)} [V^{\\pi}(s')]}\\)\n\nAdvantage function: \\(A^{\\pi}(s, a) = Q^{\\pi}(s,a) - V^{\\pi}(s)\\)\n\nReward for taking\naction a in state s\nExpected reward in state s’"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#methodology-npg",
+    "href": "lecs/w04/lec04.html#methodology-npg",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Methodology (NPG)",
+    "text": "Methodology (NPG)\n• Directly optimize parameters of policy to maximize objective\n\nSub-optimal \\(\\searrow\\)\nVanilla Policy Gradient: \\(g = \\frac{1}{NT} \\sum_{i=1}^{N} \\sum_{t=1}^{T} \\nabla_{\\theta} \\log \\pi_{\\theta}(a_t^i \\mid s_t^i) \\hat{A}^{\\pi}(s_t^i, a_t^i, t)\\)\nFisher Information Matrix: \\(F_{\\theta} = \\frac{1}{NT} \\sum_{i=1}^{N} \\nabla_{\\theta} \\log \\pi_{\\theta}(a_t^i \\mid s_t^i) \\nabla_{\\theta} \\log \\pi_{\\theta}(a_t^i \\mid s_t^i)^{T}\\)\n\n• Fisher information matrix measures the curvature (sensitivity) of policy relative to model parameters\n• Fisher information matrix is related to the Hessian matrix"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#methodology-npg-1",
+    "href": "lecs/w04/lec04.html#methodology-npg-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Methodology (NPG)",
+    "text": "Methodology (NPG)\n• Limit policy change based on parameter change\n• Fisher information matrix maps between parameter space and policy space\n• Generally use learning rate in optimization\n• Poor step size leads to poor initialization\n• Use Fisher information matrix to perform update\n\nGradient ascent update: \\(\\theta_{k+1} = \\theta_k + \\underline{\\sqrt{\\frac{\\delta}{g^T F_{\\theta_k}^{-1} g}}} \\, \\overline{F_{\\theta_k}^{-1} g}\\)\n\nNormalized step-size\nSteepest Ascent direction"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#methodology-problems-with-rl",
+    "href": "lecs/w04/lec04.html#methodology-problems-with-rl",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Methodology (Problems with RL)",
+    "text": "Methodology (Problems with RL)\n• Challenges with using NPG\n      • RL requires careful reward shaping\n      • Impractical number of samples to learn (approx. 100 hours)\n      • Unnatural movement\n      • Not as robust to environmental variations\n\n• Solution\n      • Combine RL with demonstrations\n      • Guide exploration and decrease sample complexity\n      • Robust and natural looking behaviour\n      • Demonstration Augmented Policy Gradient (DAPG)"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#methodology-pretraining-with-bc",
+    "href": "lecs/w04/lec04.html#methodology-pretraining-with-bc",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Methodology (Pretraining with BC)",
+    "text": "Methodology (Pretraining with BC)\n• Exploration in PG achieved with stochastic action distribution\n• Poor initialization leads to slow exploration\n• Behavioral Cloning (BC) guides exploration\n• Reduces sample complexity\n\\[\n\\text{maximize}_{\\theta} \\sum_{(s, a) \\in \\rho_D} \\ln \\pi_{\\theta}(a \\mid s)\n\\]\n• Mimic actions taken in demonstrations\n• Does not guarantee effectiveness of policy due to distributional shift"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#methodology-fine-tuning-with-augmented-loss",
+    "href": "lecs/w04/lec04.html#methodology-fine-tuning-with-augmented-loss",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Methodology (Fine-tuning with augmented loss)",
+    "text": "Methodology (Fine-tuning with augmented loss)\n• BC does not make optimal use of demonstrations\n• Cannot learn subtasks (reaching, grasping, hammering)\n• BC policy (only grasping)\n• Capturing all data\n\\[\ng_{\\text{aug}} = \\sum_{(s,a) \\in \\rho_{\\pi}} \\overline{\\nabla_{\\theta} \\ln \\pi_{\\theta}(a \\mid s)} \\, A^{\\pi}(s, a) + \\sum_{(s,a) \\in \\rho_{D}} \\overline{\\nabla_{\\theta} \\ln \\pi_{\\theta}(a \\mid s)} \\, w(s, a)\n\\]\n\n\\[\nw(s, a) = \\lambda_0 \\lambda_1^k \\max_{(s', a') \\in \\rho_\\pi} A^\\pi(s', a') \\quad \\forall (s, a) \\in \\rho_D\n\\]\n\nPolicy gradient\nBehavioral cloning\n\\(\\uparrow\\)\nDataset from policy\n\\(\\uparrow\\)\nDataset from\ndemonstrations\n\\(\\uparrow\\)\nWeighting\nfunction\n\\(\\downarrow\\) iteration\n\\(\\uparrow \\quad \\uparrow\\)\nhyperparameters"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#results-1",
+    "href": "lecs/w04/lec04.html#results-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Results 1",
+    "text": "Results 1\nReinforcement learning from scratch\n• Can RL cope with high dimensional manipulation tasks ?\n• Is it robust to variations in environment ?\n• Are movements safe and can they be used on real hardware ?\n\n• Compare NPG vs DDPG (Deep Deterministic Policy Gradient)\n• DDPG is a policy gradient actor-critic algorithm that is off-policy\n• Stochastic policy for exploration, estimates deterministic policy\n• Score based on percentage of successful trajectories (100 samples)\n• Sparse Reward vs Reward shaping"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#results-1-1",
+    "href": "lecs/w04/lec04.html#results-1-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Results 1",
+    "text": "Results 1\nReinforcement learning from scratch\n\n• NPG learns with reward shaping, DDPG fails to learn\n• DDPG is sample efficient but sensitive to hyper-parameters\n• Resulting policies have unnatural behaviors\n• Poor sample efficiency, cant use on hardware\n• Cannot generalize to unseen environment (weight and ball size change)"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#results-2",
+    "href": "lecs/w04/lec04.html#results-2",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Results 2",
+    "text": "Results 2\nReinforcement learning with demonstrations\n• Does incorporating demonstrations reduce learning time?\n• Comparison of DAPG vs DDPGfD (.. from Demonstrations)?\n• Does it result in human like behaviour ?\n\n• DDPGfD better version of DDPG (demonstrations in replay buffer, prioritized experience replay, n-step returns, regularization)\n• Only use sparse rewards"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#results-2-1",
+    "href": "lecs/w04/lec04.html#results-2-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Results 2",
+    "text": "Results 2\nReinforcement learning with demonstrations\n\n\n\n• DAPG outperforms DDPGfD\n• DAPG requires few robot hours\n• Can be used on real hardware\n• Robust and human behavior\n• Generalizes to unseen environment"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#future-work",
+    "href": "lecs/w04/lec04.html#future-work",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Future Work",
+    "text": "Future Work\n• Tests on real hardware\n• Reduce sample complexity using novelty based exploration methods\n• Learn policies from raw visual inputs and tactile sensing"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#results",
+    "href": "lecs/w04/lec04.html#results",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Results",
+    "text": "Results\n\nhttps://www.youtube.com/watch?v=jJtBll8l_OM"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#todays-agenda-3",
+    "href": "lecs/w04/lec04.html#todays-agenda-3",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Today’s agenda",
+    "text": "Today’s agenda\n\n• Guided policy search (GPS)\n• Policy learning from adaptive MPC with privileged information (PLATO)\n• Combining behavioral cloning and RL\n\n• Dynamic movement primitives (DMPs)\n• Expert iteration & learning to search\n\n\nAcknowledgments\nToday’s slides are based on student presentations from 2019 by: Yuwei Chen, Jienan Yao, and Jason Rebello as well as from YouTube recordings of lectures from Gregor Schöner, for his Autonomous Robotics course:\nhttps://www.youtube.com/watch?v=IV8Eze9Hxrc&ab_channel=Dynamicfieldtheory"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#section-7",
+    "href": "lecs/w04/lec04.html#section-7",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "",
+    "text": "https://www.youtube.com/watch?v=IV8Eze9Hxrc"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#todays-agenda-4",
+    "href": "lecs/w04/lec04.html#todays-agenda-4",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Today’s agenda",
+    "text": "Today’s agenda\n\n• Guided policy search (GPS)\n• Policy learning from adaptive MPC with privileged information (PLATO)\n• Combining behavioral cloning and RL\n• Dynamic movement primitives (DMPs)\n\n• Expert iteration & learning to search\n\n\nAcknowledgments\nToday’s slides are based on student presentations from 2019 by: Yuwei Chen, Jienan Yao, and Jason Rebello as well as from YouTube recordings of lectures from Gregor Schöner, for his Autonomous Robotics course:\nhttps://www.youtube.com/watch?v=IV8Eze9Hxrc&ab_channel=Dynamicfieldtheory"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#from-search-to-learning-and-back",
+    "href": "lecs/w04/lec04.html#from-search-to-learning-and-back",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "From Search to Learning and Back",
+    "text": "From Search to Learning and Back\n\n\n\nLogic Geometric Programming\nMarc Toussaint et al. IJCAI’15, RSS’17\nPDDLStream Planners\nCaelan Garret et al. ICAPS’20\nTAMP = SMT + Motion Planning\nNeil Dantam et al. IJRR’18\n. . .\n\n\\(-\\) Need to specify symbols / logic\n\\(-\\) Slow to plan, not very reactive\n\n\n\\(+\\) Generalize\n\\(+\\) No training data\n\n\n\n\nLearning to Guide TAMP\nBeomjoom Kim et al., AAAI’18\nPLOI\nTom Silver, Rohan Chitnis et al. AAAI’21\nDeep Visual Heuristics\nDanny Driess et al. ICRA’20\nLearning to Search for TAMP\nMohamed Khodeir et al. RAL’22, ICRA’23\nText2Motion\nChris Agia et al. ICRA’23\n\\(-\\) Need to specify symbols / logic\n\\(+\\) Can be made fast, reactive\n\n\\(+\\) Generalize\n\\(+\\) Few training data needed\n\n\n\n\nPaLM-E\nDanny Driess et al. ’23\nSayCan\nMichael Ahn et al. CoRL‘23\nRT-1\nAnthony Brohan et al. ’22\nDeep Affordance Foresight\nDanfei Xu et al. ICRA’21\nPlaNet, Dreamer, Hierarchical RL\nDanijar Hafner et al.\n\n\\(+\\) Symbols not needed\n\\(+\\) Fast, reactive\n\n\n\\(-\\) Do not generalize\n\\(-\\) Large data regime"
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#learning-to-plan-via-expert-iteration",
+    "href": "lecs/w04/lec04.html#learning-to-plan-via-expert-iteration",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Learning to Plan via Expert Iteration",
+    "text": "Learning to Plan via Expert Iteration\n\n\n\n\n\nIf we do multiple rounds of heuristic learning and tree search, we could potentially get:\n• monotonic improvement guarantees for the policy / planning heuristic\n• convergence to a point where tree search and the policy are equally good\n\n\nDual Policy Iteration. Sun, Gordon, Boots, Bagnell. NeurIPS’18.\nThinking Fast and Slow with Deep Learning and Tree Search. Anthony, Tian, Barber. NeurIPS’17.\nAlphaGo Zero: Mastering the Game of Go Without Human Knowledge. Silver, Schrittwieser, Simonyan, Antonoglou. Nature’17."
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#alphago-zero",
+    "href": "lecs/w04/lec04.html#alphago-zero",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "AlphaGo Zero",
+    "text": "AlphaGo Zero\n\n\n\n\n\n\nAlphaGo Zero: Mastering the Game of Go Without Human Knowledge. Silver, Schrittwieser, Simonyan, Antonoglou. Nature’17."
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#mcts-in-alphago-zero",
+    "href": "lecs/w04/lec04.html#mcts-in-alphago-zero",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "MCTS in AlphaGo Zero",
+    "text": "MCTS in AlphaGo Zero\n\nAlphaGo Zero: Mastering the Game of Go Without Human Knowledge. Silver, Schrittwieser, Simonyan, Antonoglou. Nature’17."
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#section-8",
+    "href": "lecs/w04/lec04.html#section-8",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "",
+    "text": "A policy optimization framework that includes\n\nGuided Policy Search\nExpert Iteration\nAlphaGo Zero\n“Thinking fast and slow”\nAggreVaTeD (a varianbt of DAgger)\n\nas special cases and provides conditions under which we expect monotonic improvement of the fast, reactive policy."
+  },
+  {
+    "objectID": "lecs/w04/lec04.html#section-10",
+    "href": "lecs/w04/lec04.html#section-10",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "",
+    "text": "\\[\n\\begin{array}{ll}\n\\text{1.} & \\text{Fit MLE } \\hat{P} \\text{ on states and actions from } d_{\\pi_n} \\pi_n \\text{ (Eq. 2).} \\\\\n\\text{2.} & \\eta_n \\leftarrow \\text{MBOC}(\\hat{P}), \\text{ subject to trust region } \\mathbb{E}_{s \\sim d_{\\pi_n}} D_{TV}(\\pi, \\pi_n) \\leq \\alpha \\text{ (Eq. 4)} \\\\\n\\text{3.} & \\boxed{\\text{Update to } \\pi_{n+1} \\text{ by imitating } \\eta_n, \\text{ subject to trust region } \\mathbb{E}_{s \\sim d_{\\pi_{\\eta}}} D_{TV}(\\pi, \\pi_n) \\leq \\beta \\text{ (Eq. 5)}}\n\\end{array}\n\\]\n\n\nMain difference with respect to Guided Policy Search\n\n\nGPS, including the mirror descent version, phrases the update procedure of the reactive policy as\na behavior cloning procedure, i.e., given an expert policy \\(\\eta\\), we perform \\(\\min_{\\pi} D_{KL}(d_{\\mu \\mu} \\,\\|\\, d_{\\pi \\pi})^3\\)\nNote that our approach to updating \\(\\pi\\) is fundamentally on-policy, i.e., we generate samples from \\(\\pi\\)."
   },
   {
     "objectID": "lecs/w01/lec01.html#todays-agenda",
