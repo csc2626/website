@@ -22,10 +22,10 @@ This page contains an outline of the topics, content, and assignments for the se
 |  |  | Monotonic improvement of the value function (optional) | 📖 | 🖥️ | 📋 |  |  |
 |  |  | Learning dynamics well only where it matters for the value function (optional) | 📖 | 🖥️ | 📋 | 📂 |  |
 |  |  | Parallelizing MPC on the GPU (optional) | 📖 | 🖥️ | 📋 |  |  |
-| [3](#week-3) | Mon, Sep 23 | Offline / batch reinforcement learning | 📖 | [🖥️](/lecs/w03/lec03.html){.no-style target="_blank" aria-label="Lec 3 slides"}  | 📋 | ✍️ |  |
+| [3](#week-3) | Mon, Sep 23 | Offline / batch reinforcement learning | 📖 | [🖥️](/lecs/w03/lec03.html){.no-style target="_blank" aria-label="Lec 3 slides"} | 📋 | ✍️ |  |
 |  |  | Transitioning from offline to online RL | 📖 | 🖥️ | 📋 |  |  |
 | [4](#week-4) | Mon, Sep 30 | Imitation learning combined with RL and planning | 📖 | 🖥️ | 📋 |  |  |
-|  |  | Making cost-to-go queries to experts | 📖 | 🖥️ | 📋 |  |  |
+|  |  | Making cost-to-go queries to experts | 📖 | [🖥️](/lecs/w04/lec04.html){.no-style target="_blank" aria-label="Lec 4 slides"} | 📋 |  |  |
 |  |  | Expert iteration | 📖 | 🖥️ | 📋 |  |  |
 |  |  | Imitation can improve search and exploration strategies | 📖 | 🖥️ | 📋 |  |  |
 |  |  | Learning from experts that have privileged information | 📖 | 🖥️ | 📋 | 📂 | ✍️ |
