@@ -30,7 +30,7 @@ This page contains an outline of the topics, content, and assignments for the se
 |  |  | Imitation can improve search and exploration strategies | 📖 | 🖥️ | 📋 |  |  |
 |  |  | Learning from experts that have privileged information | 📖 | 🖥️ | 📋 | 📂 | ✍️ |
 |  |  | Dynamic movement primitives | 📖 | 🖥️ | 📋 | 📂 | ✍️ |
-| [5](#week-5) | Mon, Oct 7 | Inverse reinforcement learning | 📖 | 🖥️ | 📋 |  |  |
+| [5](#week-5) | Mon, Oct 7 | Inverse reinforcement learning | 📖 | [🖥️](/lecs/w05/lec05.html){.no-style target="_blank" aria-label="Lec 5 slides"} | 📋 |  |  |
 |  |  | Inferring rewards from preferences | 📖 | 🖥️ | 📋 |  |  |
 |  |  | Task specification and human-robot dialog | 📖 | 🖥️ | 📋 |  |  |
 |  |  | Value alignment | 📖 | 🖥️ | 📋 |  |  |
