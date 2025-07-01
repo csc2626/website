@@ -37,7 +37,7 @@ This page contains an outline of the topics, content, and assignments for the se
 | [6](#week-6) | Mon, Oct 14 | Thanksgiving Monday |  |  |  |  | 📂 |
 |  |  | No in-person lecture or office hours on Monday |  |  |  |  |  |
 |  |  | TA office hours are on |  |  |  |  |  |
-| [7](#week-7) | Mon, Oct 21 | Imitation as program induction | 📖 | 🖥️ | 📋 |  |  |
+| [7](#week-7) | Mon, Oct 21 | Imitation as program induction | 📖 | [🖥️](/lecs/w07/lec07.html){.no-style target="_blank" aria-label="Lec 7 slides"} | 📋 |  |  |
 |  |  | Modular decomposition of demonstrations into skills | 📖 | 🖥️ | 📋 |  |  |
 |  |  | (Hierarchical) imitation of multi-goal tasks | 📖 | 🖥️ | 📋 |  |  |
 |  |  | Inferring grammars and planning domains | 📖 | 🖥️ | 📋 |  |  |
