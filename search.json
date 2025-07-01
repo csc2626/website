@@ -9951,11 +9951,193 @@
     "text": "LQR examples: code to replicate these results\n• https://github.com/florianshkurti/comp417.git\n• Look under comp417/lqr_examples/python"
   },
   {
-    "objectID": "lecs/w09/lec09.html",
-    "href": "lecs/w09/lec09.html",
-    "title": "CSC2626 - Fall 2024",
+    "objectID": "lecs/w09/lec09.html#todays-agenda",
+    "href": "lecs/w09/lec09.html#todays-agenda",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Today’s agenda",
+    "text": "Today’s agenda\n• Adversarial optimization for imitation learning (GAIL)\n• Adversarial optimization with multiple inferred behaviors (InfoGAIL)\n• Model based adversarial optimization (MGAIL)\n• Multi-agent imitation learning\n\n\nAcknowledgments\nToday’s slides are based on student presentations from 2019 by: Yeming Wen, Yin-Hung Chen , and Yuwen Xiong"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#detour-solving-mdps-via-linear-programming",
+    "href": "lecs/w09/lec09.html#detour-solving-mdps-via-linear-programming",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Detour: solving MDPs via linear programming",
+    "text": "Detour: solving MDPs via linear programming\n\\(\\underset{v}{\\arg\\min} \\quad \\underset{s \\in S}{\\sum} d_s v_s\\)\n\\(\\text{subject to:} \\quad v_s \\geq r_{s,a} + \\gamma \\underset{s' \\in S}{\\sum} T_{s,a}^{s'} v_{s'} \\quad \\forall s \\in S, a \\in A\\)\n\\(\\qquad \\qquad \\quad d\\) is the initial state distribution.\n\n\nOptimal policy\n\\(\\pi^*(s) = \\underset{a \\in A}{\\text{argmax}} Q^*(s, a)\\)"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#detour-solving-mdps-via-linear-programming-1",
+    "href": "lecs/w09/lec09.html#detour-solving-mdps-via-linear-programming-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Detour: solving MDPs via linear programming",
+    "text": "Detour: solving MDPs via linear programming\n\\(\\underset{\\mu}{\\text{argmax}} \\underset{s \\in S, a \\in A}{\\sum} \\mu_{s,a} r_{s,a}\\)\n\\(\\text{subject to} \\quad \\underset{a \\in A}{sum} \\mu_{s',a} = d_{s'} + \\gamma \\underset{s \\in S, a \\in A}{\\sum} T_{s,a}^{s'} \\mu_{s,a} \\quad \\forall s' \\in S\\)\n\\(\\qquad \\qquad \\quad \\mu_{s,a} \\geq 0\\)\n\n\nDiscounted state action counts / occupancy measure\n\\(\\mu(s,a) = \\underset{t=0}{\\sum}^{\\infty} \\gamma^t p(s_t = s, a_t = a)\\)\nOptimal policy\n\\(\\pi^*(s) = \\underset{a \\in A}{\\text{argmax}} \\, \\mu(s,a)\\)"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#detour-solving-mdps-via-linear-programming-2",
+    "href": "lecs/w09/lec09.html#detour-solving-mdps-via-linear-programming-2",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Detour: solving MDPs via linear programming",
+    "text": "Detour: solving MDPs via linear programming\n\n\n\\(\\underset{v}{\\text{argmin}} \\underset{s \\in S}{\\sum} d_s v_s\\)\n\\(\\text{subject to} \\quad v_s \\geq r_{s,a} + \\gamma \\underset{s' \\in S}{\\sum} T_{s,a}^{s'} v_{s'} \\quad \\forall s \\in S, a \\in A\\)\n\\(\\qquad \\qquad \\quad d\\) is the initial state distribution\n\n\\(\\underset{\\mu}{\\text{argmax}} \\underset{s \\in S, a \\in A}{\\sum} \\mu_{s,a} r_{s,a}\\)\n\\(\\text{subject to} \\quad \\underset{a \\in A}{\\sum} \\mu_{s',a} = d_{s'} + \\underset{s \\in S, a \\in A}{\\sum} T_{s,a}^{s'} \\mu_{s,a} \\quad \\forall s' \\in S\\)\n\\(\\qquad \\qquad \\quad \\mu_{s,a} \\geq 0\\)\n\nPrimal LP\n\n\nDual LP"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#section-4",
+    "href": "lecs/w09/lec09.html#section-4",
+    "title": "CSC2626 Imitation Learning for Robotics",
     "section": "",
-    "text": "CSC2626 Imitation Learning for Robotics\nFlorian Shkurti\nWeek 9: Adversarial Imitation Learning\n\fToday’s agenda\n• Adversarial optimization for imitation learning (GAIL) • Adversarial optimization with multiple inferred behaviors (InfoGAIL) • Model based adversarial optimization (MGAIL) • Multi-agent imitation learning\nAcknowledgments Today’s slides are based on student presentations from 2019 by: Yeming Wen, Yin-Hung Chen , and Yuwen Xiong\n\fDetour: solving MDPs via linear programming\nOptimal policy\n\fDetour: solving MDPs via linear programming\nDiscounted state action counts / occupancy measure\nOptimal policy\n\fDetour: solving MDPs via linear programming\nPrimal LP\nDual LP\n\f\f\f\f\fThere is a nice visualization of convex conjugate at https://remilepriol.github.io/dualityviz/\n\f\f\f\f\f\f\f\f\fToday’s agenda\n• Adversarial optimization for imitation learning (GAIL) • Adversarial optimization with multiple inferred behaviors (InfoGAIL) • Model based adversarial optimization (MGAIL) • Multi-agent imitation learning\nAcknowledgments Today’s slides are based on student presentations from 2019 by: Yeming Wen, Yin-Hung Chen , and Yuwen Xiong\n\fInfoGAIL: Interpretable Imitation Learning from Visual Demonstrations\nPresenter: Yin-Hung Chen\n\fMotivation\n\fGAIL\nA generator producing a policy 𝜋 competes with a discriminator distinguishing 𝜋 and the expert.\nEnvironment\nAgent\nPolicy\nGenerator\nPolicy 𝜋(𝑎|𝑠)\nTrajectories\nExpert Data\nCost\nDiscriminator D\nBinary Classifier\n\fDrawbacks of GAIL\n• Expert demonstrations can show significant variability.\n• The observations might have been sampled from different experts\nwith different skills and habits.\n• External latent factors of variation are not explicitly captured by GAIL, but they can significantly affect the observed behaviors.\n\fInfoGAIL\n\fModified GAIL\nEnvironment\nAgent\nPolicy\nTrajectories\nExpert Data\nLatent Feature c\nGenerator\nPolicy 𝝅(𝒂|𝒔, 𝒄)\nfrom a known distribution 𝑐~𝑝(𝑐)\nCost\nDiscriminator D\nBinary Classifier\n\fObjective Function\nGAIL:\nmin 𝜋\nmax 𝐷∈(0,1)𝒮×𝒜\n𝔼𝜋 𝑙𝑜𝑔𝐷 𝑠, 𝑎 + 𝔼𝜋𝐸 𝑙𝑜𝑔 1 − 𝐷 𝑠, 𝑎 − 𝜆𝐻(𝜋)\nwhere 𝜋 is learner policy, and 𝜋𝐸 is expert policy.\nInfoGAIL:\n• Discriminator: same with GAIL • Generator: simply introducing latent factor c into 𝜋 → 𝜋 𝑎 𝑠, 𝑐\nHowever, applying GAIL to 𝜋 𝑎 𝑠, 𝑐 could simply ignore c and fail to separate different expert behaviors → adding more constraints over c\n\fConstraints over Latent Features\nThere should be high mutual information between the latent factor c and learner trajectory 𝜏.\n𝐼 𝑐; 𝜏 = ෍ 𝜏\n𝑝(𝜏) ෍ 𝑐\n𝑝(𝑐|𝜏)𝑙𝑜𝑔2\n𝑝(𝑐|𝜏) 𝑝(𝑐)\nIndependence between c and trajectory tau:\n𝑝 𝑐 𝜏 =\n𝑝(𝑐)𝑝(𝜏) 𝑝(𝜏)\n,\n𝑝(𝑐|𝜏) 𝑝(𝑐)\n= 1,\n𝑙𝑜𝑔2\n𝑝(𝑐|𝜏) 𝑝(𝑐)\n= 0\nMaximizing mutual information 𝐼(𝑐; 𝜏) → hard to maximize directly as it requires the posterior 𝑃(𝑐|𝜏) → using 𝑄(𝑐|𝜏) to estimate 𝑃(𝑐|𝜏)\n\fConstraints over Latent Features\nIntroducing the lower bound 𝐿𝐼(𝜋, 𝑄) of 𝐼 𝑐; 𝜏\n𝐼 𝑐; 𝜏 = 𝐻 𝑐 − 𝐻 𝑐 𝜏 = 𝔼𝑎~𝜋(∙|𝑠,𝑐) 𝔼𝑐′~𝑃 𝑐 𝜏 𝑙𝑜𝑔𝑃 𝑐′ 𝜏 + 𝐻 𝑐 = 𝔼𝑎~𝜋(∙|𝑠,𝑐) 𝐷𝐾𝐿 𝑃 ∙ 𝜏 ∥ 𝑄 ∙ 𝜏 + 𝔼𝑐′~𝑃 𝑐 𝜏 𝑙𝑜𝑔𝑄 𝑐′ 𝜏 + 𝐻 𝑐 ≥ 𝔼𝑎~𝜋 ∙ 𝑠, 𝑐 𝔼𝑐′~𝑃 𝑐 𝜏 𝑙𝑜𝑔𝑄 𝑐′ 𝜏 + 𝐻 𝑐 = 𝔼𝑐~𝑃 𝑐 ,𝑎~𝜋 ∙ 𝑠, 𝑐 𝑙𝑜𝑔𝑄 𝑐 𝜏 + 𝐻 𝑐 = 𝐿𝐼(𝜋, 𝑄)\n\fConstraints over Latent Features\nThere should be high mutual information between the latent factor c and learner trajectory 𝜏.\nMaximizing mutual information 𝐼(𝑐; 𝜏) → hard to maximize directly as it requires the posterior 𝑃(𝑐|𝜏) → using 𝑄(𝑐|𝜏) to estimate 𝑃(𝑐|𝜏)\nMaximizing 𝐼(𝑐; 𝜏) through maximize the lower bound 𝐿𝐼(𝜋, 𝑄)\n\fObjective Function\nGAIL:\nmin 𝜋\nmax 𝐷∈(0,1)𝒮×𝒜\n𝔼𝜋 𝑙𝑜𝑔𝐷 𝑠, 𝑎 + 𝔼𝜋𝐸 log 1 − 𝐷 𝑠, 𝑎 − 𝜆𝐻(𝜋)\nwhere 𝜋 is learner policy, and 𝜋𝐸 is expert policy.\nInfoGAIL:\nmin 𝜋,𝑄\nmax 𝐷\n𝔼𝜋 𝑙𝑜𝑔𝐷 𝑠, 𝑎 + 𝔼𝜋𝐸 log 1 − 𝐷 𝑠, 𝑎 − 𝜆1𝐿𝐼 𝜋, 𝑄 − 𝜆2𝐻(𝜋)\nwhere 𝜆1 &gt; 0 and 𝜆2 &gt; 0.\n\fInfoGAIL\nEnvironment\nAgent\nPolicy\nTrajectories\nExpert Data\nLatent Feature c\nGenerator\nPolicy 𝜋(𝑎|𝑠, 𝑐)\nfrom a known distribution 𝑐~𝑝(𝑐)\nCost\nDiscriminator D\nBinary Classifier\nPosterior Approximato r 𝑄(𝑐|𝜏)\n\f\fAdditional Optimization\n\fImproved Optimization\nThe traditional GAN objective suffers from vanishing gradient and mode collapse problems. Vanishing gradient\n𝜕𝐶 𝜕𝑏1\n=\n=\n𝜕𝐶 𝜕𝑦3\n𝜕𝑧3 𝜕𝑥3\n𝜕𝑥3 𝜕𝑧2\n𝜕𝑦3 𝜕𝑧3\n𝜕𝑥2 𝜕𝐶 𝜕𝑧1 𝜕𝑦3 𝜎′(𝑧3)𝑤3𝜎′(𝑧2)𝑤2𝜎′(𝑧1)\n𝜕𝑧2 𝜕𝑥2\n𝜕𝑧1 𝜕𝑏1\nb1\nw2\nb2\nw3\nb3\nC\n\fImproved Optimization\nThe traditional GAN objective suffers from vanishing gradient and mode collapse problems.\nMode collapse: generator tends to produce the same type of data → generator yields the same G(z) for different z\n\fImproved Optimization\nThe traditional GAN objective suffers from vanishing gradient and mode collapse problems.\n→ using the Wasserstein GAN (WGAN)\nmin 𝜃,𝜓\nmax 𝜔\n𝔼𝜋𝜃 𝐷𝜔 𝑠, 𝑎 − 𝔼𝜋𝐸[𝐷𝜔 𝑠, 𝑎 ] − 𝜆0𝜂(𝜋𝜃 ) − 𝜆1𝐿𝐼 𝜋𝜃, 𝑄𝜓 − 𝜆2𝐻(𝜋𝜃)\n\f\fExperiments\n\fLearning to Distinguish Trajectories\n• The observations at time t are positions from t − 4 to t. • The latent code is a one-hot encoded vector with 3\ndimensions and a uniform prior.\n\fSelf-driving car in the TORCS Environment\n• The demonstrations collected by manually driving • Three-dimensional continuous action composed of steering, acceleration,\nand braking\n• Raw visual inputs as the only external inputs for the state • Auxiliary information as internal input, including velocity at time t, actions\nat time t − 1 and t − 2, and damage of the car\n• Pre-trained ResNet on ImageNet\n\f\fPerformance\nTurn [0, 1] corresponds to using the inside lane (blue lines), while [1, 0] corresponds to the outside lane (red lines).\n\fPerformance\nPass [0, 1] corresponds to passing from right (red lines), while [1, 0] corresponds to passing from left (blue lines).\nInfoGAIL\nGAIL\n\fPerformance\n• Classification accuracies of 𝑄(𝑐|𝜏) • Reward augmentation encouraging the car to drive faster\n\f\fToday’s agenda\n• Adversarial optimization for imitation learning (GAIL) • Adversarial optimization with multiple inferred behaviors (InfoGAIL) • Model based adversarial optimization (MGAIL) • Multi-agent imitation learning\nAcknowledgments Today’s slides are based on student presentations from 2019 by: Yeming Wen, Yin-Hung Chen , and Yuwen Xiong\n\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\f\fToday’s agenda\n• Adversarial optimization for imitation learning (GAIL) • Adversarial optimization with multiple inferred behaviors (InfoGAIL) • Model based adversarial optimization (MGAIL) • Multi-agent imitation learning\nAcknowledgments Today’s slides are based on student presentations from 2019 by: Yeming Wen, Yin-Hung Chen , and Yuwen Xiong"
+    "text": "There is a nice visualization of convex conjugate at https://remilepriol.github.io/dualityviz/"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#todays-agenda-1",
+    "href": "lecs/w09/lec09.html#todays-agenda-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Today’s agenda",
+    "text": "Today’s agenda\n\n• Adversarial optimization for imitation learning (GAIL)\n\n• Adversarial optimization with multiple inferred behaviors (InfoGAIL)\n• Model based adversarial optimization (MGAIL)\n• Multi-agent imitation learning\n\n\nAcknowledgments\nToday’s slides are based on student presentations from 2019 by: Yeming Wen, Yin-Hung Chen , and Yuwen Xiong"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#infogail-interpretable-imitation-learning-from-visual-demonstrations",
+    "href": "lecs/w09/lec09.html#infogail-interpretable-imitation-learning-from-visual-demonstrations",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "InfoGAIL: Interpretable Imitation Learning from Visual Demonstrations",
+    "text": "InfoGAIL: Interpretable Imitation Learning from Visual Demonstrations\nPresenter: Yin-Hung Chen"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#gail",
+    "href": "lecs/w09/lec09.html#gail",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "GAIL",
+    "text": "GAIL\nA generator producing a policy 𝜋 competes with a discriminator distinguishing 𝜋 and the expert."
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#drawbacks-of-gail",
+    "href": "lecs/w09/lec09.html#drawbacks-of-gail",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Drawbacks of GAIL",
+    "text": "Drawbacks of GAIL\n\nExpert demonstrations can show significant variability.\nThe observations might have been sampled from different experts with different skills and habits.\nExternal latent factors of variation are not explicitly captured by GAIL, but they can significantly affect the observed behaviors."
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#modified-gail",
+    "href": "lecs/w09/lec09.html#modified-gail",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Modified GAIL",
+    "text": "Modified GAIL"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#objective-function",
+    "href": "lecs/w09/lec09.html#objective-function",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Objective Function",
+    "text": "Objective Function\nGAIL: \\[\n\\underset{\\pi}{\\min} \\underset{𝐷\\in(0,1)^{S×A}}{\\max} + 𝔼_{𝜋_𝐸}  [ 𝑙𝑜𝑔(1 − 𝐷(𝑠, a))] − 𝜆𝐻(𝜋)\n\\]\nwhere 𝜋 is learner policy, and \\(𝜋_𝐸\\) is expert policy.\nInfoGAIL:\n\nDiscriminator: same with GAIL\nGenerator: simply introducing latent factor c into 𝜋 → 𝜋 𝑎 𝑠, 𝑐\nHowever, applying GAIL to 𝜋(𝑎 | 𝑠, 𝑐) could simply ignore c and fail to separate different expert behaviors → adding more constraints over c"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#constraints-over-latent-features",
+    "href": "lecs/w09/lec09.html#constraints-over-latent-features",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Constraints over Latent Features",
+    "text": "Constraints over Latent Features\nThere should be high mutual information between the latent factor c and learner trajectory τ.\n\\[\nI(c; \\tau) = \\sum_{\\tau} p(\\tau) \\sum_c p(c|\\tau) \\log_2 \\frac{p(c|\\tau)}{p(c)}\n\\]\nIndependence between c and trajectory τ:\n\\[\np(c|\\tau) = \\frac{p(c)p(\\tau)}{p(\\tau)}, \\quad \\frac{p(c|\\tau)}{p(c)} = 1, \\quad \\log_2 \\frac{p(c|\\tau)}{p(c)} = 0\n\\]\nMaximizing mutual information \\(I(c; \\tau)\\)\n→ hard to maximize directly as it requires the posterior \\(P(c|\\tau)\\)\n→ using \\(Q(c|\\tau)\\) to estimate \\(P(c|\\tau)\\) There should be high mutual information between the latent factor c and learner trajectory 𝜏."
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#constraints-over-latent-features-1",
+    "href": "lecs/w09/lec09.html#constraints-over-latent-features-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Constraints over Latent Features",
+    "text": "Constraints over Latent Features\nIntroducing the lower bound \\(L_I(\\pi, Q)\\) of \\(I(c; \\tau)\\)\n\\[\n\\begin{align}\n& I(c; \\tau) \\\\\n&= H(c) - H(c|\\tau) \\\\\n&= \\mathbb{E}_{a \\sim \\pi(\\cdot|s,c)} \\left[ \\mathbb{E}_{c' \\sim P(c|\\tau)} [log P(c'|\\tau)] \\right] + H(c) \\\\\n&= \\mathbb{E}_{a \\sim \\pi(\\cdot|s,c)} \\left[ D_{KL}(P(\\cdot|\\tau) \\| Q(\\cdot|\\tau)) + \\mathbb{E}_{c' \\sim P(c|\\tau)} [log Q(c'|\\tau)] \\right] + H(c) \\\\\n&\\geq \\mathbb{E}_{a \\sim \\pi(\\cdot|s,c)} \\left[ \\mathbb{E}_{c' \\sim P(c|\\tau)} [log Q(c'|\\tau)] \\right] + H(c) \\\\\n&= \\mathbb{E}_{c \\sim P(c), a \\sim \\pi(\\cdot|s,c)} [log Q(c|\\tau)] + H(c) \\\\\n&= L_I(\\pi, Q)\n\\end{align}\n\\]"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#constraints-over-latent-features-2",
+    "href": "lecs/w09/lec09.html#constraints-over-latent-features-2",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Constraints over Latent Features",
+    "text": "Constraints over Latent Features\nThere should be high mutual information between the latent factor c and learner trajectory 𝜏.\n\nMaximizing mutual information 𝐼(𝑐; 𝜏)\n→ hard to maximize directly as it requires the posterior 𝑃(𝑐|𝜏)\n→ using 𝑄(𝑐|𝜏) to estimate 𝑃(𝑐|𝜏)\n\nMaximizing 𝐼(𝑐; 𝜏) through maximize the lower bound 𝐿𝐼(𝜋, 𝑄)"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#objective-function-1",
+    "href": "lecs/w09/lec09.html#objective-function-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Objective Function",
+    "text": "Objective Function\nGAIL:\n\\[\n\\min_\\pi \\max_{D \\in (0,1)^{S \\times A}} \\mathbb{E}_\\pi [log D(s, a)] + \\mathbb{E}_{\\pi_E} [log(1 - D(s, a))] - \\lambda H(\\pi)\n\\]\nwhere \\(\\pi\\) is learner policy, and \\(\\pi_E\\) is expert policy.\n\nInfoGAIL:\n\\[\n\\min_{\\pi,Q} \\max_D \\mathbb{E}_\\pi [log D(s, a)] + \\mathbb{E}_{\\pi_E} [log(1 - D(s, a))] - \\lambda_1 L_I(\\pi, Q) - \\lambda_2 H(\\pi)\n\\]\n\\(\\qquad \\qquad \\qquad \\qquad \\qquad \\qquad\\) where \\(\\lambda_1 &gt; 0\\) and \\(\\lambda_2 &gt; 0\\)."
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#infogail-1",
+    "href": "lecs/w09/lec09.html#infogail-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "InfoGAIL",
+    "text": "InfoGAIL"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#improved-optimization",
+    "href": "lecs/w09/lec09.html#improved-optimization",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Improved Optimization",
+    "text": "Improved Optimization\nThe traditional GAN objective suffers from vanishing gradient and mode collapse problems.\nVanishing gradient\n\n\n\\[\n\\frac{\\partial C}{\\partial b_1} = \\frac{\\partial C}{\\partial y_3} \\frac{\\partial y_3}{\\partial z_3} \\frac{\\partial z_3}{\\partial x_3} \\frac{\\partial x_3}{\\partial z_2} \\frac{\\partial z_2}{\\partial x_2} \\frac{\\partial x_2}{\\partial z_1} \\frac{\\partial z_1}{\\partial b_1}\n\\]\n\\[\n= \\frac{\\partial C}{\\partial y_{3}} \\sigma'(z_{3}) w_{3} \\sigma'(z_{2}) w_{2} \\sigma'(z_{1})\n\\]"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#improved-optimization-1",
+    "href": "lecs/w09/lec09.html#improved-optimization-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Improved Optimization",
+    "text": "Improved Optimization\nThe traditional GAN objective suffers from vanishing gradient and mode collapse problems.\n\nMode collapse: generator tends to produce the same type of data → generator yields the same G(z) for different z"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#improved-optimization-2",
+    "href": "lecs/w09/lec09.html#improved-optimization-2",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Improved Optimization",
+    "text": "Improved Optimization\nThe traditional GAN objective suffers from vanishing gradient and mode collapse problems.\n→ using the Wasserstein GAN (WGAN)\n\\[\n\\min_{\\theta, \\psi} \\max_{\\omega} \\mathbb{E}_{\\pi_\\theta}[D_\\omega(s, a)] - \\mathbb{E}_{\\pi_E}[D_\\omega(s, a)] - \\lambda_0 \\eta(\\pi_\\theta) - \\lambda_1 L_I(\\pi_\\theta, Q_\\psi) - \\lambda_2 H(\\pi_\\theta)\n\\]"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#learning-to-distinguish-trajectories",
+    "href": "lecs/w09/lec09.html#learning-to-distinguish-trajectories",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Learning to Distinguish Trajectories",
+    "text": "Learning to Distinguish Trajectories\n\nThe observations at time t are positions from t − 4 to t.\nThe latent code is a one-hot encoded vector with 3 dimensions and a uniform prior."
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#self-driving-car-in-the-torcs-environment",
+    "href": "lecs/w09/lec09.html#self-driving-car-in-the-torcs-environment",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Self-driving car in the TORCS Environment",
+    "text": "Self-driving car in the TORCS Environment\n• The demonstrations collected by manually driving\n• Three-dimensional continuous action composed of steering, acceleration,and braking\n• Raw visual inputs as the only external inputs for the state\n• Auxiliary information as internal input, including velocity at time t, actions at time t − 1 and t − 2, and damage of the car\n• Pre-trained ResNet on ImageNet"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#performance",
+    "href": "lecs/w09/lec09.html#performance",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Performance",
+    "text": "Performance\nTurn\n[0, 1] corresponds to using the inside lane (blue lines), while [1, 0] corresponds to the outside lane (red lines)."
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#performance-1",
+    "href": "lecs/w09/lec09.html#performance-1",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Performance",
+    "text": "Performance\nPass\n[0, 1] corresponds to passing from right (red lines), while [1, 0] corresponds to passing from left (blue lines).\n\n\ninfoGAIL\nGAIL"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#performance-2",
+    "href": "lecs/w09/lec09.html#performance-2",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Performance",
+    "text": "Performance\n• Classification accuracies of 𝑄(𝑐|𝜏)\n• Reward augmentation encouraging the car to drive faster"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#section-16",
+    "href": "lecs/w09/lec09.html#section-16",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "",
+    "text": "https://www.youtube.com/watch?v=YtNPBAW6h5k"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#todays-agenda-2",
+    "href": "lecs/w09/lec09.html#todays-agenda-2",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Today’s agenda",
+    "text": "Today’s agenda\n\n• Adversarial optimization for imitation learning (GAIL)\n• Adversarial optimization with multiple inferred behaviors (InfoGAIL)\n\n• Model based adversarial optimization (MGAIL)\n• Multi-agent imitation learning\n\n\nAcknowledgments\nToday’s slides are based on student presentations from 2019 by: Yeming Wen, Yin-Hung Chen , and Yuwen Xiong"
+  },
+  {
+    "objectID": "lecs/w09/lec09.html#todays-agenda-3",
+    "href": "lecs/w09/lec09.html#todays-agenda-3",
+    "title": "CSC2626 Imitation Learning for Robotics",
+    "section": "Today’s agenda",
+    "text": "Today’s agenda\n\n• Adversarial optimization for imitation learning (GAIL)\n• Adversarial optimization with multiple inferred behaviors (InfoGAIL)\n• Model based adversarial optimization (MGAIL)\n\n• Multi-agent imitation learning\n\n\n\n\nAcknowledgments\nToday’s slides are based on student presentations from 2019 by: Yeming Wen, Yin-Hung Chen , and Yuwen Xiong"
   },
   {
     "objectID": "lecs/test.html#columns",
