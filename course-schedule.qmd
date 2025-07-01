@@ -44,7 +44,7 @@ This page contains an outline of the topics, content, and assignments for the se
 | [8](#week-8) | Mon, Oct 28 | Fall Reading Week |  |  |  |  |  |
 |  |  | No lecture |  |  |  |  |  |
 |  |  | No office hours |  |  |  |  |  |
-| [9](#week-9) | Mon, Nov 4 | Adversarial imitation learning | 📖 | 🖥️ | 📋 |  |  |
+| [9](#week-9) | Mon, Nov 4 | Adversarial imitation learning | 📖 | [🖥️](/lecs/w09/lec09.html){.no-style target="_blank" aria-label="Lec 9 slides"} | 📋 |  |  |
 | [10](#week-10) | Mon, Nov 11 | Shared autonomy | 📖 | 🖥️ | 📋 |  |  |
 |  |  | Imitation with a human in the loop | 📖 | 🖥️ | 📋 |  |  |
 |  |  | Teleoperation | 📖 | 🖥️ | 📋 |  |  |

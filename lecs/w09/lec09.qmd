@@ -1,0 +1,505 @@
+---
+title: "CSC2626 Imitation Learning for Robotics"
+subtitle: "Week 9: Adversarial Imitation Learning"
+author: "Florian Shkurti"
+format:
+    revealjs:
+        slide-number: true
+        embed-resources: false
+        show-notes: false
+        smaller: true
+        footer: '<a href="https://csc2626.github.io/website/" target="_blank">↩ Back to Course Website</a>'
+        chalkboard:
+            src: chalkboard.json
+            buttons: true
+            boardmarker-width: 2
+            chalk-width: 2
+            chalk-effect: 1.0
+        css: ../style.css
+html-math-method:
+    method: mathjax
+    url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+---
+
+## Today’s agenda
+
+• Adversarial optimization for imitation learning (GAIL) 
+
+• Adversarial optimization with multiple inferred behaviors (InfoGAIL) 
+
+• Model based adversarial optimization (MGAIL) 
+
+• Multi-agent imitation learning
+
+::: aside
+Acknowledgments \
+Today’s slides are based on student presentations from 2019 by: Yeming Wen, Yin-Hung Chen , and Yuwen Xiong
+:::
+
+
+## Detour: solving MDPs via linear programming
+
+$\underset{v}{\arg\min} \quad \underset{s \in S}{\sum} d_s v_s$
+
+$\text{subject to:} \quad v_s \geq r_{s,a} + \gamma \underset{s' \in S}{\sum} T_{s,a}^{s'} v_{s'} \quad \forall s \in S, a \in A$
+
+$\qquad \qquad \quad d$ is the initial state distribution.
+
+<br><br>
+
+:::{.right-align}
+Optimal policy
+
+$\pi^*(s) = \underset{a \in A}{\text{argmax}} Q^*(s, a)$
+:::
+
+## Detour: solving MDPs via linear programming
+
+$\underset{\mu}{\text{argmax}} \underset{s \in S, a \in A}{\sum} \mu_{s,a} r_{s,a}$
+
+$\text{subject to} \quad \underset{a \in A}{sum} \mu_{s',a} = d_{s'} + \gamma \underset{s \in S, a \in A}{\sum} T_{s,a}^{s'} \mu_{s,a} \quad \forall s' \in S$
+
+$\qquad \qquad \quad \mu_{s,a} \geq 0$
+
+<br>
+
+:::{.right-align}
+
+Discounted state action counts / occupancy measure
+
+$\mu(s,a) = \underset{t=0}{\sum}^{\infty} \gamma^t p(s_t = s, a_t = a)$
+
+Optimal policy
+
+$\pi^*(s) = \underset{a \in A}{\text{argmax}} \, \mu(s,a)$
+:::
+
+## Detour: solving MDPs via linear programming
+
+::: {.columns}
+:::: {.column width="85%"}
+
+$\underset{v}{\text{argmin}} \underset{s \in S}{\sum} d_s v_s$
+
+$\text{subject to} \quad v_s \geq r_{s,a} + \gamma \underset{s' \in S}{\sum} T_{s,a}^{s'} v_{s'} \quad \forall s \in S, a \in A$
+
+$\qquad \qquad \quad d$ is the initial state distribution
+
+<br><br>
+
+$\underset{\mu}{\text{argmax}} \underset{s \in S, a \in A}{\sum} \mu_{s,a} r_{s,a}$
+
+$\text{subject to} \quad \underset{a \in A}{\sum} \mu_{s',a} = d_{s'} + \underset{s \in S, a \in A}{\sum} T_{s,a}^{s'} \mu_{s,a} \quad \forall s' \in S$
+
+$\qquad \qquad \quad \mu_{s,a} \geq 0$
+
+::::
+
+:::: {.column width="15%"}
+Primal LP
+
+<br><br><br><br>
+
+<br>
+
+Dual LP
+::::
+::: 
+
+
+##
+![](images/background.jpg){fig-align="center"}
+
+##
+![](images/formulation.jpg){fig-align="center"}
+
+##
+![](images/derivation.jpg){fig-align="center"}
+
+##
+![](images/derivation2.jpg){fig-align="center"}
+
+##
+![](images/convex-conjugate.jpg){fig-align="center"}
+
+:::{.small-math}
+There is a nice visualization of convex conjugate at <https://remilepriol.github.io/dualityviz/>
+:::
+
+##
+![](images/derivation3.jpg){fig-align="center"}
+
+##
+![](images/occupancy.jpg){fig-align="center"}
+
+##
+![](images/apprenticeship.jpg){fig-align="center"}
+
+##
+![](images/gail.jpg){fig-align="center"}
+
+##
+![](images/gail-2.jpg){fig-align="center"}
+
+##
+![](images/gail3.jpg){fig-align="center"}
+
+##
+![](images/algo.jpg){fig-align="center"}
+
+##
+![](images/results.jpg){fig-align="center"}
+
+
+## Today’s agenda
+
+:::{.grey-text}
+• Adversarial optimization for imitation learning (GAIL) 
+:::
+
+• Adversarial optimization with multiple inferred behaviors (InfoGAIL) 
+
+• Model based adversarial optimization (MGAIL) 
+
+• Multi-agent imitation learning
+
+::: aside
+Acknowledgments \
+Today’s slides are based on student presentations from 2019 by: Yeming Wen, Yin-Hung Chen , and Yuwen Xiong
+:::
+
+## InfoGAIL: Interpretable Imitation Learning from Visual Demonstrations {.center}
+
+Presenter: Yin-Hung Chen
+
+# Motivation
+
+## GAIL
+
+A generator producing a policy 𝜋 competes with a discriminator distinguishing 𝜋 and the expert.
+
+![](images/gail-diagram.png)
+
+## Drawbacks of GAIL
+
+* Expert demonstrations can show significant **variability**.
+
+* The observations might have been sampled from **different experts with different skills and habits**.
+
+* **External latent factors** of variation are not explicitly captured by GAIL, but they can significantly affect the observed behaviors.
+
+# InfoGAIL
+
+## Modified GAIL
+
+![](images/modified-gail.png)
+
+## Objective Function
+
+GAIL:
+$$
+\underset{\pi}{\min} \underset{𝐷\in(0,1)^{S×A}}{\max} + 𝔼_{𝜋_𝐸}  [ 𝑙𝑜𝑔(1 − 𝐷(𝑠, a))] − 𝜆𝐻(𝜋)
+$$
+
+where 𝜋 is learner policy, and $𝜋_𝐸$ is expert policy.
+
+InfoGAIL:
+
+* Discriminator: same with GAIL 
+* Generator: simply introducing latent factor c into 𝜋 → 𝜋 𝑎 𝑠, 𝑐 \
+[However, applying GAIL to 𝜋(𝑎 | 𝑠, 𝑐) could simply ignore c and fail to separate different expert behaviors → **adding more constraints over c**]{.orange}
+
+## Constraints over Latent Features
+
+There should be high mutual information between the latent factor c and learner trajectory τ.
+
+$$
+I(c; \tau) = \sum_{\tau} p(\tau) \sum_c p(c|\tau) \log_2 \frac{p(c|\tau)}{p(c)}
+$$
+
+Independence between c and trajectory τ:
+
+$$
+p(c|\tau) = \frac{p(c)p(\tau)}{p(\tau)}, \quad \frac{p(c|\tau)}{p(c)} = 1, \quad \log_2 \frac{p(c|\tau)}{p(c)} = 0
+$$
+
+Maximizing mutual information $I(c; \tau)$  
+→ hard to maximize directly as it requires the posterior $P(c|\tau)$  
+→ using $Q(c|\tau)$ to estimate $P(c|\tau)$
+There should be high mutual information between the latent factor c and learner trajectory 𝜏.
+
+
+## Constraints over Latent Features
+
+Introducing the lower bound $L_I(\pi, Q)$ of $I(c; \tau)$
+
+$$
+\begin{align}
+& I(c; \tau) \\
+&= H(c) - H(c|\tau) \\
+&= \mathbb{E}_{a \sim \pi(\cdot|s,c)} \left[ \mathbb{E}_{c' \sim P(c|\tau)} [log P(c'|\tau)] \right] + H(c) \\
+&= \mathbb{E}_{a \sim \pi(\cdot|s,c)} \left[ D_{KL}(P(\cdot|\tau) \| Q(\cdot|\tau)) + \mathbb{E}_{c' \sim P(c|\tau)} [log Q(c'|\tau)] \right] + H(c) \\
+&\geq \mathbb{E}_{a \sim \pi(\cdot|s,c)} \left[ \mathbb{E}_{c' \sim P(c|\tau)} [log Q(c'|\tau)] \right] + H(c) \\
+&= \mathbb{E}_{c \sim P(c), a \sim \pi(\cdot|s,c)} [log Q(c|\tau)] + H(c) \\
+&= L_I(\pi, Q)
+\end{align}
+$$
+
+## Constraints over Latent Features
+
+There should be high mutual information between the latent factor c and learner trajectory 𝜏.
+
+<br>
+
+Maximizing mutual information 𝐼(𝑐; 𝜏) \
+→ hard to maximize directly as it requires the posterior 𝑃(𝑐\|𝜏) \
+→ using 𝑄(𝑐\|𝜏) to estimate 𝑃(𝑐\|𝜏)
+
+<br>
+
+Maximizing 𝐼(𝑐; 𝜏) through maximize the lower bound 𝐿𝐼(𝜋, 𝑄)
+
+## Objective Function
+
+GAIL:
+
+$$
+\min_\pi \max_{D \in (0,1)^{S \times A}} \mathbb{E}_\pi [log D(s, a)] + \mathbb{E}_{\pi_E} [log(1 - D(s, a))] - \lambda H(\pi)
+$$
+
+where $\pi$ is learner policy, and $\pi_E$ is expert policy.
+
+<br>
+
+InfoGAIL:
+
+$$
+\min_{\pi,Q} \max_D \mathbb{E}_\pi [log D(s, a)] + \mathbb{E}_{\pi_E} [log(1 - D(s, a))] - \lambda_1 L_I(\pi, Q) - \lambda_2 H(\pi)
+$$
+
+$\qquad \qquad \qquad \qquad \qquad \qquad$ where $\lambda_1 > 0$ and $\lambda_2 > 0$.
+
+## InfoGAIL
+
+![](images/infogail.png)
+
+## 
+![](images/algo-infogail.png)
+
+
+# Additional Optimization
+
+## Improved Optimization
+
+The traditional GAN objective suffers from vanishing gradient and mode collapse problems. \
+Vanishing gradient
+
+
+::: {.columns}
+:::: {.column width="40%"}
+
+$$
+\frac{\partial C}{\partial b_1} = \frac{\partial C}{\partial y_3} \frac{\partial y_3}{\partial z_3} \frac{\partial z_3}{\partial x_3} \frac{\partial x_3}{\partial z_2} \frac{\partial z_2}{\partial x_2} \frac{\partial x_2}{\partial z_1} \frac{\partial z_1}{\partial b_1}
+$$
+
+$$
+= \frac{\partial C}{\partial y_{3}} \sigma'(z_{3}) w_{3} \sigma'(z_{2}) w_{2} \sigma'(z_{1})
+$$
+
+
+![](images/improved-opt.png)
+
+::::
+
+:::: {.column width="60%"}
+![](images/sigmold-func.png){fig-align="right"}
+::::
+::: 
+
+
+## Improved Optimization
+
+The traditional GAN objective suffers from vanishing gradient and mode collapse problems.
+
+<br>
+
+Mode collapse: generator tends to produce the same type of data → generator yields the same G(z) for different z
+
+## Improved Optimization
+
+The traditional GAN objective suffers from vanishing gradient and mode collapse problems.
+
+→ using the Wasserstein GAN (WGAN)
+
+$$
+\min_{\theta, \psi} \max_{\omega} \mathbb{E}_{\pi_\theta}[D_\omega(s, a)] - \mathbb{E}_{\pi_E}[D_\omega(s, a)] - \lambda_0 \eta(\pi_\theta) - \lambda_1 L_I(\pi_\theta, Q_\psi) - \lambda_2 H(\pi_\theta)
+$$
+
+##
+![](images/infogail-algo2.png)
+
+# Experiments
+
+## Learning to Distinguish Trajectories
+
+* The observations at time t are positions from t − 4 to t. 
+* The latent code is a one-hot encoded vector with 3 dimensions and a uniform prior.
+
+![](images/trajectory-observation.png)
+
+## Self-driving car in the TORCS Environment
+
+• The demonstrations collected by manually driving 
+
+• Three-dimensional continuous action composed of steering, acceleration,and *braking*
+
+• Raw visual inputs as the only external inputs for the state 
+
+• Auxiliary information as internal input, including velocity at time t, actions at time t − 1 and t − 2, and damage of the car
+
+• Pre-trained ResNet on ImageNet
+
+![](images/self-drivingcar.png){fig-align="right"}
+
+## 
+
+![](images/torcs-env.png)
+
+
+## Performance
+
+**Turn** 
+
+\[0, 1\] corresponds to using the inside lane (blue lines), while \[1, 0\] corresponds to the outside lane (red lines).
+
+![](images/perf1.png)
+
+## Performance
+
+**Pass** 
+
+\[0, 1\] corresponds to passing from right (red lines), while \[1, 0\] corresponds to passing from left (blue lines).
+
+![](images/perf2.png)
+
+:::{.vertical-align}
+infoGAIL 
+
+GAIL
+:::
+
+## Performance
+
+• Classification accuracies of 𝑄(𝑐\|𝜏) 
+
+• Reward augmentation encouraging the car to drive faster
+
+![](images/perf-table.png)
+
+##
+
+{{< video https://www.youtube.com/watch?v=YtNPBAW6h5k width="100%" height="80%" >}}
+
+[<https://www.youtube.com/watch?v=YtNPBAW6h5k>]{.small-math}
+
+## Today’s agenda
+
+:::{.grey-text}
+• Adversarial optimization for imitation learning (GAIL) 
+
+• Adversarial optimization with multiple inferred behaviors (InfoGAIL)
+::: 
+
+• Model based adversarial optimization (MGAIL) 
+
+• Multi-agent imitation learning
+
+::: aside
+Acknowledgments \
+Today’s slides are based on student presentations from 2019 by: Yeming Wen, Yin-Hung Chen , and Yuwen Xiong
+:::
+
+##
+![](images/model-based.jpg){fig-align="center"}
+
+##
+![](images/recap-gailalgo.jpg){fig-align="center"}
+
+##
+![](images/motivation.jpg)
+
+##
+![](images/motivation2.jpg)
+
+##
+![](images/algo-overview.jpg)
+
+##
+![](images/algo-overview2.jpg)
+
+##
+![](images/algo-prep.jpg)
+
+##
+![](images/algo-prep2.jpg)
+
+##
+![](images/algo-prep3.jpg)
+
+##
+![](images/algo-prep4.jpg)
+
+##
+![](images/algo-prep5.jpg)
+
+##
+![](images/algo-prep6.jpg)
+
+##
+![](images/algo-prep7.jpg)
+
+##
+![](images/algo-prep8.jpg)
+
+##
+![](images/algo-reparameterization.jpg)
+
+##
+![](images/algo-reparameterization2.jpg)
+
+##
+![](images/algo-reparameterization3.jpg)
+
+##
+![](images/algorithm.jpg)
+
+##
+![](images/algorithm2.jpg)
+
+##
+![](images/algorithm3.jpg)
+
+##
+![](images/algorithm4.jpg)
+
+##
+![](images/experiments.jpg)
+
+
+
+## Today’s agenda
+
+:::{.grey-text}
+• Adversarial optimization for imitation learning (GAIL) 
+
+• Adversarial optimization with multiple inferred behaviors (InfoGAIL)
+
+• Model based adversarial optimization (MGAIL) 
+::: 
+
+• Multi-agent imitation learning
+
+::: aside
+Acknowledgments \
+Today’s slides are based on student presentations from 2019 by: Yeming Wen, Yin-Hung Chen , and Yuwen Xiong
+:::
