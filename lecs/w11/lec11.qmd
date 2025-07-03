@@ -1,0 +1,397 @@
+---
+title: "CSC2626 Imitation Learning for Robotics"
+subtitle: "Week 11: Learning from Videos"
+author: "Florian Shkurti"
+format:
+    revealjs:
+        slide-number: true
+        embed-resources: false
+        show-notes: false
+        smaller: true
+        footer: '<a href="https://csc2626.github.io/website/" target="_blank">↩ Back to Course Website</a>'
+        chalkboard:
+            src: chalkboard.json
+            buttons: true
+            boardmarker-width: 2
+            chalk-width: 2
+            chalk-effect: 1.0
+        css: ../style.css
+html-math-method:
+    method: mathjax
+    url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+---
+
+## Learning to act from videos
+
+:::{.medium}
+[• The argument]{.green}: we have billions of videos on the internet, many of which show how humans interact with objects. Let’s try to use these videos to teach robots how to act. A tantalizing possibility for scaling up robot learning.
+
+[• Problem #1]{.red}: Actions labels are missing! 
+
+[• Problem #2]{.red}: Morphology and mechanics of the human body are different than the robot’s 
+
+[• Problem #3]{.red}: The camera viewpoint during the recording of the video is likely different than the one during deployment.
+
+<br> 
+
+:::{.fragment}
+[What can we realistically learn from videos?]{.underline} 
+
+• Learn representations for pretraining policy backbones 
+
+• Learn video dynamics 
+
+• Extract actions from videos 
+
+• Learn affordances (how humans interact with objects)
+:::
+
+:::
+
+## Today’s agenda
+
+* Extracting actions from videos
+    + Physics–based human motion estimation & prediction 
+    + Hand motion estimation 
+    + Motion retargeting to a robot
+
+* Learning video dynamics 
+    + Video predictive models 
+    + Action spaces for learning from videos
+
+* Learning object affordances from video
+
+
+## SMPL (Skinned Multi-Person Linear Model)
+
+![](images/smpl.png)
+
+![](images/smpl2.png){width="150" fig-align="center"}
+
+## 
+
+{{< video https://www.youtube.com/watch?v=kuBlUyHeV5U width="100%" height="75%" >}}
+
+[<https://www.youtube.com/watch?v=kuBlUyHeV5U>]{.small-math}
+
+
+## SMPL + Hands
+
+{{< video https://www.youtube.com/watch?v=_1o21xc3TD0 width="100%" height="75%" >}}
+
+[<https://mano.is.tue.mpg.de>]{.small-math}
+
+
+## Biomechanics models
+
+• SMPL is a kinematic model of the human body 
+
+• For more accurate models we could try to model the muscle structure of the human body
+
+<br>
+
+:::{.small-math}
+<https://myosuite.readthedocs.io/en/latest/index.html>
+
+<https://sites.google.com/view/myodex>
+:::
+
+
+## Hand motion estimation in AR/VR headsets
+
+![](images/hand-animation.jpeg)
+
+## Frame-by-frame human pose detectors
+
+![](images/frame-by-frame.png)
+
+:::{.small-math}
+[KAMA: 3D Keypoint Aware Body Mesh Articulation]{.red}. Iqbal, Xie et al. 3DV 2021. <https://arxiv.org/abs/2104.13502>
+:::
+
+## Motivation
+
+:::{.red}
+Frame-by-frame human pose estimators exist but are **not good enough**. We can **correct** them with physics.
+:::
+
+::: {.columns}
+:::: {.column width="40%"}
+![](images/human-pose.gif){height=400}
+::::
+
+:::: {.column width="5%" .left-align}
+$\Rightarrow$
+:::
+
+:::: {.column width="50%" .small-math}
+
+![](images/human-pose2.gif){height=400}
+::::
+
+![](images/camera-arrow.png){.absolute right=0 bottom=90 height=400}
+:::
+
+
+## System overview
+
+![](images/sys-overview.png)
+
+:::{.small-math}
+[Physics-based Human Motion Estimation and Synthesis from Videos.]{.red}\
+Xie, Wang, Iqbal, Guo, Fidler, Shkurti. ICCV ’21.
+:::
+
+:::{.absolute top=0 right=0 .tiny-font}
+![](images/kevin-xie.jpeg){height=100} \
+Kevin Xie 
+:::
+
+
+## Physics constraints reduce slip
+
+<iframe src="https://drive.google.com/file/d/1MrQTNIgOpeHlwS3IXcnZxgD5AT4K8Ygv/preview"
+  width="960" height="500"></iframe>
+
+
+:::{.small-math}
+[Physics-based Human Motion Estimation and Synthesis from Videos.]{.red} \
+Xie, Wang, Iqbal, Guo, Fidler, Shkurti. ICCV ’21.
+:::
+
+## 
+
+::: {.columns}
+:::: {.column width="50%"}
+![](images/physics1.gif){height=300}
+
+![](images/physics3.gif){height=300}
+::::
+
+:::: {.column width="50%"}
+![](images/physics2.gif){height=300}
+
+![](images/physics4.gif){height=300}
+::::
+:::
+
+##
+
+
+<iframe src="https://drive.google.com/file/d/18nc9BU2ESapwftihBZ_8QmnSTVNAPdPw/preview"
+ width="960" height="550"></iframe>
+
+
+:::{.small-math}
+[Physics-based Human Motion Estimation and Synthesis from Videos.]{.red} \
+Xie, Wang, Iqbal, Guo, Fidler, Shkurti. ICCV ’21.
+:::
+
+## Motion generation
+
+<iframe src="https://drive.google.com/file/d/1VEInU7_l1lUrgM3oNAN4skYl6vrgNGMn/preview"
+  width="960" height="500"></iframe>
+
+
+
+## Today’s agenda
+
+* Extracting actions from videos
+    
+    + [Physics–based human motion estimation & prediction ]{.grey-text}
+    + [Hand motion estimation]{.grey-text}
+    
+    + Motion retargeting to a robot
+
+* Learning video dynamics 
+    + Video predictive models 
+    + Action spaces for learning from videos
+
+* Learning object affordances from video
+
+## Motion retargeting: formulating a loss function
+
+
+::: {.columns}
+:::: {.column width="60%"}
+![](images/motion-retarget.png)
+::::
+
+:::: {.column width="40%" .small-math}
+
+Motion retargeting loss function: 
+
+1. Tracking error
+2. Respecting joint limits 
+3. Avoiding self-collisions 
+4. Respecting dynamics 
+5. Smooth motion
+
+[Issue]{.red}: source and target system have different dimensionality!
+
+[Potential fix]{.green}: need to decide joint mappings from source to target
+::::
+:::
+
+
+## [Motion retargeting from human to robot hands]{.medium}
+
+![](images/robothands1.png){width=30%}
+![](images/robothands2.png){width=30%}
+![](images/robothands3.png){width=30%}
+
+::: {.columns}
+:::: {.column width="65%"}
+![](images/robot-cup.gif)
+::::
+
+:::: {.column width="35%" .small-math}
+Motion retargeting loss terms: 
+
+1. Tracking error 
+2. Respecting target joint limits 
+3. Avoiding self-collisions in target 
+4. Respecting target dynamics 
+5. Smooth motion for target
+
+[Issue]{.red}: source and target system have different dimensionality!
+
+[Potential fix]{.green}: need to decide joint mappings from source to target
+::::
+:::
+
+
+## 
+
+{{< video https://www.youtube.com/watch?v=x7OriVj7dYM width="100%" height="80%" >}}
+
+
+## Modeling human-object interaction
+
+{{< video videos/human-object-interactions.mp4  width="900" height="500" >}}
+
+:::{.small-math}
+[NIFTY: Neural Object Interaction Fields for Guided Human Motion Synthesis.]{.red} Kulkarni et al. 2023
+:::
+
+## 
+
+::: {.columns}
+:::: {.column width="50%"}
+{{< video videos/human-handpose.mp4  width="500" height="660" >}}
+::::
+
+:::: {.column width="50%" .small-math}
+
+:::{.absolute bottom=100}
+Need to estimate human hand poses + unknown object geometry
+
+<br>
+
+<br>
+
+<br><br><br><br>
+
+[Learning to Imitate Object Interactions from Internet Videos.]{.red} Patel et al. 2022
+:::
+
+::::
+:::
+
+
+## {.center}
+
+A lot of nuance and engineering details that matter in estimating the motions of the human body, the hands, and the geometry of objects they interact with.
+
+<br>
+
+[Open questions:]{.green} Do we have to infer 3D geometry and actions from video? Do we have to do 3D perception?
+
+
+## Today’s agenda
+
+:::{.grey-text}
+* Extracting actions from videos
+    
+    + Physics–based human motion estimation & prediction 
+    + Hand motion estimation
+    
+    + Motion retargeting to a robot
+
+:::
+
+* Learning video dynamics 
+    + Video predictive models 
+    + Action spaces for learning from videos
+
+* Learning object affordances from video
+
+## Large video reconstruction models
+
+![](images/video-reconstruction.png)
+
+:::{.small-math}
+If you learn a good token representation for videos, then you can learn a latent dynamics model over it.
+
+Cosmos model from NVIDIA. <https://research.nvidia.com/labs/dir/cosmos-tokenizer/>
+:::
+
+## Large video reconstruction models
+
+::: {.columns}
+:::: {.column width="50%"}
+
+{{< video videos/prev-sota.mp4 >}}
+Previous SOTA  
+::::
+
+:::: {.column width="50%"} 
+{{< video videos/cosmos.mp4 >}}
+Cosmos 
+::::
+:::
+
+:::{.small-math}
+Cosmos model from NVIDIA. <https://research.nvidia.com/labs/dir/cosmos-tokenizer/>
+:::
+
+
+## Large video reconstruction models
+
+::: {.columns}
+:::: {.column width="50%"}
+
+{{< video videos/kitchen-prevsota.mp4 >}}
+Previous SOTA  
+::::
+
+:::: {.column width="50%"} 
+{{< video videos/kitchen-cosmos.mp4 >}}
+Cosmos 
+::::
+:::
+
+:::{.small-math}
+Cosmos model from NVIDIA. <https://research.nvidia.com/labs/dir/cosmos-tokenizer/>
+:::
+
+
+## How can we use video models in robotics?
+
+![](images/viper-algo.png){height=350}
+
+:::{.small-math}
+[Video prediction models as rewards for RL. Escontrela et al.]{.red} NeurIPS 2023.
+:::
+
+## Another idea: dynamics models with learned action spaces
+
+![](images/dynamic-models.png)
+
+## [Need to manually map robot actions to latent actions]{.medium}
+
+![](images/map-robot.gif){height=500}
+
+## Genie
+
+![](images/genie.png)
