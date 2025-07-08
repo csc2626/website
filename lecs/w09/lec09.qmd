@@ -56,7 +56,7 @@ $\pi^*(s) = \underset{a \in A}{\text{argmax}} Q^*(s, a)$
 
 $\underset{\mu}{\text{argmax}} \underset{s \in S, a \in A}{\sum} \mu_{s,a} r_{s,a}$
 
-$\text{subject to} \quad \underset{a \in A}{sum} \mu_{s',a} = d_{s'} + \gamma \underset{s \in S, a \in A}{\sum} T_{s,a}^{s'} \mu_{s,a} \quad \forall s' \in S$
+$\text{subject to} \quad \underset{a \in A}{\sum} \mu_{s',a} = d_{s'} + \gamma \underset{s \in S, a \in A}{\sum} T_{s,a}^{s'} \mu_{s,a} \quad \forall s' \in S$
 
 $\qquad \qquad \quad \mu_{s,a} \geq 0$
 
