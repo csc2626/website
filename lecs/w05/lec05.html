@@ -989,15 +989,34 @@ u_0^*, \ldots, u_{N-1}^* &amp;= \underset{{u_0, \ldots, u_N}}{\arg\min} \sum_{t=
 </section>
 <section id="recall-from-guided-policy-search" class="slide level2">
 <h2>Recall from Guided Policy Search</h2>
-<p><img data-src="images/guided-policy1.png"></p>
-<div class="absolute fragment" style="left: 0px; bottom: 200px; ">
-<p><img data-src="images/guided-policy2.png"></p>
+<div class="small-math">
+<p><span class="math inline">\(\underset{q(\tau)}{\text{argmin}} \quad \mathbb{E}_{\tau \sim q(\tau)}[c(\tau)]\)</span></p>
+<p><span class="math inline">\(\text{subject to} \quad q(x_{t+1}|x_t, u_t) = \mathcal{N}(x_{t+1}; f_{xt}x_t + f_{ut}u_t, F_t) \qquad \color{red}\Leftarrow \quad \text{Learn linear Gaussian dynamics}\)</span></p>
+<p><span class="math inline">\(\qquad \qquad \text{KL}(q(\tau) || q_{\text{prev}}(\tau)) \leq \epsilon\)</span></p>
+<div class="fragment">
+<p><img data-src="images/downarrow.png" height="50"></p>
+<p><span class="math inline">\(q_{\text{gps}}(\tau) = \underset{q(\tau)}{\text{argmin}} \quad \mathbb{E}_{\tau \sim q(\tau)}[c(\tau)] - \mathcal{H}(q(\tau))\)</span></p>
+<p><span class="math inline">\(\qquad \qquad \text{subject to} \quad q(x_{t+1}|x_t, u_t) = \mathcal{N}(x_{t+1}; f_{xt}x_t + f_{ut}u_t, F_t)\)</span></p>
 </div>
-<div class="absolute fragment" style="left: 0px; bottom: 0px; ">
-<p><img data-src="images/guided-policy3.png"></p>
+<div class="fragment">
+<p><img data-src="images/downarrow.png" height="50"></p>
+<p><span class="math inline">\(q_{\text{gps}}(\tau) = q(x_0) \prod_{t=0}^{T-1} q(x_{t+1}|x_t, u_t)q(u_t|x_t)\)</span></p>
+<div class="absolute" style="left: 200px; bottom: 80px; ">
+<p><span class="math inline">\(\qquad \color{red} \uparrow \qquad \quad \uparrow\)</span><br>
+<span class="red">Linear Gaussian<br>
+dynamics and controller</span></p>
 </div>
-<div class="absolute fragment" style="bottom: 0px; right: 0px; ">
-<p><img data-src="images/guided-policy4.png" width="550"></p>
+</div>
+<div class="fragment">
+<p><img data-src="images/rightuparrow.png" class="absolute" style="bottom: 150px; right: 190px; height: 300px; "></p>
+<div class="red absolute" style="bottom: 80px; right: 250px; ">
+<p>Run controller on the robot<br>
+Collect trajectories</p>
+</div>
+<div class="absolute" style="bottom: 40%; right: 50px; ">
+<p><span class="math inline">\(q_{prev} = q_{gps}\)</span></p>
+</div>
+</div>
 </div>
 </section>
 <section id="recall-from-guided-policy-search-1" class="slide level2">
@@ -1069,7 +1088,7 @@ Today’s slides are based on student presentations from 2019 by: Sergio Casas, 
 </section>
 <section id="section-2" class="slide level2">
 <h2></h2>
-<video id="video_shortcode_videojs_video1" width="800" height="550" class="video-js vjs-default-skin " controls="" preload="auto" data-setup="{}" title=""><source src="https://rss2017.lids.mit.edu/static/slides/04.mp4"></video>
+<video id="video_shortcode_videojs_video1" width="800" height="550" class="video-js vjs-default-skin " controls="" preload="auto" data-setup="{}" title=""><source src="videos/active-preference-based.mp4"></video>
 <p>Source: <a href="https://rss2017.lids.mit.edu/static/slides/04.mp4" class="uri">https://rss2017.lids.mit.edu/static/slides/04.mp4</a></p>
 </section>
 <section id="preference-based-learning" class="slide level2">
@@ -1273,7 +1292,7 @@ Today’s slides are based on student presentations from 2019 by: Sergio Casas, 
 </div></aside></section>
 <section id="section-4" class="slide level2">
 <h2></h2>
-<iframe data-external="1" src="https://www.youtube.com/embed/xCXx09gfhx4" width="90%" height="90%" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+<iframe data-external="1" src="https://www.youtube.com/embed/xCXx09gfhx4" width="90%" height="80%" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 <p><span class="tiny-font"><a href="https://www.youtube.com/watch?v=xCXx09gfhx4&amp;t=3s" class="uri">https://www.youtube.com/watch?v=xCXx09gfhx4&amp;t=3s</a></span></p>
 
 
@@ -1281,7 +1300,7 @@ Today’s slides are based on student presentations from 2019 by: Sergio Casas, 
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p><a href="https://csc2626.github.io/website/" target="_blank">↩︎ Back to Course Website</a></p>
+<p><a href="https://csc2626.github.io/website/" target="_blank" style="font-size:0.8em; bottom: -5px;">↩︎ Back to Course Website</a></p>
 </div>
 </div></div>
 

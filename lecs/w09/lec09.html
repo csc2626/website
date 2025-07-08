@@ -173,7 +173,7 @@ Today’s slides are based on student presentations from 2019 by: Yeming Wen, Yi
 <section id="detour-solving-mdps-via-linear-programming-1" class="slide level2">
 <h2>Detour: solving MDPs via linear programming</h2>
 <p><span class="math inline">\(\underset{\mu}{\text{argmax}} \underset{s \in S, a \in A}{\sum} \mu_{s,a} r_{s,a}\)</span></p>
-<p><span class="math inline">\(\text{subject to} \quad \underset{a \in A}{sum} \mu_{s',a} = d_{s'} + \gamma \underset{s \in S, a \in A}{\sum} T_{s,a}^{s'} \mu_{s,a} \quad \forall s' \in S\)</span></p>
+<p><span class="math inline">\(\text{subject to} \quad \underset{a \in A}{\sum} \mu_{s',a} = d_{s'} + \gamma \underset{s \in S, a \in A}{\sum} T_{s,a}^{s'} \mu_{s,a} \quad \forall s' \in S\)</span></p>
 <p><span class="math inline">\(\qquad \qquad \quad \mu_{s,a} \geq 0\)</span></p>
 <p><br></p>
 <div class="right-align">
@@ -201,61 +201,130 @@ Today’s slides are based on student presentations from 2019 by: Yeming Wen, Yi
 <p>Dual LP</p>
 </div></div>
 </section>
-<section id="section" class="slide level2">
-<h2></h2>
-
-<img data-src="images/background.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-1" class="slide level2">
-<h2></h2>
-
-<img data-src="images/formulation.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-2" class="slide level2">
-<h2></h2>
-
-<img data-src="images/derivation.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-3" class="slide level2">
-<h2></h2>
-
-<img data-src="images/derivation2.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-4" class="slide level2">
-<h2></h2>
-
-<img data-src="images/convex-conjugate.jpg" class="quarto-figure quarto-figure-center r-stretch"><div class="small-math">
+<section id="background" class="slide level2">
+<h2>Background</h2>
+<p>▶ <strong>Definitions:</strong> Action space <span class="math inline">\(\mathcal{A}\)</span> and sample space <span class="math inline">\(\mathcal{S}\)</span>. <span class="math inline">\(\Pi\)</span> is the set of all policies. Also assume <span class="math inline">\(P(s'|s,a)\)</span> is the dynamics model. In this paper, <span class="math inline">\(\pi_E\)</span> denotes the expert policy.</p>
+<p>▶ <strong>Imitation Learning:</strong> Learning to perform a task from expert demonstrations without querying the expert while training.</p>
+<p>▶ <strong>Behavioral cloning:</strong> Its success depends on large amounts of data.</p>
+<p>▶ <strong>Inverse RL:</strong> The paper adopts the maximum causal entropy IRL which fits a cost function <span class="math inline">\(c\)</span> with the following problem.</p>
+<p><span class="math display">\[\pi^* = \arg \min_{\pi \in \Pi} -H(\pi) + \mathbb{E}_\pi[c(s,a)]\]</span></p>
+<p><span class="math display">\[\tilde{c} = \arg \max_{c \in \mathcal{C}} \mathbb{E}_{\pi^*}[c(s,a)] - \mathbb{E}_{\pi_E}[c(s,a)]\]</span></p>
+<p>where <span class="math inline">\(H(\pi) = \mathbb{E}_\pi[-\log \pi(a|s)]\)</span> is the entropy of the policy.</p>
+</section>
+<section id="formulation" class="slide level2">
+<h2>Formulation</h2>
+<p>▶ We first study the policies found by RL on costs learned by IRL on the largest possible set of cost functions <span class="math inline">\(\mathcal{C} = \{c : S \times A \to \mathbb{R}\}\)</span>.</p>
+<p>▶ Also need to define a convex cost function regularizer <span class="math inline">\(\psi : \mathbb{R}_{S \times A} \to \mathbb{R}\)</span>, which turns out to be important in this paper.</p>
+<p>▶ Re-write the Eq. 1 as the following:</p>
+<p><span class="math display">\[IRL_\psi(\pi_E) = \arg \max_{c \in \mathcal{C}} -\psi(c) + (\min_{\pi \in \Pi} -H(\pi) + \mathbb{E}_\pi[c(s,a)])\]</span></p>
+<p><span class="math display">\[- \mathbb{E}_{\pi_E}[c(s,a)]\]</span></p>
+<p>▶ Define <span class="math inline">\(RL(c) = \arg \min_{\pi \in \Pi} -H(\pi) + \mathbb{E}_\pi[c(s,a)]\)</span>.<br>
+Let <span class="math inline">\(\tilde{c} \in IRL_\psi(\pi_E)\)</span>. We are interested in characterizing the induced policy <span class="math inline">\(RL(\tilde{c})\)</span>.</p>
+</section>
+<section id="derivations" class="slide level2">
+<h2>Derivations</h2>
+<p>▶ It is easier to characterize <span class="math inline">\(RL(\tilde{c})\)</span> if we transform optimization problems over policies into convex problems.</p>
+<p>▶ So the paper introduces an occupancy measure <span class="math inline">\(\rho_\pi : S \times A \to \mathbb{R}\)</span>:</p>
+<p><span class="math display">\[\rho_\pi(s,a) = \pi(a|s) \sum_{t=0}^{\infty} \gamma^t P(s_t = s|\pi) \qquad (1)\]</span></p>
+<p>It can be interpreted as the distribution of state-action pairs when roll-out with policy <span class="math inline">\(\pi\)</span>.</p>
+<p>▶ There is an <strong>one-to-one</strong> correspondence between policy and occupancy measure. It also allows us to re-write the expected cost as</p>
+<p><span class="math display">\[\mathbb{E}_\pi[c(s,a)] = \sum_{s,a} \rho_\pi(s,a)c(s,a) \qquad (2)\]</span></p>
+</section>
+<section id="derivations-1" class="slide level2">
+<h2>Derivations</h2>
+<p>▶ <strong>Lemma 1:</strong> If we define</p>
+<p><span class="math display">\[\hat{H}(\rho) = -\sum_{s,a} \rho(s,a) \log(\rho(s,a)/\sum_{a'} \rho(s,a')) \qquad (3)\]</span></p>
+<p>then we have <span class="math inline">\(\hat{H}(\rho) = H(\pi_\rho)\)</span> and <span class="math inline">\(H(\pi) = \hat{H}(\rho_\pi)\)</span>. So we can represent the entropy of a policy <span class="math inline">\(\pi\)</span> with the occupancy measure <span class="math inline">\(\rho_\pi\)</span>.</p>
+<p>▶ <strong>Lemma 2:</strong> If we define,</p>
+<p><span class="math display">\[L(\pi, c) = -H(\pi) + \mathbb{E}_\pi[c(s,a)]\]</span></p>
+<p><span class="math display">\[\hat{L}(\rho, c) = -\hat{H}(\rho) + \sum_{s,a} \rho(s,a)c(s,a)\]</span></p>
+<p>then we have <span class="math inline">\(L(\pi, c) = \hat{L}(\rho_\pi, c)\)</span> and <span class="math inline">\(\hat{L}(\rho, c) = L(\pi_\rho, c)\)</span>. The Lemma allows us to transform the problem from optimizing <span class="math inline">\(\pi\)</span> to <span class="math inline">\(\rho\)</span>.</p>
+</section>
+<section id="convex-conjugate" class="slide level2">
+<h2>Convex Conjugate</h2>
+<p>▶ Given a function <span class="math inline">\(f\)</span>, it can be represented by the supremum of all affine functions that are majorized by <span class="math inline">\(f\)</span>.</p>
+<p>▶ For any given slope <span class="math inline">\(m\)</span>, there may be many different constants <span class="math inline">\(b\)</span> such that the affine function <span class="math inline">\(\langle m, x \rangle - b\)</span> is majorized by <span class="math inline">\(f\)</span>. We only need the best such constant.</p>
+<p>▶ That’s what the convex conjugate <span class="math inline">\(f^*\)</span> does. Given a slope <span class="math inline">\(m\)</span>, <span class="math inline">\(f^*\)</span> returns the best constant <span class="math inline">\(b\)</span> such that <span class="math inline">\(\langle m, x \rangle - b\)</span> is majorized by <span class="math inline">\(f\)</span>. Thus,</p>
+<p><span class="math display">\[f^*(m) = \sup_x \langle m, x \rangle - f(x)\]</span></p>
+<p>▶ Note that <span class="math inline">\(f^{**} = f\)</span>.</p>
+<div class="small-math">
 <p>There is a nice visualization of convex conjugate at <a href="https://remilepriol.github.io/dualityviz/" class="uri">https://remilepriol.github.io/dualityviz/</a></p>
 </div>
 </section>
-<section id="section-5" class="slide level2">
-<h2></h2>
-
-<img data-src="images/derivation3.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-6" class="slide level2">
-<h2></h2>
-
-<img data-src="images/occupancy.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-7" class="slide level2">
-<h2></h2>
-
-<img data-src="images/apprenticeship.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-8" class="slide level2">
-<h2></h2>
-
-<img data-src="images/gail.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-9" class="slide level2">
-<h2></h2>
-
-<img data-src="images/gail-2.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-10" class="slide level2">
-<h2></h2>
-
-<img data-src="images/gail3.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-11" class="slide level2">
-<h2></h2>
+<section id="derivations-2" class="slide level2">
+<h2>Derivations</h2>
+<p>▶ By Lemma 2, if <span class="math inline">\(\psi\)</span> is a constant regularizer and <span class="math inline">\(\tilde{c} \in IRL_\psi(\pi_E)\)</span> and <span class="math inline">\(\hat{\pi} \in RL(\hat{c})\)</span>, then <span class="math inline">\(\rho_{\hat{\pi}} = \rho_{\pi_E}\)</span>.</p>
+<p>▶ Furthermore, we can also get the main result of the paper</p>
+<p><span class="math display">\[RL \circ IRL_\psi(\pi_E) = \arg \min_{\pi \in \Pi} -H(\pi) + \psi^*(\rho_\pi - \rho_{\pi_E}) \qquad (4)\]</span></p>
+<p>where <span class="math inline">\(\psi^*\)</span> is the convex conjugate of <span class="math inline">\(\psi\)</span>, which is defined as</p>
+<p><span class="math display">\[\psi^*(m) = \sup_{x \in \mathbb{R}^{S \times A}} m^T x - \psi(x)\]</span></p>
+<p>▶ It tells us that the <span class="math inline">\(\psi\)</span>-regularized inverse RL seeks a policy whose occupancy measure is close to the expert’s as measured by the convex function <span class="math inline">\(\psi^*\)</span>.</p>
+<p>▶ A good imitation learning algorithm boils down to a good choice of the regularizer <span class="math inline">\(\psi\)</span>.</p>
+</section>
+<section id="occupancy-measure-matching" class="slide level2">
+<h2>Occupancy Measure Matching</h2>
+<p>▶ As we showed previously, if <span class="math inline">\(\psi\)</span> is a constant, then the resulting policy would have the same occupancy measures with expert at all states and actions.</p>
+<p>▶ It is not practically useful because most of the occupancy measure of the expert values are exactly zero, due to the limited expert samples.</p>
+<p>▶ Thus, exact occupancy measure matching will force the learned policy to never visit the unseen state-action pairs.</p>
+<p>▶ If we restrict the class of cost function <span class="math inline">\(\mathcal{C}\)</span> to be convex and set the regularizer <span class="math inline">\(\psi\)</span> to be the indicator function of the set <span class="math inline">\(\mathcal{C}\)</span>. Then optimization problem in (6) can be written as</p>
+<p><span class="math display">\[\min_\pi -H(\pi) + \max_{c \in \mathcal{C}} \mathbb{E}_\pi[c(s,a)] - \mathbb{E}_{\pi_E}[c(s,a)] \qquad (5)\]</span></p>
+<p>which is a entropy-regularized apprenticeship learning problem.</p>
+</section>
+<section id="apprenticeship-learning" class="slide level2">
+<h2>Apprenticeship Learning</h2>
+<p>▶ Policy gradient method can be used to update the parameterized policy <span class="math inline">\(\pi_\theta\)</span> to optimize the apprenticeship objective, Eq. 7.</p>
+<p><span class="math display">\[\nabla_\theta \max_{c \in \mathcal{C}} \mathbb{E}_{\pi_\theta}[c(s,a)] - \mathbb{E}_{\pi_E}[c(s,a)] = \nabla_\theta \mathbb{E}_{\pi_\theta}[c^*(s,a)]\]</span></p>
+<p><span class="math display">\[= \mathbb{E}_{\pi_\theta}[\nabla_\theta \log \pi_\theta(a|s) Q_{c^*}(s,a)]\]</span></p>
+<p>where</p>
+<p><span class="math display">\[c^* = \arg \max_{c \in \mathcal{C}} \mathbb{E}_{\pi_\theta}[c(s,a)] - \mathbb{E}_{\pi_E}[c(s,a)] \qquad (6)\]</span></p>
+<p><span class="math display">\[Q_{c^*}(\bar{s}, \bar{a}) = \mathbb{E}_{\pi_\theta}[c^*(\bar{s}, \bar{a})|s_0 = \bar{s}, a_0 = \bar{a}] \qquad (7)\]</span></p>
+<p>▶ Fit <span class="math inline">\(c_i^*\)</span> as defined above. Analytical solution is feasible if <span class="math inline">\(\mathcal{C}\)</span> is restricted to Convex or Linear cost classes.</p>
+<p>▶ Given the <span class="math inline">\(c_i^*\)</span>, compute the policy gradient and take a TRPO step to produce <span class="math inline">\(\pi_{\theta_{i+1}}\)</span>.</p>
+</section>
+<section id="gail" class="slide level2">
+<h2>GAIL</h2>
+<p>▶ Apprenticeship learning via TRPO is tractable in large environments but is incapable of exactly matching occupancy measures without careful tuning due to the restrictive cost classes <span class="math inline">\(\mathcal{C}\)</span>.</p>
+<p>▶ Constant regularizer <span class="math inline">\(\psi\)</span> leads to exact matching but is intractable in large environments. Thus, GAIL is proposed to combine the best of both methods.</p>
+<p><span class="math display">\[
+\psi_{GA}(c) \triangleq \begin{cases}
+\mathbb{E}_{\pi_E}[g(c(s,a))] &amp; \text{if } c &lt; 0 \\
++\infty &amp; \text{otherwise}
+\end{cases}
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+g(x) = \begin{cases}
+-x - \log(1 - e^x) &amp; \text{if } x &lt; 0 \\
++\infty &amp; \text{otherwise}
+\end{cases}
+\]</span></p>
+</section>
+<section id="gail-1" class="slide level2">
+<h2>GAIL</h2>
+<p>▶ The GAIL regularizer <span class="math inline">\(\psi_{GA}\)</span> places low penalty on cost functions <span class="math inline">\(c\)</span> that assign an amount of negative cost to expert state-action pairs; It havily penalizes <span class="math inline">\(c\)</span> if it assigns large cost to the expert.</p>
+<p>▶ <span class="math inline">\(\psi_{GA}\)</span> is an average over expert data so it can adjust to arbitrary expert datasets.</p>
+<p>▶ In comparison, if <span class="math inline">\(\psi\)</span> is an indicator function (Apprenticeship Learning), then it’s always fixed.</p>
+<p>▶ Another property of <span class="math inline">\(\psi_{GA}\)</span> is its convex conjugate <span class="math inline">\(\psi_{GA}^*(\rho_\pi - \rho_{\pi_E})\)</span> can be derived in the following form:</p>
+<p><span class="math display">\[\max_{D \in (0,1)^{S \times A}} \mathbb{E}_\pi[\log(D(s,a))] + \mathbb{E}_{\pi_E}[\log(1 - D(s,a))] \qquad (8)\]</span></p>
+<p>▶ It can be interpreted to find a discriminator that distinguishes trajectory between learned policy and expert policy. t</p>
+</section>
+<section id="gail-2" class="slide level2">
+<h2>GAIL</h2>
+<p>▶ Combining with the main result Eq. (6) in the paper,</p>
+<p><span class="math display">\[RL \circ IRL_\psi(\pi_E) = \arg \min_{\pi \in \Pi} -H(\pi) + \psi^*(\rho_\pi - \rho_{\pi_E})\]</span></p>
+<p>The imitation learning problem is equivalent to find a saddle point <span class="math inline">\((\pi, D)\)</span> of the expression</p>
+<p><span class="math display">\[\mathbb{E}_\pi[\log(D(s,a))] + \mathbb{E}_{\pi_E}[\log(1 - D(s,a))] - \lambda H(\pi) \qquad (9)\]</span></p>
+<p>▶ In terms of implementation, we just need to fit a parameterized policy <span class="math inline">\(\pi_\theta\)</span> with weights <span class="math inline">\(\theta\)</span> and a discriminator network <span class="math inline">\(D_w : S \times A \to (0,1)\)</span> with weights <span class="math inline">\(w\)</span>.</p>
+<p>▶ Update <span class="math inline">\(D_w\)</span> with Adam and update <span class="math inline">\(\pi_\theta\)</span> with TRPO iteratively.</p>
+</section>
+<section id="algorithm" class="slide level2">
+<h2>Algorithm</h2>
 
 <img data-src="images/algo.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-12" class="slide level2">
-<h2></h2>
+<section id="results" class="slide level2">
+<h2>Results</h2>
 
-<img data-src="images/results.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
+<img data-src="images/results.png" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="todays-agenda-1" class="slide level2">
 <h2>Today’s agenda</h2>
 <div class="grey-text">
@@ -278,7 +347,7 @@ Today’s slides are based on student presentations from 2019 by: Yeming Wen, Yi
 <h1>Motivation</h1>
 
 </section>
-<section id="gail" class="slide level2">
+<section id="gail-3" class="slide level2">
 <h2>GAIL</h2>
 <p>A generator producing a policy 𝜋 competes with a discriminator distinguishing 𝜋 and the expert.</p>
 
@@ -370,7 +439,7 @@ p(c|\tau) = \frac{p(c)p(\tau)}{p(\tau)}, \quad \frac{p(c|\tau)}{p(c)} = 1, \quad
 <h2>InfoGAIL</h2>
 
 <img data-src="images/infogail.png" class="r-stretch"></section>
-<section id="section-13" class="slide level2">
+<section id="section" class="slide level2">
 <h2></h2>
 
 <img data-src="images/algo-infogail.png" class="r-stretch"></section></section>
@@ -414,7 +483,7 @@ Vanishing gradient</p>
 \min_{\theta, \psi} \max_{\omega} \mathbb{E}_{\pi_\theta}[D_\omega(s, a)] - \mathbb{E}_{\pi_E}[D_\omega(s, a)] - \lambda_0 \eta(\pi_\theta) - \lambda_1 L_I(\pi_\theta, Q_\psi) - \lambda_2 H(\pi_\theta)
 \]</span></p>
 </section>
-<section id="section-14" class="slide level2">
+<section id="section-1" class="slide level2">
 <h2></h2>
 
 <img data-src="images/infogail-algo2.png" class="r-stretch"></section></section>
@@ -440,7 +509,7 @@ Vanishing gradient</p>
 <p>• Pre-trained ResNet on ImageNet</p>
 
 <img data-src="images/self-drivingcar.png" class="quarto-figure quarto-figure-right r-stretch"></section>
-<section id="section-15" class="slide level2">
+<section id="section-2" class="slide level2">
 <h2></h2>
 
 <img data-src="images/torcs-env.png" class="r-stretch"></section>
@@ -466,9 +535,9 @@ Vanishing gradient</p>
 <p>• Reward augmentation encouraging the car to drive faster</p>
 
 <img data-src="images/perf-table.png" class="r-stretch"></section>
-<section id="section-16" class="slide level2">
+<section id="section-3" class="slide level2">
 <h2></h2>
-<iframe data-external="1" src="https://www.youtube.com/embed/YtNPBAW6h5k" width="100%" height="80%" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+<iframe data-external="1" src="https://www.youtube.com/embed/YtNPBAW6h5k?rel=0" width="100%" height="80%" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 <p><span class="small-math"><a href="https://www.youtube.com/watch?v=YtNPBAW6h5k" class="uri">https://www.youtube.com/watch?v=YtNPBAW6h5k</a></span></p>
 </section>
 <section id="todays-agenda-2" class="slide level2">
@@ -484,94 +553,160 @@ Vanishing gradient</p>
 <p>Acknowledgments<br>
 Today’s slides are based on student presentations from 2019 by: Yeming Wen, Yin-Hung Chen , and Yuwen Xiong</p>
 </div></aside></section>
-<section id="section-17" class="slide level2">
-<h2></h2>
+<section id="model-based-adversarial-imitation-learning" class="slide level2 center">
+<h2>Model-based Adversarial Imitation Learning</h2>
+<p>Nir Baram, Oron Anschel, Shie Mannor</p>
+<p>Presented by Yuwen Xiong, Mar 1 st</p>
+</section>
+<section id="recap-gail-algorithm" class="slide level2">
+<h2>Recap: GAIL algorithm</h2>
+<p><span class="math display">\[
+\underset{\pi}{\text{argmin}} \quad \underset{D \in (0,1)}{\text{argmax}} \mathbb{E}_{\pi}[\log D(s, a)] + \mathbb{E}_{\pi_E}[\log(1 - D(s, a))] - \lambda H(\pi)
+\]</span></p>
+<ul>
+<li>We use Adam to optimize the discriminator and use TRPO to optimize the policy</li>
+<li>The optimization of the discriminator can be done by using backpropagation, but this is not the case for the optimization of the policy</li>
+<li><span class="math inline">\(\pi\)</span> affects the data distribution but do not appear in the objective itself</li>
+<li>We use these two equations to get gradient estimation for <span class="math inline">\(\pi_{\theta}\)</span></li>
+</ul>
+<p><span class="math display">\[
+\nabla_{\theta} \mathbb{E}_{\pi}[\log D(s, a)] \cong \mathbb{\hat{E}}_{\tau_i}[\nabla_{\theta} \log \pi_{\theta}(a|s) Q(s, a)]
+\]</span></p>
+<p><span class="math display">\[Q(\hat{s}, \hat{a}) = \mathbb{\hat{E}}_{\tau_i}[\log D(s, a) \mid s_0 = \hat{s}, a_0 = \hat{a}]\]</span></p>
+</section>
+<section id="motivation-1" class="slide level2">
+<h2>Motivation</h2>
+<ul>
+<li>A model-free approach like GAIL has its limitations
+<ul>
+<li>The generative model can no longer be trained by simply backpropagating the gradient from the loss function defined over the discriminator</li>
+<li>Has to resort to high-variance gradient estimations</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<p><br></p>
+<ul>
+<li>If we have a model-based version of adversarial imitation learning
+<ul>
+<li>The system can be easily trained end-to-end using regular backpropagation</li>
+<li>The policy gradient can be derived directly from the gradient of the discriminator</li>
+<li>Policies can be more robust and training requires fewer interactions with the environment</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="algorithm---overview" class="slide level2">
+<h2>Algorithm - overview</h2>
+<div class="columns">
+<div class="column" style="width:70%;">
+<p>The model-free approach treats the state s as fixed and only tries to optimize the behavior.</p>
+<div class="fragment">
+<p>Instead, we treat s as a function of the policy: <span class="math display">\[s' = f(s, a)\]</span></p>
+<p>So that, by using the law of total derivative we can get:</p>
+<p><span class="math display">\[
+\begin{align}
+\left.\nabla_{\theta} D(s_t, a_t)\right|_{s=s_t, a=a_t} &amp;= \left.\frac{\partial D}{\partial a} \frac{\partial a}{\partial \theta}\right|_{a=a_t} + \left.\frac{\partial D}{\partial s} \frac{\partial s}{\partial \theta}\right|_{s=s_t} \\
+&amp;= \left.\frac{\partial D}{\partial a} \frac{\partial a}{\partial \theta}\right|_{a=a_t} + \frac{\partial D}{\partial s} \left(\left.\frac{\partial f}{\partial s} \frac{\partial s}{\partial \theta}\right|_{s=s_{t-1}} + \left.\frac{\partial f}{\partial a} \frac{\partial a}{\partial \theta}\right|_{a=a_{t-1}}\right)
+\end{align}
+\]</span></p>
+</div>
+</div><div class="column" style="width:30%;">
+<p><img data-src="images/algo-diagram.png" height="300"></p>
+</div></div>
+</section>
+<section id="algorithm---preparation" class="slide level2">
+<h2>Algorithm - preparation</h2>
+<p>First, we know that <span class="math inline">\(D(s, a) = p(y|s, a)\)</span>, where <span class="math inline">\(y = \{\pi_E, \pi\}\)</span></p>
+<div class="fragment">
+<p>By using Bayes rule and the law of total probability we can get:</p>
+<p><span class="math display">\[D(s, a) = p(\pi|s, a) = \frac{p(s, a|\pi)p(\pi)}{p(s, a)}\]</span></p>
+<p><span class="math display">\[\qquad \qquad \qquad = \frac{p(s, a|\pi)p(\pi)}{p(s, a|\pi)p(\pi) + p(s, a|\pi_E)p(\pi_E)}\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[\qquad = \frac{p(s, a|\pi)}{p(s, a|\pi) + p(s, a|\pi_E)}\]</span></p>
+</div>
+</section>
+<section id="algorithm---preparation-1" class="slide level2">
+<h2>Algorithm - preparation</h2>
+<p>Re-writing it as following:</p>
+<p><span class="math display">\[
+D(s, a) = \frac{1}{\frac{p(s,a|\pi)+p(s,a|\pi_E)}{p(s,a|\pi)}} = \frac{1}{1 + \frac{p(s,a|\pi_E)}{p(s,a|\pi)}} = \frac{1}{1 + \frac{p(a|s,\pi_E)}{p(a|s,\pi)} \cdot \frac{p(s|\pi_E)}{p(s|\pi)}}\]</span></p>
+<div class="fragment">
+<p>Let <span class="math inline">\(\varphi(s, a) = \frac{p(a|s,\pi_E)}{p(a|s,\pi)}\)</span> and <span class="math inline">\(\psi(s) = \frac{p(s|\pi_E)}{p(s|\pi)}\)</span>, we can get:</p>
+<p><span class="math display">\[
+D(s, a) = \frac{1}{1 + \varphi(s, a) \cdot \psi(s)}
+\]</span></p>
+</div>
+</section>
+<section id="algorithm---preparation-2" class="slide level2">
+<h2>Algorithm - preparation</h2>
+<p>Here <span class="math inline">\(\varphi(s, a) = \frac{p(a|s,\pi_E)}{p(a|s,\pi)}\)</span> stands for policy likelihood ratio</p>
+<p>And <span class="math inline">\(\psi(s) = \frac{p(s|\pi_E)}{p(s|\pi)}\)</span> stands for state distribution likelihood ratio</p>
+<div class="fragment">
+<p>By using differentiation rule we can easily get:</p>
+<p><span class="math display">\[
+\nabla_a D = -\frac{\varphi_a(s, a)\psi(s)}{(1 + \varphi(s, a)\psi(s))^2}
+\]</span></p>
+<p><span class="math display">\[
+\nabla_s D = -\frac{\varphi_s(s, a)\psi(s) + \varphi(s, a)\psi_s(s)}{(1 + \varphi(s, a)\psi(s))^2}
+\]</span></p>
+</div>
+<div class="fragment">
+<p>Recall what we need: <span class="math inline">\(\left.\nabla_\theta D(s_t, a_t)\right|_{s=s_t,a=a_t} = \left.\frac{\partial D}{\partial a} \frac{\partial a}{\partial \theta}\right|_{a=a_t} + \left.\frac{\partial D}{\partial s} \frac{\partial s}{\partial \theta}\right|_{s=s_t}\)</span></p>
+</div>
+</section>
+<section id="algorithm---re-parameterization-of-distribution" class="slide level2">
+<h2>Algorithm - re-parameterization of distribution</h2>
+<p>Assuming the policy is given by</p>
+<p><span class="math display">\[
+\pi_\theta(a|s) = \mathcal{N}(a|\mu_\theta(s), \sigma_\theta^2(s))
+\]</span></p>
+<div class="fragment">
+<p>We can rewrite it to</p>
+<p><span class="math display">\[
+\pi_\theta(a|s) = \mu_\theta(s) + \xi\sigma_\theta(s), \text{ where } \xi \sim \mathcal{N}(0, 1)
+\]</span></p>
+</div>
+<div class="fragment">
+<p>So that we can get a Monte-Carlo estimator of the derivative</p>
+<p><span class="math display">\[
+\begin{align}
+\nabla_\theta \mathbb{E}_\pi(a|s) D(s, a) &amp;= \mathbb{E}_{\rho(\xi)} \nabla_a D(a, s) \nabla_\theta \pi_\theta(a|s) \\
+&amp; \cong \frac{1}{M} \sum_{i=1}^M \left.\nabla_a D(s, a) \nabla_\theta \pi_\theta(a|s)\right|_{\xi=\xi_i}
+\end{align}
+\]</span></p>
+</div>
+</section>
+<section id="algorithm-1" class="slide level2">
+<h2>Algorithm</h2>
 
-<img data-src="images/model-based.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-18" class="slide level2">
-<h2></h2>
+<img data-src="images/algo-model-diagram.png" class="r-stretch"></section>
+<section id="algorithm-2" class="slide level2">
+<h2>Algorithm</h2>
+<p>To maximize the reward function, we can view reward as <span class="math inline">\(r(s, a) = -D(s, a)\)</span>, and then maximizing the total reward is equivalent to minimizing the total discriminator beliefs along a trajectory.</p>
+<div class="fragment">
+<p>So that we can define: <span class="math display">\[
+J(\theta) = \mathbb{E} \left[ \sum_{t=0} \gamma^t D(s_t, a_t) \mid \theta \right]
+\]</span></p>
+<p>And write down the derivatives: (this follows SVG paper [Heess et al.&nbsp;2015]) <span class="math display">\[
+J_s = \mathbb{E}_{p(a\mid s)}\mathbb{E}_{p(s'\mid s,a)}\mathbb{E}_{p(\xi\mid s,a,s')}
+\left[ D_s + D_a\pi_s + \gamma J'_{s'}(f_s + f_a\pi_s)
+\right]
+\]</span></p>
+<p><span class="math display">\[
+J_\theta =  \mathbb{E}_{p(a\mid s)}\mathbb{E}_{p(s'\mid s,a)}\mathbb{E}_{p(\xi\mid s,a,s')}
+[D_a\pi_\theta +  \gamma(J'_{s'}f_a\pi_\theta + J'_\theta)]
+\]</span></p>
+</div>
+</section>
+<section id="algorithm-3" class="slide level2">
+<h2>Algorithm</h2>
 
-<img data-src="images/recap-gailalgo.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-19" class="slide level2">
-<h2></h2>
+<img data-src="images/algo1.png" class="r-stretch"></section>
+<section id="experiments-1" class="slide level2">
+<h2>Experiments</h2>
 
-<img data-src="images/motivation.jpg" class="r-stretch"></section>
-<section id="section-20" class="slide level2">
-<h2></h2>
-
-<img data-src="images/motivation2.jpg" class="r-stretch"></section>
-<section id="section-21" class="slide level2">
-<h2></h2>
-
-<img data-src="images/algo-overview.jpg" class="r-stretch"></section>
-<section id="section-22" class="slide level2">
-<h2></h2>
-
-<img data-src="images/algo-overview2.jpg" class="r-stretch"></section>
-<section id="section-23" class="slide level2">
-<h2></h2>
-
-<img data-src="images/algo-prep.jpg" class="r-stretch"></section>
-<section id="section-24" class="slide level2">
-<h2></h2>
-
-<img data-src="images/algo-prep2.jpg" class="r-stretch"></section>
-<section id="section-25" class="slide level2">
-<h2></h2>
-
-<img data-src="images/algo-prep3.jpg" class="r-stretch"></section>
-<section id="section-26" class="slide level2">
-<h2></h2>
-
-<img data-src="images/algo-prep4.jpg" class="r-stretch"></section>
-<section id="section-27" class="slide level2">
-<h2></h2>
-
-<img data-src="images/algo-prep5.jpg" class="r-stretch"></section>
-<section id="section-28" class="slide level2">
-<h2></h2>
-
-<img data-src="images/algo-prep6.jpg" class="r-stretch"></section>
-<section id="section-29" class="slide level2">
-<h2></h2>
-
-<img data-src="images/algo-prep7.jpg" class="r-stretch"></section>
-<section id="section-30" class="slide level2">
-<h2></h2>
-
-<img data-src="images/algo-prep8.jpg" class="r-stretch"></section>
-<section id="section-31" class="slide level2">
-<h2></h2>
-
-<img data-src="images/algo-reparameterization.jpg" class="r-stretch"></section>
-<section id="section-32" class="slide level2">
-<h2></h2>
-
-<img data-src="images/algo-reparameterization2.jpg" class="r-stretch"></section>
-<section id="section-33" class="slide level2">
-<h2></h2>
-
-<img data-src="images/algo-reparameterization3.jpg" class="r-stretch"></section>
-<section id="section-34" class="slide level2">
-<h2></h2>
-
-<img data-src="images/algorithm.jpg" class="r-stretch"></section>
-<section id="section-35" class="slide level2">
-<h2></h2>
-
-<img data-src="images/algorithm2.jpg" class="r-stretch"></section>
-<section id="section-36" class="slide level2">
-<h2></h2>
-
-<img data-src="images/algorithm3.jpg" class="r-stretch"></section>
-<section id="section-37" class="slide level2">
-<h2></h2>
-
-<img data-src="images/algorithm4.jpg" class="r-stretch"></section>
-<section id="section-38" class="slide level2">
-<h2></h2>
-
-<img data-src="images/experiments.jpg" class="r-stretch"></section>
+<img data-src="images/experiments.png" class="r-stretch"></section>
 <section id="todays-agenda-3" class="slide level2">
 <h2>Today’s agenda</h2>
 <div class="grey-text">
@@ -590,7 +725,7 @@ Today’s slides are based on student presentations from 2019 by: Yeming Wen, Yi
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p><a href="https://csc2626.github.io/website/" target="_blank">↩︎ Back to Course Website</a></p>
+<p><a href="https://csc2626.github.io/website/" target="_blank" style="font-size:0.8em; bottom: -5px;">↩︎ Back to Course Website</a></p>
 </div>
 </div></div>
 

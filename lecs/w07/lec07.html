@@ -363,61 +363,148 @@ fixed!</p>
 <p>Acknowledgments<br>
 Today’s slides are based on student presentations from 2019 by: Zeqi Li, Angran Li, Zihan Fu</p>
 </div></aside></section>
+<section id="neural-task-programming-learning-to-generalize-across-hierarchical-tasks" class="slide level2 center">
+<h2>Neural Task Programming: Learning to Generalize Across Hierarchical Tasks</h2>
+<p>Danfei Xu, Suraj Nair, Yuke Zhu, Julian Gao, Animesh Garg, Li Fei-Fei, Silvio Savarese</p>
+<p>Presented by Angran Li<br>
+February 8, 2019</p>
+</section>
+<section id="how-the-algorithm-works" class="slide level2">
+<h2>How the Algorithm works?</h2>
+
+<img data-src="images/how-algo-works.png" class="r-stretch"><ul>
+<li>Task Demonstration: state trajectory, first/third-person video demonstrations, or a list of language instructions.</li>
+<li>Task-Conditional Policy: a neural program.</li>
+<li>Using callable primitive actions to interact with the environment.</li>
+</ul>
+</section>
+<section id="how-the-algorithm-works-1" class="slide level2">
+<h2>How the Algorithm works?</h2>
+
+<img data-src="images/how-algo-works2.png" class="quarto-figure quarto-figure-center r-stretch"><p>Top-level program block_stacking is recursively decomposed to bottom-level API move_to and grip.</p>
+</section>
+<section id="goals" class="slide level2">
+<h2>Goals</h2>
+<p>Learning to Generalize Across Hierarchical Tasks</p>
+<ul>
+<li>Generalizing the learned policies to new task objectives
+<ul>
+<li>Task Length: more objects to transport</li>
+<li>Task Semantics: a different goal</li>
+<li>Task Topology: a different trajectory to the same goal</li>
+</ul></li>
+<li>Hierarchical composition of primitive actions
+<ul>
+<li>Modularization and reusability</li>
+<li>Learn the latent structure in complex tasks, instead of fake dependencies</li>
+</ul></li>
+</ul>
+</section>
+<section id="implementation-neural-task-programming" class="slide level2">
+<h2>Implementation: Neural Task Programming</h2>
+
+<img data-src="images/neural-task-programming.png" class="quarto-figure quarto-figure-center r-stretch"><ul>
+<li>Observation Encoder: observation <span class="math inline">\(o_i \Rightarrow\)</span> state representation <span class="math inline">\(s_i\)</span></li>
+<li>Task Spec. Interpreter: <span class="math inline">\(\Rightarrow\)</span> API arguments <span class="math inline">\(a_i\)</span> or task spec. <span class="math inline">\(\psi_{i+1}\)</span></li>
+<li>Task Spec. Encoder: task spec. <span class="math inline">\(\psi_i \Rightarrow\)</span> vector space <span class="math inline">\(\phi_i\)</span></li>
+<li>Core Network: <span class="math inline">\(s_i, P_i, \phi_i \Rightarrow P_{i+1}, r_i\)</span></li>
+</ul>
+</section>
+<section id="implementation-standing-on-the-shoulder-of-npi" class="slide level2">
+<h2>Implementation: Standing on the shoulder of NPI</h2>
+<p>Neural Task Programming combines the idea of <strong>Few-Shot Learning from Demonstration</strong> and <strong>Neural Programmer-Interpreters</strong>.</p>
+<ul>
+<li>Similarities when executing a program:
+<ul>
+<li>When the EOP probability exceeds a threshold <span class="math inline">\(\alpha\)</span>, control is returned to the caller program;</li>
+<li>When the program is not primitive, a sub-program with its arguments is called;</li>
+<li>When the program is primitive, a low-level basic action is performed.</li>
+</ul></li>
+<li>Two similar modules:
+<ul>
+<li>Domain-specific task encoders that map an observation to a state representation.</li>
+<li>A key-value memory that stores and retrieves program embeddings.</li>
+</ul></li>
+</ul>
+</section>
+<section id="implementation-ntp-vs-npi" class="slide level2">
+<h2>Implementation: NTP vs NPI</h2>
+<ul>
+<li><strong>NPI</strong>: one-shot generalization to tasks with longer lengths; can’t generalizing to novel programs without training.</li>
+<li><strong>NTP</strong>: generalizes to sub-task permutations (topology) and success conditions (semantics).</li>
+<li>Three main <strong>differences</strong> of NTP than the original NPI:
+<ul>
+<li>NTP can interpret task specifications and perform hierarchical decomposition and thus can be considered as a <strong>meta-policy</strong>;</li>
+<li>It uses robot <strong>APl</strong>s as the primitive actions to scale up neural programs for complex tasks;</li>
+<li>It uses a <strong>reactive core network</strong> instead of a <strong>recurrent network</strong>, making the model less history-dependent, enabling feedback control for recovery from failures.</li>
+</ul></li>
+</ul>
+</section>
+<section id="model-training" class="slide level2">
+<h2>Model Training</h2>
+<ul>
+<li><p>The model is trained using rich supervision from program execution traces <span class="math inline">\(\{\xi_t| \xi_t = (\Psi_t, p_t, s_t), t = 1 \ldots T\}\)</span>.</p></li>
+<li><p>The training objective is to maximize the probability of the correct executions over all the tasks in the dataset <span class="math inline">\(D = \{(\xi_t, \xi_{t+1})\}\)</span>.</p></li>
+<li><p>For each task specification, the ground-truth hierarchical decomposition is provided by the expert policy, which is an agent with hard-coded rules.</p></li>
+</ul>
+</section>
+<section id="experiments-setup" class="slide level2">
+<h2>Experiments: Setup</h2>
+
+<img data-src="images/experiments-setup.png" class="quarto-figure quarto-figure-center r-stretch"><ul>
+<li>Generalization in 3 variations: semantics, topology, and length.</li>
+<li>Using image-based input without access to ground truth state.</li>
+<li>Working in real-world tasks combine these variations.</li>
+</ul>
+<p>→ Three tasks: Object Sorting, Block Stacking, and Table Clean-up</p>
+</section>
+<section id="experiments-object-sorting" class="slide level2">
+<h2>Experiments: Object Sorting</h2>
+
+<img data-src="images/object-sorting.png" class="quarto-figure quarto-figure-center r-stretch"><ul>
+<li><p><strong>Flat</strong>: non-hierarchical model, directly predicts the primitive APls instead of calling hierarchical programs.</p></li>
+<li><p><strong>GRU</strong>: Gated Recurrent Unit.</p></li>
+</ul>
+</section>
+<section id="experiments-block-stacking" class="slide level2">
+<h2>Experiments: Block Stacking</h2>
+
+<img data-src="images/block-stacking.png" class="quarto-figure quarto-figure-center r-stretch"><ul>
+<li><strong>NTPVID(E2E)</strong>: Trained with only visual information.</li>
+<li><strong>NTP(Full State)</strong>: Trained with ground-truth hierarchical decomposition.</li>
+</ul>
+</section>
+<section id="experiments-table-clean-up" class="slide level2">
+<h2>Experiments: Table Clean-up</h2>
+
+<img data-src="images/table-cleanup.png" class="quarto-figure quarto-figure-center r-stretch"><ul>
+<li><p>Sort plastic bowls and forks into a stack, so they can be steadily carried away.</p></li>
+<li><p>Task variations:</p>
+<ul>
+<li>Task length: number of bowls and forks varies.</li>
+<li>Task topology: the ordering in which bowls are stacked varies.</li>
+</ul></li>
+</ul>
+</section>
+<section id="discussion-future-work" class="slide level2">
+<h2>Discussion &amp; Future Work</h2>
+<ul>
+<li><strong>Neural Task Programming</strong>:
+<ul>
+<li>A meta-learning framework that learns modular and reusable neural programs for hierarchical tasks.</li>
+<li>Generalizing well towards the variation of task length, semantics, and topology for complex tasks.</li>
+</ul></li>
+<li><strong>Future work</strong>:
+<ul>
+<li>Improve the state encoder to extract more task-salient information such as object relationships;</li>
+<li>Devise a richer set of APls such as velocity and torque-based controllers;</li>
+<li>Extend this framework to tackle more complex tasks on real robots.</li>
+</ul></li>
+</ul>
+</section>
 <section id="section" class="slide level2">
 <h2></h2>
-
-<img data-src="images/neural-task-program.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-1" class="slide level2">
-<h2></h2>
-
-<img data-src="images/how-the-algo-works1.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-2" class="slide level2">
-<h2></h2>
-
-<img data-src="images/how-the-algo-works2.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-3" class="slide level2">
-<h2></h2>
-
-<img data-src="images/goals.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-4" class="slide level2">
-<h2></h2>
-
-<img data-src="images/neural-task-programming.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-5" class="slide level2">
-<h2></h2>
-
-<img data-src="images/implementation-npi.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-6" class="slide level2">
-<h2></h2>
-
-<img data-src="images/ntp-npi.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-7" class="slide level2">
-<h2></h2>
-
-<img data-src="images/model-training.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-8" class="slide level2">
-<h2></h2>
-
-<img data-src="images/experiments-setup.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-9" class="slide level2">
-<h2></h2>
-
-<img data-src="images/object-sorting.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-10" class="slide level2">
-<h2></h2>
-
-<img data-src="images/block-stacking.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-11" class="slide level2">
-<h2></h2>
-
-<img data-src="images/table-cleaup.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-12" class="slide level2">
-<h2></h2>
-
-<img data-src="images/future-work.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-13" class="slide level2">
-<h2></h2>
-<iframe data-external="1" src="https://www.youtube.com/embed/YWkBRPnGUqA" width="100%" height="80%" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+<iframe data-external="1" src="https://www.youtube.com/embed/YWkBRPnGUqA?rel=0" width="100%" height="80%" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 <p><span class="tiny-font"><a href="https://www.youtube.com/watch?v=YWkBRPnGUqA" class="uri">https://www.youtube.com/watch?v=YWkBRPnGUqA</a></span></p>
 </section>
 <section id="questions" class="slide level2 center">
@@ -694,18 +781,18 @@ Continuous action space: 5 joint angles on the robot arm x T timesteps</p>
 <p>Expanding 1 and 2 requires solving continuous optimization problems with constraints</p>
 </div></div>
 </section>
-<section id="section-14" class="slide level2">
+<section id="section-1" class="slide level2">
 <h2></h2>
 <p>Solubility experiment</p>
-<iframe data-external="1" src="https://www.youtube.com/embed/NjpZmaKQWls" width="100%" height="80%" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+<iframe data-external="1" src="https://www.youtube.com/embed/NjpZmaKQWls?rel=0" width="100%" height="80%" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 <p><span class="tiny-font"><a href="https://www.youtube.com/watch?v=NjpZmaKQWls" class="uri">https://www.youtube.com/watch?v=NjpZmaKQWls</a></span></p>
 </section>
 <section id="constrained-motion-planner-to-avoid-spilling" class="slide level2">
 <h2>Constrained Motion Planner to Avoid Spilling</h2>
-<iframe data-external="1" src="https://www.youtube.com/embed/NjpZmaKQWls" width="80%" height="65%" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+<iframe data-external="1" src="https://www.youtube.com/embed/NjpZmaKQWls?rel=0" width="80%" height="65%" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 <p><span class="tiny-font"><a href="https://www.youtube.com/watch?v=NjpZmaKQWls" class="uri">https://www.youtube.com/watch?v=NjpZmaKQWls</a></span></p>
 </section>
-<section id="section-15" class="slide level2 center">
+<section id="section-2" class="slide level2 center">
 <h2></h2>
 <p>These plans are useful, but unfortunately discrete + continuous optimization is <span class="red">slow</span></p>
 <p>Q: How can we <span class="red">learn to plan</span> from past experience of having solved similar problems?</p>
@@ -718,7 +805,7 @@ Continuous action space: 5 joint angles on the robot arm x T timesteps</p>
 <h2><span class="medium">Learning to Rank Objects and Operations from Past Experience</span></h2>
 
 <img data-src="images/rank-obj2.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="section-16" class="slide level2">
+<section id="section-3" class="slide level2">
 <h2></h2>
 <iframe data-external="1" src="https://www.youtube.com/embed/pzzpR4wh_Zk" width="100%" height="80%" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 <p><span class="tiny-font"><a href="https://www.youtube.com/watch?v=pzzpR4wh_Zk&amp;t=15s" class="uri">https://www.youtube.com/watch?v=pzzpR4wh_Zk&amp;t=15s</a></span></p>
@@ -743,16 +830,16 @@ Continuous action space: 5 joint angles on the robot arm x T timesteps</p>
 <p>Acknowledgments<br>
 Today’s slides are based on student presentations from 2019 by: Zeqi Li, Angran Li, Zihan Fu</p>
 </div></aside></section>
-<section id="section-17" class="slide level2">
+<section id="section-4" class="slide level2">
 <h2></h2>
-<iframe data-external="1" src="https://www.youtube.com/embed/hlvRmLlYHZ0" width="100%" height="90%" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+<iframe data-external="1" src="https://www.youtube.com/embed/hlvRmLlYHZ0?rel=0" width="100%" height="90%" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 
 
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p><a href="https://csc2626.github.io/website/" target="_blank">↩︎ Back to Course Website</a></p>
+<p><a href="https://csc2626.github.io/website/" target="_blank" style="font-size:0.8em; bottom: -5px;">↩︎ Back to Course Website</a></p>
 </div>
 </div></div>
 
