@@ -9,49 +9,49 @@ This page contains an outline of the topics, content, and assignments for the se
 | Week | Date | Topic | Prepare | Slides | Notebooks | Assignments | Project |
 |:-------:|---------|---------|:-------:|:-------:|:-------:|:-------:|:-------:|
 | [1](#week-1) | Mon, Sep 9 | Imitation learning vs supervised learning | 📖 | [🖥️](/lecs/w01/lec01.html){.no-style target="_blank" aria-label="Lec 1 slides"} | 📋 | ✍️ |  |
-|  |  | Mitigating compunding errors via dataset aggregation | 📖 | 🖥️ | 📋 |  |  |
-|  |  | Mitigating compounding errors by choosing loss functions | 📖 | 🖥️ | 📋 |  |  |
-|  |  | Imitation via multi-modal generative models | 📖 | 🖥️ | 📋 |  |  |
-|  |  | Training instabilities of behavioral cloning | 📖 | 🖥️ | 📋 |  |  |
-|  |  | Teleoperation interfaces for manipulation (optional) | 📖 | 🖥️ | 📋 |  |  |
-|  |  | Querying experts only when necessary (optional) | 📖 | 🖥️ | 📋 |  |  |
-|  |  | Imitation for visual navigation and autonomous driving (optional) | 📖 | 🖥️ | 📋 |  |  |
+|  |  | Mitigating compunding errors via dataset aggregation | 📖 |  | 📋 |  |  |
+|  |  | Mitigating compounding errors by choosing loss functions | 📖 |  | 📋 |  |  |
+|  |  | Imitation via multi-modal generative models | 📖 | | 📋 |  |  |
+|  |  | Training instabilities of behavioral cloning | 📖 |  | 📋 |  |  |
+|  |  | Teleoperation interfaces for manipulation (optional) | 📖 |  | 📋 |  |  |
+|  |  | Querying experts only when necessary (optional) | 📖 |  | 📋 |  |  |
+|  |  | Imitation for visual navigation and autonomous driving (optional) | 📖 |  | 📋 |  |  |
 | [2](#week-2) | Mon, Sep 16 | Intro to optimal control | 📖 | [🖥️](/lecs/w02/lec02.html){.no-style target="_blank" aria-label="Lec 2 slides"} | 📋 |  |  |
-|  |  | Intro to model-based reinforcement learning | 📖 | 🖥️ | 📋 |  |  |
-|  |  | Intro to model-free reinforcement learning | 📖 | 🖥️ | 📋 |  |  |
-|  |  | Monotonic improvement of the value function (optional) | 📖 | 🖥️ | 📋 |  |  |
-|  |  | Learning dynamics well only where it matters for the value function (optional) | 📖 | 🖥️ | 📋 | 📂 |  |
-|  |  | Parallelizing MPC on the GPU (optional) | 📖 | 🖥️ | 📋 |  |  |
+|  |  | Intro to model-based reinforcement learning | 📖 |  | 📋 |  |  |
+|  |  | Intro to model-free reinforcement learning | 📖 |  | 📋 |  |  |
+|  |  | Monotonic improvement of the value function (optional) | 📖 |  | 📋 |  |  |
+|  |  | Learning dynamics well only where it matters for the value function (optional) | 📖 |  | 📋 | 📂 |  |
+|  |  | Parallelizing MPC on the GPU (optional) | 📖 |  | 📋 |  |  |
 | [3](#week-3) | Mon, Sep 23 | Offline / batch reinforcement learning | 📖 | [🖥️](/lecs/w03/lec03.html){.no-style target="_blank" aria-label="Lec 3 slides"} | 📋 | ✍️ |  |
-|  |  | Transitioning from offline to online RL | 📖 | 🖥️ | 📋 |  |  |
+|  |  | Transitioning from offline to online RL | 📖 |  | 📋 |  |  |
 | [4](#week-4) | Mon, Sep 30 | Imitation learning combined with RL and planning | 📖 | [🖥️](/lecs/w04/lec04.html){.no-style target="_blank" aria-label="Lec 4 slides"} | 📋 |  |  |
-|  |  | Making cost-to-go queries to experts | 📖 | 🖥️ | 📋 |  |  |
-|  |  | Expert iteration | 📖 | 🖥️ | 📋 |  |  |
-|  |  | Imitation can improve search and exploration strategies | 📖 | 🖥️ | 📋 |  |  |
-|  |  | Learning from experts that have privileged information | 📖 | 🖥️ | 📋 | 📂 | ✍️ |
-|  |  | Dynamic movement primitives | 📖 | 🖥️ | 📋 | 📂 | ✍️ |
+|  |  | Making cost-to-go queries to experts | 📖 |  | 📋 |  |  |
+|  |  | Expert iteration | 📖 |  | 📋 |  |  |
+|  |  | Imitation can improve search and exploration strategies | 📖 |  | 📋 |  |  |
+|  |  | Learning from experts that have privileged information | 📖 |  | 📋 | 📂 | ✍️ |
+|  |  | Dynamic movement primitives | 📖 |  | 📋 | 📂 | ✍️ |
 | [5](#week-5) | Mon, Oct 7 | Inverse reinforcement learning | 📖 | [🖥️](/lecs/w05/lec05.html){.no-style target="_blank" aria-label="Lec 5 slides"} | 📋 |  |  |
-|  |  | Inferring rewards from preferences | 📖 | 🖥️ | 📋 |  |  |
-|  |  | Task specification and human-robot dialog | 📖 | 🖥️ | 📋 |  |  |
-|  |  | Value alignment | 📖 | 🖥️ | 📋 |  |  |
+|  |  | Inferring rewards from preferences | 📖 |  | 📋 |  |  |
+|  |  | Task specification and human-robot dialog | 📖 |  | 📋 |  |  |
+|  |  | Value alignment | 📖 |  | 📋 |  |  |
 | [6](#week-6) | Mon, Oct 14 | Thanksgiving Monday |  |  |  |  | 📂 |
 |  |  | No in-person lecture or office hours on Monday |  |  |  |  |  |
 |  |  | TA office hours are on |  |  |  |  |  |
 | [7](#week-7) | Mon, Oct 21 | Imitation as program induction | 📖 | [🖥️](/lecs/w07/lec07.html){.no-style target="_blank" aria-label="Lec 7 slides"} | 📋 |  |  |
-|  |  | Modular decomposition of demonstrations into skills | 📖 | 🖥️ | 📋 |  |  |
-|  |  | (Hierarchical) imitation of multi-goal tasks | 📖 | 🖥️ | 📋 |  |  |
-|  |  | Inferring grammars and planning domains | 📖 | 🖥️ | 📋 |  |  |
+|  |  | Modular decomposition of demonstrations into skills | 📖 |  | 📋 |  |  |
+|  |  | (Hierarchical) imitation of multi-goal tasks | 📖 |  | 📋 |  |  |
+|  |  | Inferring grammars and planning domains | 📖 |  | 📋 |  |  |
 | [8](#week-8) | Mon, Oct 28 | Fall Reading Week |  |  |  |  |  |
 |  |  | No lecture |  |  |  |  |  |
 |  |  | No office hours |  |  |  |  |  |
 | [9](#week-9) | Mon, Nov 4 | Adversarial imitation learning | 📖 | [🖥️](/lecs/w09/lec09.html){.no-style target="_blank" aria-label="Lec 9 slides"} | 📋 |  |  |
 | [10](#week-10) | Mon, Nov 11 | Shared autonomy | 📖 | [🖥️](/lecs/w10/lec10.html){.no-style target="_blank" aria-label="Lec 10 slides"} | 📋 |  |  |
-|  |  | Imitation with a human in the loop | 📖 | 🖥️ | 📋 |  |  |
-|  |  | Teleoperation | 📖 | 🖥️ | 📋 |  |  |
+|  |  | Imitation with a human in the loop | 📖 |  | 📋 |  |  |
+|  |  | Teleoperation | 📖 |  | 📋 |  |  |
 | [11](#week-11) | Mon, Nov 18 | Imitation learning from videos | 📖 | [🖥️](/lecs/w11/lec11.html){.no-style target="_blank" aria-label="Lec 11 slides"} | 📋 |  |  |
-|  |  | Causal confusion in imitation learning | 📖 | 🖥️ | 📋 |  |  |
+|  |  | Causal confusion in imitation learning | 📖 |  | 📋 |  |  |
 | [12](#week-12) | Mon, Nov 25 | Representation learning for imitation | 📖 | [🖥️](/lecs/w12/lec12.html){.no-style target="_blank" aria-label="Lec 11 slides"} | 📋 |  |  |
-|  |  | Generalization and safety guarantees for imitation | 📖 | 🖥️ | 📋 |  |  |
+|  |  | Generalization and safety guarantees for imitation | 📖 |  | 📋 |  |  |
 | [13](#week-13) | Mon, Dec 2 | Project presentations |  |  |  |  |  |
 | [14](#week-14) | Mon, Dec 9 | Final project submission |  |  |  |  | 📂 |
 :::
