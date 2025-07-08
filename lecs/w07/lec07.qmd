@@ -8,7 +8,7 @@ format:
         embed-resources: false
         show-notes: false
         smaller: true
-        footer: '<a href="https://csc2626.github.io/website/" target="_blank">↩ Back to Course Website</a>'
+        footer: '<a href="https://csc2626.github.io/website/" target="_blank" style="font-size:0.8em; bottom: -5px;">↩ Back to Course Website</a>'
         chalkboard:
             src: chalkboard.json
             buttons: true
@@ -23,22 +23,22 @@ html-math-method:
 
 ## Today’s agenda
 
-• Learning programs based on execution traces (NPI - Neural Programmer Interpreters) 
+• Learning programs based on execution traces (NPI - Neural Programmer Interpreters)
 
-• Extending NPI for video-based robot imitation (NTP - Neural Task Programming) 
+• Extending NPI for video-based robot imitation (NTP - Neural Task Programming)
 
-• Inferring sub-task boundaries (TACO - Temporal Alignment for Control) 
+• Inferring sub-task boundaries (TACO - Temporal Alignment for Control)
 
-• Learning to search in Task and Motion Planning (TAMP) 
+• Learning to search in Task and Motion Planning (TAMP)
 
 • Generalization through imitation – using hierarchical policies
 
 ::: aside
-Acknowledgments \
+Acknowledgments\
 Today’s slides are based on student presentations from 2019 by: Zeqi Li, Angran Li, Zihan Fu
-::: 
+:::
 
-## Neural Programmer-Interpreters{.center}
+## Neural Programmer-Interpreters {.center}
 
 By Scott Reed & Nando de Freitas
 
@@ -50,28 +50,25 @@ Neural Programmer-Interpreters (NPI) is an attempt to use **neural methods** to 
 
 ![](images/rnn.png)
 
-• RNN is a neural network with feedback 
+• RNN is a neural network with feedback
 
 • Hidden state is to capture history information and current state of the network
 
 ## Long Short Term Memory (LSTM)
 
-::: {.columns}
-:::: {.column width="50%"}
+::::: columns
+::: {.column width="50%"}
 ![](images/lstm.png)
-::::
+:::
 
-:::: {.column width="50%"}
-
+::: {.column width="50%"}
 <br><br>
 
 • LSTM is a special kind of RNN
 
 • Gates are used to control information flow. Just like a valve
-
-::::
-::: 
-
+:::
+:::::
 
 ## Model
 
@@ -99,16 +96,16 @@ Neural Programmer-Interpreters (NPI) is an attempt to use **neural methods** to 
 
 ![](images/algo-inference3.png)
 
-:::{.small-math}
+::: small-math
 [(1)]{.red}: $𝑀^{𝑝𝑟𝑜𝑔}$ and $𝑀^{𝑘𝑒𝑦}$ are memory storing program embeddings and program keys
 
-[(2)]{.red}: $𝑓_{𝑒𝑛𝑐}$ is a domain-specific encoder (for different tasks, have different encoders) 
+[(2)]{.red}: $𝑓_{𝑒𝑛𝑐}$ is a domain-specific encoder (for different tasks, have different encoders)
 
-[(3)]{.red}: $𝑓_{𝑒𝑛𝑑}$ is to calculate the probability of finishing the program 
+[(3)]{.red}: $𝑓_{𝑒𝑛𝑑}$ is to calculate the probability of finishing the program
 
-[(4)]{.red}: $𝑓_{𝑝𝑟𝑜𝑔}$ is to retrieve the next program key from memory 
+[(4)]{.red}: $𝑓_{𝑝𝑟𝑜𝑔}$ is to retrieve the next program key from memory
 
-[(5)]{.red}: $𝑓_{𝑎𝑟𝑔}$ is to return the next program’s arguments 
+[(5)]{.red}: $𝑓_{𝑎𝑟𝑔}$ is to return the next program’s arguments
 
 [(6)]{.red}: $(𝑀_{𝑗,}^{𝑘𝑒𝑦})^{𝑇}𝑘$ is to measure cosine similarity
 
@@ -177,7 +174,7 @@ Then we can just run gradient ascent to optimize it
 
 <br>
 
-:::: {.columns}
+::::: columns
 ::: {.column width="50%"}
 ![](images/data-sort.png)
 :::
@@ -189,18 +186,15 @@ Then we can just run gradient ascent to optimize it
 
 • NPI benefits from mining multiple subprogram examples per sorting instance, and additional parameters of the program memory.
 :::
-::::
-
+:::::
 
 ## Generalization - Sorting
 
 <br>
 
-:::: {.columns}
+::::: columns
 ::: {.column width="50%"}
-
 ![](images/gen-sort.png)
-
 :::
 
 ::: {.column width="50%"}
@@ -208,56 +202,47 @@ Then we can just run gradient ascent to optimize it
 
 • Then, they evaluated whether the network can learn to sort arrays beyond length 20
 :::
-::::
-
+:::::
 
 ## Generalization - Adding
 
 <br>
 
-:::: {.columns}
+::::: columns
 ::: {.column width="50%"}
-
 ![](images/add-sort.png)
-
 :::
 
 ::: {.column width="50%"}
-
 • NPI trained on **32 examples** for sequence **length up to 20**
 
 • s2s-easy trained on **twice** as many examples as NPI (purple curve)
 
 • s2s-stack trained on **16 times** more examples than NPI (orange curve)
-
 :::
-::::
-
+:::::
 
 ## Generalization - Adding
 
 <br>
 
-:::: {.columns}
+::::: columns
 ::: {.column width="50%"}
 ![](images/npi-demo.png)
 :::
 
 ::: {.column width="50%"}
-
 • NPI trained on **32 examples** for sequence **length up to 20**
 
 • s2s-easy trained on **twice** as many examples as NPI (purple curve)
 
 • s2s-stack trained on **16 times** more examples than NPI (orange curve)
-
 :::
-::::
+:::::
 
+## Learning New Programs with a Fixed NPI Core
 
-## Learning New Programs with a Fixed NPI Core 
-
-• Toy example: maximum-finding in an array 
+• Toy example: maximum-finding in an array
 
 • Simple (not optimal) way: call BUBBLESORT and then take the right-most element of the array. Two new programs:
 
@@ -271,18 +256,18 @@ Then we can just run gradient ascent to optimize it
 
 ![](images/rjmp-max.png){fig-align="center" height="240"}
 
-:::{.red-annotation .absolute right=0 bottom=50%}
-Only the memory slots of \
-the new program are updated! \
-All other weights are \
+::: {.red-annotation .absolute right="0" bottom="50%"}
+Only the memory slots of\
+the new program are updated!\
+All other weights are\
 fixed!
 :::
 
-Protocol: 
+Protocol:
 
-• Randomly initialize new program vectors in memory 
+• Randomly initialize new program vectors in memory
 
-• Freeze core and other program vectors 
+• Freeze core and other program vectors
 
 • Backpropagate gradients to new program vectors
 
@@ -290,7 +275,7 @@ Protocol:
 
 ![](images/quantitative-table.png){fig-align="center" height="240"}
 
-• Numbers are per-sequence % accuracy 
+• Numbers are per-sequence % accuracy
 
 • + Max: indicates performance after addition of MAX program to memory
 
@@ -298,27 +283,24 @@ Protocol:
 
 ## Today’s agenda
 
-::: {.grey-text}
-
-• Learning programs based on execution traces (NPI - Neural Programmer Interpreters) 
-
+::: grey-text
+• Learning programs based on execution traces (NPI - Neural Programmer Interpreters)
 :::
 
-• Extending NPI for video-based robot imitation (NTP - Neural Task Programming) 
+• Extending NPI for video-based robot imitation (NTP - Neural Task Programming)
 
-• Inferring sub-task boundaries (TACO - Temporal Alignment for Control) 
+• Inferring sub-task boundaries (TACO - Temporal Alignment for Control)
 
-• Learning to search in Task and Motion Planning (TAMP) 
+• Learning to search in Task and Motion Planning (TAMP)
 
 • Generalization through imitation – using hierarchical policies
 
 ::: aside
-Acknowledgments \
+Acknowledgments\
 Today’s slides are based on student presentations from 2019 by: Zeqi Li, Angran Li, Zihan Fu
-::: 
+:::
 
-
-##
+## 
 
 ![](images/neural-task-program.png){fig-align="center"}
 
@@ -326,76 +308,84 @@ Today’s slides are based on student presentations from 2019 by: Zeqi Li, Angra
 
 ![](images/how-the-algo-works1.png){fig-align="center"}
 
-##
+## 
 
 ![](images/how-the-algo-works2.png){fig-align="center"}
 
-##
+## 
+
 ![](images/goals.png){fig-align="center"}
 
-##
+## 
+
 ![](images/neural-task-programming.png){fig-align="center"}
 
-##
+## 
+
 ![](images/implementation-npi.png){fig-align="center"}
 
-##
+## 
+
 ![](images/ntp-npi.png){fig-align="center"}
 
-##
+## 
+
 ![](images/model-training.png){fig-align="center"}
 
-##
+## 
+
 ![](images/experiments-setup.png){fig-align="center"}
 
-##
+## 
+
 ![](images/object-sorting.png){fig-align="center"}
 
-##
+## 
+
 ![](images/block-stacking.png){fig-align="center"}
 
-##
+## 
+
 ![](images/table-cleaup.png){fig-align="center"}
 
-##
+## 
+
 ![](images/future-work.png){fig-align="center"}
 
 ## 
 
-{{< video https://www.youtube.com/watch?v=YWkBRPnGUqA width="100%" height="80%" >}}
+{{< video https://www.youtube.com/watch?v=YWkBRPnGUqA?rel=0&enablejsapi=1 width="100%" height="80%" >}}
 
 [<https://www.youtube.com/watch?v=YWkBRPnGUqA>]{.tiny-font}
 
 ## Questions? {.center}
 
-
 ## Today’s agenda
 
-::: {.grey-text}
+::: grey-text
+• Learning programs based on execution traces (NPI - Neural Programmer Interpreters)
 
-• Learning programs based on execution traces (NPI - Neural Programmer Interpreters) 
-
-• Extending NPI for video-based robot imitation (NTP - Neural Task Programming) 
+• Extending NPI for video-based robot imitation (NTP - Neural Task Programming)
 :::
 
-• Inferring sub-task boundaries (TACO - Temporal Alignment for Control) 
+• Inferring sub-task boundaries (TACO - Temporal Alignment for Control)
 
-• Learning to search in Task and Motion Planning (TAMP) 
+• Learning to search in Task and Motion Planning (TAMP)
 
 • Generalization through imitation – using hierarchical policies
 
 ::: aside
-Acknowledgments \
+Acknowledgments\
 Today’s slides are based on student presentations from 2019 by: Zeqi Li, Angran Li, Zihan Fu
-::: 
+:::
 
-## TACO: Learning Task Decomposition via Temporal Alignment for Control{.center}
+## TACO: Learning Task Decomposition via Temporal Alignment for Control {.center}
 
 Kyriacos Shiarlis, Markus Wulfmeier, Sasha Salter, Shimon Whiteson, Ingmar Posner
 
 ## Motivation – Block Stacking Task
 
-:::: {.columns}
+::::: columns
 ::: {.column width="50%"}
 ![](images/block-stack.png)
 :::
@@ -403,38 +393,37 @@ Kyriacos Shiarlis, Markus Wulfmeier, Sasha Salter, Shimon Whiteson, Ingmar Posne
 ::: {.column width="50%"}
 <br>
 
-* Complex tasks can often be broken down into simpler sub-tasks
+-   Complex tasks can often be broken down into simpler sub-tasks
 
-* Most Learning from Demonstration (LfD) algorithms can only learn a single policy for the whole task
+-   Most Learning from Demonstration (LfD) algorithms can only learn a single policy for the whole task
 
-* Resulting in more complex policies, and also less reusable
+-   Resulting in more complex policies, and also less reusable
 :::
-::::
-
+:::::
 
 ## Modular LfD
 
 <br>
 
-* Modelling the task as a composition of sub-tasks
+-   Modelling the task as a composition of sub-tasks
 
-* Reusable sub-policies (modules) are learned for each sub-task.
+-   Reusable sub-policies (modules) are learned for each sub-task.
 
-* Sub-policies are easier to learn and can be composed in different ways to execute new tasks.
+-   Sub-policies are easier to learn and can be composed in different ways to execute new tasks.
 
 Key approach: provide the learner with additional information about the demonstration
 
 ## TACO: Temporal Alignment for Control
 
-* Partly supervised 
-* Domain agnostic 
-* Demonstration is augmented by [task sketches - a sequence of sub-tasks that occur within the demonstration]{.red}
+-   Partly supervised
+-   Domain agnostic
+-   Demonstration is augmented by [task sketches - a sequence of sub-tasks that occur within the demonstration]{.red}
 
 $$
 𝛕 = (b1, b2, . . . , bL),
 $$
 
-* Simultaneously aligns the sketches with the observed demonstrations and learns the required sub-policies
+-   Simultaneously aligns the sketches with the observed demonstrations and learns the required sub-policies
 
 ## Example: Block stacking task
 
@@ -450,31 +439,25 @@ Solution: Borrow temporal sequence alignment techniques from speech recognition!
 
 ## TACO: Temporal Alignment for Control
 
-:::: {.columns}
+::::: columns
 ::: {.column width="60%"}
+<br>
 
-<br> 
-
-𝛕 = (b1, b2, . . . , bL), 
+𝛕 = (b1, b2, . . . , bL),
 
 Input sequence ρ with length T
 
-
 A path $ζ = (ζ_1, ζ_2, ..., ζ_T )$ is a sequence of sub- tasks of the same length as the input sequence ρ, describing the active sub-task $ζ_t$ at every time-step
 
-
 $Z_{T,𝛕}$ is the set of all possible paths of length T for a task sketch 𝛕
-
 
 Eg. T = 6, 𝛕 = (b1, b2, b3), ζ = (b1, b1, b2, b3, b3, b3)
 :::
 
 ::: {.column width="40%"}
-
 ![](images/taco.png)
 :::
-::::
-
+:::::
 
 ## TACO: Temporal Alignment for Control
 
@@ -483,7 +466,6 @@ Objective: Maximise the joint log likelihood of the task sequence and the action
 $$
 p(\tau, \mathbf{a}_\rho \mid s_\rho) = \sum_{\zeta \in \mathbb{Z}_{T, \tau}} p(\zeta \mid s_\rho) \prod_{t=1}^{T} \pi_{\theta_{\zeta_t}} (a_t \mid s_t)
 $$
-
 
 $p(ζ |s_ρ)$ is the product of the stop, $a_{STOP}$ , and nonstop, $ā_{STOP}$, probabilities associated with any given path.
 
@@ -503,12 +485,10 @@ $$
 \alpha_t(l) := \sum_{\zeta_{1:t} \in \mathbb{Z}_t, \tau_{1:l}} p(\zeta \mid s_\rho) \prod_{t' = 1}^{t} \pi_{\theta_{\zeta_{t'}}}(a_{t'} \mid s_{t'})
 $$
 
-
 ## TACO: Temporal Alignment for Control
 
-:::: {.columns}
-::: {.column width="50%" .small-math}
-
+::::: columns
+::: {.column .small-math width="50%"}
 <br>
 
 $\alpha_1(l) = \begin{cases}
@@ -523,54 +503,47 @@ $\left. + \alpha_{t-1}(l)(1 - \pi_{\theta_{b_l}}(a_{STOP}|s_t)) \right].$
 <br>
 
 $\alpha_T(L) = p(\tau, \mathbf{a}_\rho|\mathbf{s}_\rho).$
-
 :::
 
 ::: {.column width="50%"}
 ![](images/taco-alignment.png)
 :::
-::::
+:::::
 
 Training: Maximize $⍺_T(L)$ over θ
 
 ## Experiments: Nav-World
 
-:::: {.columns}
+::::: columns
 ::: {.column width="50%"}
 Setup:
 
-* The agent (blue) receives a route as a task sketch. 
-* 𝛕 = (black, green, yellow, red) 
-* State space: (x, y) distance from each of the destination points 
-* Action space: $(v_x, v_y)$ - the velocity
-
+-   The agent (blue) receives a route as a task sketch.
+-   𝛕 = (black, green, yellow, red)
+-   State space: (x, y) distance from each of the destination points
+-   Action space: $(v_x, v_y)$ - the velocity
 
 Training:
 
-* Provided with state-action trajectories ⍴ and the task sketch. 
-* At the end of learning, the agent learns four sub-policies
-
+-   Provided with state-action trajectories ⍴ and the task sketch.
+-   At the end of learning, the agent learns four sub-policies
 :::
 
 ::: {.column width="50%"}
-
 ![](images/nav-world.png)
 
 <br><br>
 
 Test:
 
-* Given an unseen task sketch. 
-* Considered successful if the agent visits all destinations in the correct order
-
-
+-   Given an unseen task sketch.
+-   Considered successful if the agent visits all destinations in the correct order
 :::
-::::
-
+:::::
 
 ## Experiments: Nav-World
 
-:::: {.columns}
+::::: columns
 ::: {.column width="50%"}
 ![Success Rate](images/nav-world-success.png)
 :::
@@ -578,12 +551,11 @@ Test:
 ::: {.column width="50%"}
 ![Alignment Accuracy](images/nav-world-alignment.png)
 :::
-::::
-
+:::::
 
 ## Experiments: Dial Domain
 
-:::: {.columns}
+::::: columns
 ::: {.column width="50%"}
 ![](images/dial-domain.png)
 :::
@@ -591,55 +563,52 @@ Test:
 ::: {.column width="50%"}
 ![](images/dial-domain-graph.png)
 :::
-::::
+:::::
 
 ## Summary: TACO - Temporal Alignment for Control
 
-* Modular LfD
+-   Modular LfD
 
-* Weak supervision - task sketch
+-   Weak supervision - task sketch
 
-* Optimising the sub-policies over a distribution of possible alignments
+-   Optimising the sub-policies over a distribution of possible alignments
 
 ## Future Work & Limitation
 
 Limitation:
 
-* Sub-tasks in the task sketch has to be placed in the correct order
+-   Sub-tasks in the task sketch has to be placed in the correct order
 
 <br>
 
 Future work:
 
-* Task sketches are dissimilar to natural human communication. Combination of TACO with architectures that can handle natural language.
+-   Task sketches are dissimilar to natural human communication. Combination of TACO with architectures that can handle natural language.
 
-* Hierarchical task decomposition.
-
+-   Hierarchical task decomposition.
 
 ## Today’s agenda
 
-:::{.grey-text}
-• Learning programs based on execution traces (NPI - Neural Programmer Interpreters) 
+::: grey-text
+• Learning programs based on execution traces (NPI - Neural Programmer Interpreters)
 
-• Extending NPI for video-based robot imitation (NTP - Neural Task Programming) 
+• Extending NPI for video-based robot imitation (NTP - Neural Task Programming)
 
-• Inferring sub-task boundaries (TACO - Temporal Alignment for Control) 
+• Inferring sub-task boundaries (TACO - Temporal Alignment for Control)
 :::
 
-• Learning to search in Task and Motion Planning (TAMP) 
+• Learning to search in Task and Motion Planning (TAMP)
 
 • Generalization through imitation – using hierarchical policies
 
 ::: aside
-Acknowledgments \
+Acknowledgments\
 Today’s slides are based on student presentations from 2019 by: Zeqi Li, Angran Li, Zihan Fu
-::: 
-
+:::
 
 ## Task and Motion Planning
 
-
-:::: {.columns}
+::::: columns
 ::: {.column width="50%"}
 ![](images/task-motion-planning.png)
 :::
@@ -649,29 +618,25 @@ Today’s slides are based on student presentations from 2019 by: Zeqi Li, Angra
 
 [Problem]{.underline}: [grey box]{.grey-text} is obstructing
 
-
 [Task plan]{.underline}:
 
 1.  move [grey box]{.grey-text} where it doesn’t obstruct
 2.  move [blue box]{.blue-text} on goal surface
 3.  move [green box]{.green} on goal surface
-
 :::
-::::
-
+:::::
 
 ## Task and Motion Planning
 
-:::: {.columns}
-::: {.column width="50%" .red-annotation}
+::::: columns
+::: {.column .red-annotation width="50%"}
 ![](images/task-motion-planning.png)
 
-Discrete action space: 3 objects x 4 operations \
+Discrete action space: 3 objects x 4 operations\
 Continuous action space: 5 joint angles on the robot arm x T timesteps
 :::
 
 ::: {.column width="50%"}
-
 find-grasp(b, hand)
 
 place(b, hand, sur face)
@@ -683,23 +648,20 @@ collides(arm, b, objects)
 <br>
 
 $b \in \{b_0, b_1, b_2 \}$
-
 :::
-::::
-
+:::::
 
 ## Task and Motion Planning
 
-:::: {.columns}
-::: {.column width="50%" .red-annotation}
+::::: columns
+::: {.column .red-annotation width="50%"}
 ![](images/task-motion-planning.png)
 
-Discrete action space: M objects x N operations \
+Discrete action space: M objects x N operations\
 Continuous action space: 5 joint angles on the robot arm x T timesteps
 :::
 
 ::: {.column width="50%"}
-
 find-grasp(b, hand)
 
 place(b, hand, sur face)
@@ -714,52 +676,47 @@ stir(b)
 
 shake(b)
 
-. \
-. \
-. 
-
+.\
+.\
+.
 :::
-::::
-
-
+:::::
 
 ## Task and Motion Planning
 
-:::: {.columns}
-::: {.column width="50%" .red-annotation}
+::::: columns
+::: {.column .red-annotation width="50%"}
 ![](images/task-motion-planning.png)
 
-Discrete action space: M objects x N operations \
+Discrete action space: M objects x N operations\
 Continuous action space: 5 joint angles on the robot arm x T timesteps
 :::
 
-::: {.column width="50%" .small-math}
-
+::: {.column .small-math width="50%"}
 Discrete + Continuous Optimization
 
 ![](images/task-motion-graph.png){height="250"}
 
 Expanding 1 and 2 requires solving continuous optimization problems with constraints
-
 :::
-::::
-
+:::::
 
 ## 
 
 Solubility experiment
 
-{{< video https://www.youtube.com/watch?v=NjpZmaKQWls width="100%" height="80%" >}}
+{{< video https://www.youtube.com/watch?v=NjpZmaKQWls?rel=0&enablejsapi=1 width="100%" height="80%" >}}
 
 [<https://www.youtube.com/watch?v=NjpZmaKQWls>]{.tiny-font}
 
 ## Constrained Motion Planner to Avoid Spilling
 
-{{< video https://www.youtube.com/watch?v=NjpZmaKQWls width="80%" height="65%" >}}
+{{< video https://www.youtube.com/watch?v=NjpZmaKQWls?rel=0&enablejsapi=1 width="80%" height="65%" >}}
 
 [<https://www.youtube.com/watch?v=NjpZmaKQWls>]{.tiny-font}
 
-## {.center}
+##  {.center}
+
 These plans are useful, but unfortunately discrete + continuous optimization is [slow]{.red}
 
 Q: How can we [learn to plan]{.red} from past experience of having solved similar problems?
@@ -772,8 +729,9 @@ Q: How can we [learn to plan]{.red} from past experience of having solved simila
 
 ![](images/rank-obj2.png){fig-align="center"}
 
-##
-{{< video https://www.youtube.com/watch?v=pzzpR4wh_Zk&t=15s width="100%" height="80%" >}}
+## 
+
+{{< video https://www.youtube.com/watch?v=pzzpR4wh_Zk&t=15s?rel=0&enablejsapi=1 width="100%" height="80%" >}}
 
 [<https://www.youtube.com/watch?v=pzzpR4wh_Zk&t=15s>]{.tiny-font}
 
@@ -781,31 +739,28 @@ Q: How can we [learn to plan]{.red} from past experience of having solved simila
 
 ![](images/learned-planner.png)
 
-[*Learning to Search in Task and Motion Planning with Streams, Khodeir et al, Robotics and Automation Letters. 2022]{.tiny-font}
+[\*Learning to Search in Task and Motion Planning with Streams, Khodeir et al, Robotics and Automation Letters. 2022]{.tiny-font}
 
 ## Today’s agenda
 
-:::{.grey-text}
-• Learning programs based on execution traces (NPI - Neural Programmer Interpreters) 
+::: grey-text
+• Learning programs based on execution traces (NPI - Neural Programmer Interpreters)
 
-• Extending NPI for video-based robot imitation (NTP - Neural Task Programming) 
+• Extending NPI for video-based robot imitation (NTP - Neural Task Programming)
 
-• Inferring sub-task boundaries (TACO - Temporal Alignment for Control) 
+• Inferring sub-task boundaries (TACO - Temporal Alignment for Control)
 
-• Learning to search in Task and Motion Planning (TAMP) 
+• Learning to search in Task and Motion Planning (TAMP)
 :::
 
-• Generalization through imitation – using hierarchical policies \
+• Generalization through imitation – using hierarchical policies\
 [source: <https://www.youtube.com/watch?v=hlvRmLlYHZ0&t=111s&ab_channel=RoboticsScienceandSystems>]{.tiny-font}
 
 ::: aside
-Acknowledgments \
+Acknowledgments\
 Today’s slides are based on student presentations from 2019 by: Zeqi Li, Angran Li, Zihan Fu
-::: 
+:::
 
+## 
 
-##
-
-{{< video https://www.youtube.com/watch?v=hlvRmLlYHZ0 width="100%" height="90%" >}}
-
-
+{{< video https://www.youtube.com/watch?v=hlvRmLlYHZ0?rel=0&enablejsapi=1 width="100%" height="90%" >}}

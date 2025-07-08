@@ -8,7 +8,7 @@ format:
     embed-resources: false
     show-notes: false
     smaller: true
-    footer: '<a href="https://csc2626.github.io/website/" target="_blank">↩ Back to Course Website</a>'
+    footer: '<a href="https://csc2626.github.io/website/" target="_blank" style="font-size:0.8em; bottom: -5px;">↩ Back to Course Website</a>'
     chalkboard:
       src: chalkboard.json
       buttons: true
@@ -329,7 +329,9 @@ Today’s slides borrow very heavily from: Sergey Levine & Aviral Kumar (CSC285 
 
 ## QT-Opt (roughly: continuous-action Q-Learning)
 
-{{< video https://www.youtube.com/watch?v=W4joe3zzglU width="700" height="450" >}}
+{{< video https://www.youtube.com/watch?v=W4joe3zzglU?rel=0&enablejsapi=1 width="700" height="450" >}}
+
+<!-- <iframe data-external="1" src="https://www.youtube.com/embed/W4joe3zzglU?rel=0&amp;enablejsapi=1" width="700" height="450" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe> -->
 
 ## QT-Opt (roughly: continuous-action Q-Learning)
 
@@ -448,7 +450,9 @@ Today’s slides borrow very heavily from: Sergey Levine & Aviral Kumar (CSC285 
 
 ## The need for safe exploration in RL for robotics
 
-![](images/robot1.png){width="250"} ![](images/robot2.png){width="200"} {{< video https://www.youtube.com/watch?v=eRwTbRtnT1I width="300" height="200" >}} {{< video https://www.youtube.com/watch?v=VfDYUeyzHqc width="200" height="200" >}}
+![](images/robot1.png){width="250"} ![](images/robot2.png){width="200"} 
+{{< video https://www.youtube.com/watch?v=eRwTbRtnT1I?rel=0&enablejsapi=1 width="300" height="200" >}} 
+{{< video https://www.youtube.com/watch?v=VfDYUeyzHqc?rel=0&enablejsapi=1 width="200" height="200" >}}
 
 . . .
 
@@ -460,7 +464,7 @@ When applying RL to robotics we need to guarantee that the algorithm will not vi
 
 ## The need for safe exploration in RL for robotics
 
-![](images/robot1.png){width="250"} ![](images/robot2.png){width="200"} {{< video https://www.youtube.com/watch?v=eRwTbRtnT1I width="300" height="200" >}} {{< video https://www.youtube.com/watch?v=VfDYUeyzHqc width="200" height="200" >}}
+![](images/robot1.png){width="250"} ![](images/robot2.png){width="200"} {{< video https://www.youtube.com/watch?v=eRwTbRtnT1I?rel=0&enablejsapi=1 width="300" height="200" >}} {{< video https://www.youtube.com/watch?v=VfDYUeyzHqc?rel=0&enablejsapi=1 width="200" height="200" >}}
 
 When applying RL to robotics we need to guarantee that the algorithm will not visit **unsafe states** very often during learning.
 
@@ -468,7 +472,7 @@ When applying RL to robotics we need to guarantee that the algorithm will not vi
 
 ## The need for safe exploration in RL for robotics
 
-![](images/robot1.png){width="250"} ![](images/robot2.png){width="200"} {{< video https://www.youtube.com/watch?v=eRwTbRtnT1I width="300" height="200" >}} {{< video https://www.youtube.com/watch?v=VfDYUeyzHqc width="200" height="200" >}}
+![](images/robot1.png){width="250"} ![](images/robot2.png){width="200"} {{< video https://www.youtube.com/watch?v=eRwTbRtnT1I?rel=0&enablejsapi=1 width="300" height="200" >}} {{< video https://www.youtube.com/watch?v=VfDYUeyzHqc?rel=0&enablejsapi=1 width="200" height="200" >}}
 
 When applying RL to robotics we need to guarantee that the algorithm will not visit **unsafe states** very often during learning.
 

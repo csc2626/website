@@ -8,7 +8,7 @@ format:
     embed-resources: false
     show-notes: false
     smaller: true
-    footer: '<a href="https://csc2626.github.io/website/" target="_blank">↩ Back to Course Website</a>'
+    footer: '<a href="https://csc2626.github.io/website/" target="_blank" style="font-size:0.8em; bottom: -5px;">↩ Back to Course Website</a>'
     chalkboard:
       src: chalkboard.json
       buttons: true

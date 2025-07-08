@@ -8,7 +8,7 @@ format:
     embed-resources: false
     show-notes: false
     smaller: true
-    footer: '<a href="https://csc2626.github.io/website/" target="_blank">↩ Back to Course Website</a>'
+    footer: '<a href="https://csc2626.github.io/website/" target="_blank" style="font-size:0.8em; bottom: -5px;">↩ Back to Course Website</a>'
     chalkboard:
       src: chalkboard.json
       buttons: true
@@ -203,16 +203,14 @@ $$
 \min_{\theta,\, p(\tau)} \mathbb{E}_{p(\tau)}[\ell(\tau)] \quad \text{s.t.} \quad D_{KL}(p(x_t)\pi_\theta(u_t|x_t)\,\|\,p(x_t, u_t)) = 0,\ \forall t
 $$
 
-▶ Lagrangian of the problem 
-$$
+▶ Lagrangian of the problem $$
 \begin{align}
 \mathcal{L}_{GPS}(\theta, p, \lambda) &= \mathbb{E}_{p(\tau)}[\ell(\tau)] + \sum_{t=1}^{T} \lambda_t D_{KL}(p(x_t)\pi_\theta(u_t|x_t)\,\|\,p(x_t, u_t)) \\
 \end{align}
 $$
 
 ::: {.center-align .fragment}
-[OR]{.red} 
-$$
+[OR]{.red} $$
 \qquad \qquad \qquad \qquad \qquad \qquad = \mathbb{E}_{p(\tau)}[\ell(\tau) - \eta\log\hat{p}(\tau)] - \eta\mathcal{H}(p) + \sum_{t=1}^{T} \lambda_t D_{KL}(p(x_t)\pi_\theta(u_t|x_t)\,\|\,p(x_t, u_t))
 $$
 
@@ -276,7 +274,7 @@ $$
 
 ## 
 
-{{< video https://www.youtube.com/watch?v=Q4bMcUk6pcw&t=40s&ab_channel=RAIL width="800" height="550" >}}
+<iframe data-external="1" src="https://www.youtube.com/embed/Q4bMcUk6pcw?rel=0&enablejsapi=1" width="800" height="550" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 
 [<https://www.youtube.com/watch?v=Q4bMcUk6pcw&t=40s&ab_channel=RAIL>]{.tiny-font}
 
@@ -300,7 +298,7 @@ Today’s slides are based on student presentations from 2019 by: Yuwei Chen, Ji
 
 ## 
 
-{{< video https://www.youtube.com/watch?v=clHp6QgVyAU width="800" height="550" >}}\
+{{< video https://www.youtube.com/watch?v=clHp6QgVyAU?rel=0&enablejsapi=1 width="800" height="550" >}}\
 [<https://www.youtube.com/watch?v=clHp6QgVyAU>]{.tiny-font}
 
 ## Problem Set-up
@@ -421,7 +419,7 @@ Today’s slides are based on student presentations from 2019 by: Yuwei Chen, Ji
 
 ## 
 
-{{< video https://www.youtube.com/watch?v=vppFvq2quQ0 width="800" height="550" >}}
+{{< video https://www.youtube.com/watch?v=vppFvq2quQ0?rel=0&enablejsapi=1 width="800" height="550" >}}
 
 [<https://www.youtube.com/watch?v=vppFvq2quQ0>]{.tiny-font}
 
@@ -440,7 +438,6 @@ UTIAS
 
 ::::: columns
 ::: {.column width="70%"}
-
 • Dexterous multi-fingered hands are ***extremely versatile***
 
 • ***Control*** is challenging due to high dimensionality, complex contact patterns
@@ -561,7 +558,7 @@ UTIAS
 ::: {.column .small-math width="45%"}
 [***HAPTIX Simulator***]{.underline}
 
-{{< video https://roboti.us/book/file/bakeoff.mp4 width="360" height="250" >}}
+{{< video https://roboti.us/book/file/bakeoff.mp4?rel=0&enablejsapi=1 width="360" height="250" >}}
 
 ![](images/cyberglove.png)\
 [***CyberGlove 3***]{.underline}
@@ -633,7 +630,6 @@ action a in state s]{.absolute bottom="190" left="300"}
 
 • Fisher information matrix is related to the Hessian matrix
 
-
 ## Methodology (NPG)
 
 • Limit policy change based on parameter change
@@ -650,103 +646,98 @@ action a in state s]{.absolute bottom="190" left="300"}
 
 **Gradient ascent update:** $\theta_{k+1} = \theta_k + \underline{\sqrt{\frac{\delta}{g^T F_{\theta_k}^{-1} g}}} \, \overline{F_{\theta_k}^{-1} g}$
 
-:::{.orange .small-math}
+::: {.orange .small-math}
 [Normalized step-size]{.absolute bottom="210" right="400"}
 
 [Steepest Ascent direction]{.absolute bottom="320" right="280"}
 :::
 
-
 ## Methodology (Problems with RL)
 
 • Challenges with using NPG
 
-|       • RL requires careful reward shaping 
-|       • Impractical number of samples to learn (approx. 100 hours) 
-|       • Unnatural movement 
+|       • RL requires careful reward shaping
+|       • Impractical number of samples to learn (approx. 100 hours)
+|       • Unnatural movement
 |       • Not as robust to environmental variations
 
 <br>
 
 • Solution
 
-|       • Combine RL with demonstrations 
-|       • Guide exploration and decrease sample complexity 
-|       • Robust and natural looking behaviour 
+|       • Combine RL with demonstrations
+|       • Guide exploration and decrease sample complexity
+|       • Robust and natural looking behaviour
 |       • Demonstration Augmented Policy Gradient (DAPG)
-
 
 ## Methodology (Pretraining with BC)
 
-• Exploration in PG achieved with stochastic action distribution \
-• Poor initialization leads to slow exploration \
-• Behavioral Cloning (BC) guides exploration \
+• Exploration in PG achieved with stochastic action distribution\
+• Poor initialization leads to slow exploration\
+• Behavioral Cloning (BC) guides exploration\
 • Reduces sample complexity
-
 
 $$
 \text{maximize}_{\theta} \sum_{(s, a) \in \rho_D} \ln \pi_{\theta}(a \mid s)
 $$
 
-• Mimic actions taken in demonstrations \
+• Mimic actions taken in demonstrations\
 • Does not guarantee effectiveness of policy due to distributional shift
-
 
 ## Methodology (Fine-tuning with augmented loss)
 
-• BC does not make optimal use of demonstrations \
-• Cannot learn subtasks (reaching, grasping, hammering) \
-• BC policy (only grasping) \
+• BC does not make optimal use of demonstrations\
+• Cannot learn subtasks (reaching, grasping, hammering)\
+• BC policy (only grasping)\
 • Capturing all data
 
 $$
 g_{\text{aug}} = \sum_{(s,a) \in \rho_{\pi}} \overline{\nabla_{\theta} \ln \pi_{\theta}(a \mid s)} \, A^{\pi}(s, a) + \sum_{(s,a) \in \rho_{D}} \overline{\nabla_{\theta} \ln \pi_{\theta}(a \mid s)} \, w(s, a)
 $$
 
-<br> 
+<br>
 
 $$
 w(s, a) = \lambda_0 \lambda_1^k \max_{(s', a') \in \rho_\pi} A^\pi(s', a') \quad \forall (s, a) \in \rho_D
 $$
 
-:::{.orange .small-math}
-[Policy gradient]{.absolute bottom=360 left=300} 
+::: {.orange .small-math}
+[Policy gradient]{.absolute bottom="360" left="300"}
 
-[Behavioral cloning]{.absolute bottom=360 right=200} 
+[Behavioral cloning]{.absolute bottom="360" right="200"}
 
-[$\uparrow$ \
-Dataset from policy]{.absolute bottom=230 left=235}
+[$\uparrow$\
+Dataset from policy]{.absolute bottom="230" left="235"}
 
-[$\uparrow$ \
-Dataset from \
-demonstrations]{.absolute bottom=210 right=260}
+[$\uparrow$\
+Dataset from\
+demonstrations]{.absolute bottom="210" right="260"}
 
-[$\uparrow$ \
-Weighting \
-function]{.absolute bottom=240 right=70}
+[$\uparrow$\
+Weighting\
+function]{.absolute bottom="240" right="70"}
 
-[$\downarrow$ iteration]{.absolute bottom=190 left=400}
+[$\downarrow$ iteration]{.absolute bottom="190" left="400"}
 
-[$\uparrow \quad \uparrow$ \
-hyperparameters]{.absolute bottom=90 left=350}
+[$\uparrow \quad \uparrow$\
+hyperparameters]{.absolute bottom="90" left="350"}
 :::
 
 ## Results 1
 
-[Reinforcement learning from scratch]{.underline} 
+[Reinforcement learning from scratch]{.underline}
 
-• Can RL cope with high dimensional manipulation tasks ? \
-• Is it robust to variations in environment ? \
+• Can RL cope with high dimensional manipulation tasks ?\
+• Is it robust to variations in environment ?\
 • Are movements safe and can they be used on real hardware ?
 
 <br>
 
-• Compare NPG vs DDPG (Deep Deterministic Policy Gradient) \
-• DDPG is a policy gradient actor-critic algorithm that is off-policy \
-• Stochastic policy for exploration, estimates deterministic policy \
-• Score based on percentage of successful trajectories (100 samples) \
+• Compare NPG vs DDPG (Deep Deterministic Policy Gradient)\
+• DDPG is a policy gradient actor-critic algorithm that is off-policy\
+• Stochastic policy for exploration, estimates deterministic policy\
+• Score based on percentage of successful trajectories (100 samples)\
 • Sparse Reward vs Reward shaping
-
 
 ## Results 1
 
@@ -754,25 +745,24 @@ hyperparameters]{.absolute bottom=90 left=350}
 
 ![](images/reinforcement-learning.png)
 
-• NPG learns with reward shaping, DDPG fails to learn \
-• DDPG is sample efficient but sensitive to hyper-parameters \
-• Resulting policies have unnatural behaviors \
-• Poor sample efficiency, cant use on hardware \
+• NPG learns with reward shaping, DDPG fails to learn\
+• DDPG is sample efficient but sensitive to hyper-parameters\
+• Resulting policies have unnatural behaviors\
+• Poor sample efficiency, cant use on hardware\
 • Cannot generalize to unseen environment (weight and ball size change)
 
 ## Results 2
 
 [Reinforcement learning with demonstrations]{.underline}
 
-• Does incorporating demonstrations reduce learning time? \
-• Comparison of DAPG vs DDPGfD (.. from Demonstrations)? \
+• Does incorporating demonstrations reduce learning time?\
+• Comparison of DAPG vs DDPGfD (.. from Demonstrations)?\
 • Does it result in human like behaviour ?
 
 <br>
 
-• DDPGfD better version of DDPG (demonstrations in replay buffer, prioritized experience replay, n-step returns, regularization) \
+• DDPGfD better version of DDPG (demonstrations in replay buffer, prioritized experience replay, n-step returns, regularization)\
 • Only use sparse rewards
-
 
 ## Results 2
 
@@ -782,11 +772,10 @@ hyperparameters]{.absolute bottom=90 left=350}
 
 ::::: columns
 ::: {.column width="50%"}
-
-• DAPG outperforms DDPGfD \
-• DAPG requires few robot hours \
-• Can be used on real hardware \
-• Robust and human behavior \
+• DAPG outperforms DDPGfD\
+• DAPG requires few robot hours\
+• Can be used on real hardware\
+• Robust and human behavior\
 • Generalizes to unseen environment
 :::
 
@@ -794,7 +783,6 @@ hyperparameters]{.absolute bottom=90 left=350}
 ![](images/dapg-table.png)
 :::
 :::::
-
 
 ## Future Work
 
@@ -804,160 +792,150 @@ hyperparameters]{.absolute bottom=90 left=350}
 
 • Learn policies from raw visual inputs and tactile sensing
 
-
 ## Results
 
-{{< video https://www.youtube.com/watch?v=jJtBll8l_OM width="800" height="500" >}}
+{{< video https://www.youtube.com/watch?v=jJtBll8l_OM?rel=0&enablejsapi=1 width="800" height="500" >}}
 
 [<https://www.youtube.com/watch?v=jJtBll8l_OM>]{.tiny-font}
 
-
 ## Today’s agenda
 
-:::{.grey-text}
-• Guided policy search (GPS) 
+::: grey-text
+• Guided policy search (GPS)
 
-• Policy learning from adaptive MPC with privileged information (PLATO) 
+• Policy learning from adaptive MPC with privileged information (PLATO)
 
-• Combining behavioral cloning and RL 
+• Combining behavioral cloning and RL
 :::
 
-• Dynamic movement primitives (DMPs) 
+• Dynamic movement primitives (DMPs)
 
 • Expert iteration & learning to search
 
 ::: aside
-Acknowledgments \
-Today’s slides are based on student presentations from 2019 by: Yuwei Chen, Jienan Yao, and Jason Rebello as well as from YouTube recordings of lectures from Gregor Schöner, for his Autonomous Robotics course: \
+Acknowledgments\
+Today’s slides are based on student presentations from 2019 by: Yuwei Chen, Jienan Yao, and Jason Rebello as well as from YouTube recordings of lectures from Gregor Schöner, for his Autonomous Robotics course:\
 <https://www.youtube.com/watch?v=IV8Eze9Hxrc&ab_channel=Dynamicfieldtheory>
 :::
 
-##
+## 
 
-{{< video https://www.youtube.com/watch?v=IV8Eze9Hxrc width="900" height="550" >}} 
+{{< video https://www.youtube.com/watch?v=IV8Eze9Hxrc?rel=0&enablejsapi=1 width="900" height="550" >}}
 
 [<https://www.youtube.com/watch?v=IV8Eze9Hxrc>]{.tiny-font}
 
 ## Today’s agenda
 
-:::{.grey-text}
-• Guided policy search (GPS) 
+::: grey-text
+• Guided policy search (GPS)
 
-• Policy learning from adaptive MPC with privileged information (PLATO) 
+• Policy learning from adaptive MPC with privileged information (PLATO)
 
-• Combining behavioral cloning and RL 
+• Combining behavioral cloning and RL
 
-• Dynamic movement primitives (DMPs) 
+• Dynamic movement primitives (DMPs)
 :::
 
 • Expert iteration & learning to search
 
 ::: aside
-Acknowledgments \
-Today’s slides are based on student presentations from 2019 by: Yuwei Chen, Jienan Yao, and Jason Rebello as well as from YouTube recordings of lectures from Gregor Schöner, for his Autonomous Robotics course: \
+Acknowledgments\
+Today’s slides are based on student presentations from 2019 by: Yuwei Chen, Jienan Yao, and Jason Rebello as well as from YouTube recordings of lectures from Gregor Schöner, for his Autonomous Robotics course:\
 <https://www.youtube.com/watch?v=IV8Eze9Hxrc&ab_channel=Dynamicfieldtheory>
-
 :::
-
-
 
 ## From Search to Learning and Back
 
 ![](images/search-learning-back.png)
 
-:::: {.columns style="font-size:0.6em;"}
-
-::: {.column width="30%"}
-Logic Geometric Programming \
+::::::::::::: {.columns style="font-size:0.6em;"}
+::::: {.column width="30%"}
+Logic Geometric Programming\
 Marc Toussaint et al. IJCAI’15, RSS’17
 
-PDDLStream Planners \
+PDDLStream Planners\
 Caelan Garret et al. ICAPS’20
 
-TAMP = SMT + Motion Planning \
+TAMP = SMT + Motion Planning\
 Neil Dantam et al. IJRR’18
 
 . . .
 
-:::{.red}
+::: red
 $-$ Need to specify symbols / logic
 
 $-$ Slow to plan, not very reactive
 :::
 
-:::{.green}
+::: green
 $+$ Generalize
 
 $+$ No training data
 :::
-:::
+:::::
 
 ::: {.column width="5%"}
 :::
 
-::: {.column width="30%" .fragment fragment-index=2}
-Learning to Guide TAMP \
+:::: {.column .fragment width="30%" fragment-index="2"}
+Learning to Guide TAMP\
 Beomjoom Kim et al., AAAI’18
 
-PLOI \
+PLOI\
 Tom Silver, Rohan Chitnis et al. AAAI’21
 
-Deep Visual Heuristics \
+Deep Visual Heuristics\
 Danny Driess et al. ICRA’20
 
-Learning to Search for TAMP \
+Learning to Search for TAMP\
 Mohamed Khodeir et al. RAL’22, ICRA’23
 
-Text2Motion \
+Text2Motion\
 Chris Agia et al. ICRA’23
 
 [$-$ Need to specify symbols / logic]{.red}
 
 [$+$ Can be made fast, reactive]{.light-orange}
 
-:::{.green}
+::: green
 $+$ Generalize
 
 $+$ Few training data needed
 :::
-
-:::
+::::
 
 ::: {.column width="4%"}
 :::
 
-::: {.column width="30%" .right-align .fragment fragment-index=1}
-PaLM-E \
+::::: {.column .right-align .fragment width="30%" fragment-index="1"}
+PaLM-E\
 Danny Driess et al. ‘23
 
-SayCan \
+SayCan\
 Michael Ahn et al. CoRL‘23
 
-RT-1 \
+RT-1\
 Anthony Brohan et al. ‘22
 
-Deep Affordance Foresight \
+Deep Affordance Foresight\
 Danfei Xu et al. ICRA’21
 
-PlaNet, Dreamer, Hierarchical RL \
+PlaNet, Dreamer, Hierarchical RL\
 Danijar Hafner et al.
 
-:::{.green}
+::: green
 $+$ Symbols not needed
 
 $+$ Fast, reactive
 :::
 
-:::{.red}
+::: red
 $-$ Do not generalize
 
 $-$ Large data regime
 :::
-
-:::
-
-::::
-
+:::::
+:::::::::::::
 
 ## Learning to Plan via Expert Iteration
 
@@ -977,9 +955,9 @@ If we do multiple rounds of heuristic learning and tree search, we could potenti
 :::
 :::::
 
-:::{.tiny-font}
-Dual Policy Iteration. Sun, Gordon, Boots, Bagnell. NeurIPS’18. \
-Thinking Fast and Slow with Deep Learning and Tree Search. Anthony, Tian, Barber. NeurIPS’17. \
+::: tiny-font
+Dual Policy Iteration. Sun, Gordon, Boots, Bagnell. NeurIPS’18.\
+Thinking Fast and Slow with Deep Learning and Tree Search. Anthony, Tian, Barber. NeurIPS’17.\
 AlphaGo Zero: Mastering the Game of Go Without Human Knowledge. Silver, Schrittwieser, Simonyan, Antonoglou. Nature’17.
 :::
 
@@ -997,7 +975,6 @@ AlphaGo Zero: Mastering the Game of Go Without Human Knowledge. Silver, Schrittw
 
 [AlphaGo Zero: Mastering the Game of Go Without Human Knowledge. Silver, Schrittwieser, Simonyan, Antonoglou. Nature’17.]{.tiny-font}
 
-
 ## MCTS in AlphaGo Zero
 
 ![](images/mcts-alphago.png)
@@ -1011,9 +988,8 @@ AlphaGo Zero: Mastering the Game of Go Without Human Knowledge. Silver, Schrittw
 ![](images/dual-policy.png)
 :::
 
-::: {.column width="50%" .red .small-math}
-
-<br><br> 
+::: {.column .red .small-math width="50%"}
+<br><br>
 
 A policy optimization framework that includes
 
@@ -1024,21 +1000,20 @@ A policy optimization framework that includes
 -   AggreVaTeD (a varianbt of DAgger)
 
 as special cases and provides conditions under which we expect monotonic improvement of the fast, reactive policy.
-
 :::
 :::::
 
-##
+## 
 
-![](images/dual-policy-iteration.png){height=300}
+![](images/dual-policy-iteration.png){height="300"}
 
 ![](images/dual-policy-steps.png)
 
-##
+## 
 
-![](images/dual-policy-iteration.png){height=300}
+![](images/dual-policy-iteration.png){height="300"}
 
-:::{.small-math}
+::: small-math
 $$
 \begin{array}{ll}
 \text{1.} & \text{Fit MLE } \hat{P} \text{ on states and actions from } d_{\pi_n} \pi_n \text{ (Eq. 2).} \\
@@ -1048,13 +1023,12 @@ $$
 $$
 :::
 
-:::{.center-align}
+::: center-align
 [Main difference with respect to Guided Policy Search]{.red-annotation}
 :::
 
-
-:::{.tiny-font}
-GPS, including the mirror descent version, phrases the update procedure of the reactive policy as \
-a *behavior cloning procedure*, i.e., given an expert policy $\eta$, we perform $\min_{\pi} D_{KL}(d_{\mu \mu} \,\|\, d_{\pi \pi})^3$ \
+::: tiny-font
+GPS, including the mirror descent version, phrases the update procedure of the reactive policy as\
+a *behavior cloning procedure*, i.e., given an expert policy $\eta$, we perform $\min_{\pi} D_{KL}(d_{\mu \mu} \,\|\, d_{\pi \pi})^3$\
 Note that our approach to updating $\pi$ is fundamentally on-policy, i.e., we generate samples from $\pi$.
 :::
