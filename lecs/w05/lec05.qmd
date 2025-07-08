@@ -921,20 +921,51 @@ Arbitrary differentiable functions $c$, $f$
 **iLQG**: iteratively approximate solution by solving linearized versions of the problem via LQG
 :::
 
+
 ## Recall from Guided Policy Search
 
-![](images/guided-policy1.png)
+:::{.small-math}
+$\underset{q(\tau)}{\text{argmin}} \quad \mathbb{E}_{\tau \sim q(\tau)}[c(\tau)]$
 
-::: {.absolute .fragment bottom="200" left="0"}
-![](images/guided-policy2.png)
+$\text{subject to} \quad q(x_{t+1}|x_t, u_t) = \mathcal{N}(x_{t+1}; f_{xt}x_t + f_{ut}u_t, F_t) \qquad \color{red}\Leftarrow \quad \text{Learn linear Gaussian dynamics}$
+
+$\qquad \qquad \text{KL}(q(\tau) || q_{\text{prev}}(\tau)) \leq \epsilon$
+
+:::{.fragment}
+![](images/downarrow.png){height=50}
+
+$q_{\text{gps}}(\tau) = \underset{q(\tau)}{\text{argmin}} \quad \mathbb{E}_{\tau \sim q(\tau)}[c(\tau)] - \mathcal{H}(q(\tau))$
+
+$\qquad \qquad \text{subject to} \quad q(x_{t+1}|x_t, u_t) = \mathcal{N}(x_{t+1}; f_{xt}x_t + f_{ut}u_t, F_t)$
 :::
 
-::: {.absolute .fragment bottom="0" left="0"}
-![](images/guided-policy3.png)
+:::{.fragment}
+![](images/downarrow.png){height=50}
+
+$q_{\text{gps}}(\tau) = q(x_0) \prod_{t=0}^{T-1} q(x_{t+1}|x_t, u_t)q(u_t|x_t)$
+
+:::{.absolute bottom=80 left=200 }
+$\qquad \color{red} \uparrow \qquad \quad \uparrow$ \
+[Linear Gaussian \
+dynamics and controller]{.red}
 :::
 
-::: {.absolute .fragment bottom="0" right="0"}
-![](images/guided-policy4.png){width="550"}
+:::
+
+:::{.fragment}
+![](images/rightuparrow.png){height="300" .absolute right=190 bottom=150}
+
+:::{.red .absolute right=250 bottom=80} 
+Run controller on the robot \
+Collect trajectories
+:::
+
+:::{.absolute right=50 bottom="40%"}
+$q_{prev} = q_{gps}$
+:::
+
+:::
+
 :::
 
 ## Recall from Guided Policy Search
@@ -1026,7 +1057,7 @@ By: Dorsa Sadigh, Anca D. Dragan, Shankar Sastry, and Sanjit A. Seshia
 
 ## 
 
-{{< video https://rss2017.lids.mit.edu/static/slides/04.mp4 width="800" height="550" >}}
+{{< video videos/active-preference-based.mp4 width="800" height="550" >}}
 
 Source: <https://rss2017.lids.mit.edu/static/slides/04.mp4>
 
@@ -1249,6 +1280,6 @@ Today's slides are based on student presentations from 2019 by: Sergio Casas, Se
 
 ## 
 
-{{< video https://www.youtube.com/watch?v=xCXx09gfhx4&t=3s?rel=0&enablejsapi=1 width="90%" height="90%" >}}
+{{< video https://www.youtube.com/watch?v=xCXx09gfhx4&t=3s?rel=0&enablejsapi=1 width="90%" height="80%" >}}
 
 [<https://www.youtube.com/watch?v=xCXx09gfhx4&t=3s>]{.tiny-font}
