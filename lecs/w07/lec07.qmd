@@ -300,57 +300,125 @@ Acknowledgments\
 Today’s slides are based on student presentations from 2019 by: Zeqi Li, Angran Li, Zihan Fu
 :::
 
-## 
+## Neural Task Programming: Learning to Generalize Across Hierarchical Tasks {.center}
 
-![](images/neural-task-program.png){fig-align="center"}
+Danfei Xu, Suraj Nair, Yuke Zhu, Julian Gao, Animesh Garg, Li Fei-Fei, Silvio Savarese
 
-## 
+Presented by Angran Li \
+February 8, 2019
 
-![](images/how-the-algo-works1.png){fig-align="center"}
+## How the Algorithm works?
 
-## 
+![](images/how-algo-works.png)
 
-![](images/how-the-algo-works2.png){fig-align="center"}
+* Task Demonstration: state trajectory, first/third-person video demonstrations, or a list of language instructions.
+* Task-Conditional Policy: a neural program.
+* Using callable primitive actions to interact with the environment.
 
-## 
+## How the Algorithm works?
 
-![](images/goals.png){fig-align="center"}
+![](images/how-algo-works2.png){fig-align="center"}
 
-## 
+Top-level program block_stacking is recursively decomposed to bottom-level API move_to and grip.
+
+## Goals
+Learning to Generalize Across Hierarchical Tasks
+
+- Generalizing the learned policies to new task objectives
+    - Task Length: more objects to transport
+    - Task Semantics: a different goal
+    - Task Topology: a different trajectory to the same goal
+    
+- Hierarchical composition of primitive actions
+    - Modularization and reusability
+    - Learn the latent structure in complex tasks, instead of fake dependencies
+
+## Implementation: Neural Task Programming
 
 ![](images/neural-task-programming.png){fig-align="center"}
 
-## 
+* Observation Encoder: observation $o_i \Rightarrow$ state representation $s_i$
+* Task Spec. Interpreter: $\Rightarrow$ API arguments $a_i$ or task spec. $\psi_{i+1}$
+* Task Spec. Encoder: task spec. $\psi_i \Rightarrow$ vector space $\phi_i$
+* Core Network: $s_i, P_i, \phi_i \Rightarrow P_{i+1}, r_i$
 
-![](images/implementation-npi.png){fig-align="center"}
+## Implementation: Standing on the shoulder of NPI
 
-## 
+Neural Task Programming combines the idea of **Few-Shot Learning from Demonstration** and **Neural Programmer-Interpreters**.
 
-![](images/ntp-npi.png){fig-align="center"}
+* Similarities when executing a program:
+    * When the EOP probability exceeds a threshold $\alpha$, control is returned to the caller program;
+    * When the program is not primitive, a sub-program with its arguments is called;
+    * When the program is primitive, a low-level basic action is performed.
+* Two similar modules:
+    * Domain-specific task encoders that map an observation to a state representation.
+    * A key-value memory that stores and retrieves program embeddings.
 
-## 
 
-![](images/model-training.png){fig-align="center"}
+## Implementation: NTP vs NPI
 
-## 
+* **NPI**: one-shot generalization to tasks with longer lengths; can't generalizing to novel programs without training.
+* **NTP**: generalizes to sub-task permutations (topology) and success conditions (semantics).
+* Three main **differences** of NTP than the original NPI:
+    * NTP can interpret task specifications and perform hierarchical decomposition and thus can be considered as a **meta-policy**;
+    * It uses robot **APl**s as the primitive actions to scale up neural programs for complex tasks;
+    * It uses a **reactive core network** instead of a **recurrent network**, making the model less history-dependent, enabling feedback control for recovery from failures.
+
+## Model Training
+
+- The model is trained using rich supervision from program execution traces $\{\xi_t| \xi_t = (\Psi_t, p_t, s_t), t = 1 \ldots T\}$.
+
+- The training objective is to maximize the probability of the correct executions over all the tasks in the dataset $D = \{(\xi_t, \xi_{t+1})\}$.
+
+- For each task specification, the ground-truth hierarchical decomposition is provided by the expert policy, which is an agent with hard-coded rules.
+
+
+## Experiments: Setup
 
 ![](images/experiments-setup.png){fig-align="center"}
 
-## 
+* Generalization in 3 variations: semantics, topology, and length.
+* Using image-based input without access to ground truth state.
+* Working in real-world tasks combine these variations.
+
+→ Three tasks: Object Sorting, Block Stacking, and Table Clean-up
+
+## Experiments: Object Sorting
 
 ![](images/object-sorting.png){fig-align="center"}
 
-## 
+* **Flat**: non-hierarchical model, directly predicts the primitive APls instead of calling hierarchical programs.
+
+* **GRU**: Gated Recurrent Unit.
+
+## Experiments: Block Stacking
 
 ![](images/block-stacking.png){fig-align="center"}
 
-## 
+* **NTPVID(E2E)**: Trained with only visual information.
+* **NTP(Full State)**: Trained with ground-truth hierarchical decomposition.
 
-![](images/table-cleaup.png){fig-align="center"}
+## Experiments: Table Clean-up
 
-## 
+![](images/table-cleanup.png){fig-align="center"}
 
-![](images/future-work.png){fig-align="center"}
+* Sort plastic bowls and forks into a stack, so they can be steadily carried away.
+
+* Task variations:
+    * Task length: number of bowls and forks varies.
+    * Task topology: the ordering in which bowls are stacked varies.
+
+
+## Discussion & Future Work
+
+* **Neural Task Programming**:
+    * A meta-learning framework that learns modular and reusable neural programs for hierarchical tasks.
+    * Generalizing well towards the variation of task length, semantics, and topology for complex tasks.
+
+* **Future work**:
+    * Improve the state encoder to extract more task-salient information such as object relationships;
+    * Devise a richer set of APls such as velocity and torque-based controllers;
+    * Extend this framework to tackle more complex tasks on real robots.
 
 ## 
 
