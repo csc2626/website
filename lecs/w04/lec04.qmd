@@ -277,9 +277,7 @@ $$
 
 ## 
 
-<iframe data-external="1" src="https://www.youtube.com/embed/Q4bMcUk6pcw?rel=0&amp;enablejsapi=1" width="800" height="550" title frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-
-</iframe>
+{{< video https://www.youtube.com/embed/Q4bMcUk6pcw?rel=0 width="800" height="500">}}
 
 [<https://www.youtube.com/watch?v=Q4bMcUk6pcw&t=40s&ab_channel=RAIL>]{.tiny-font}
 
