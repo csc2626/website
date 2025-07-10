@@ -41,11 +41,11 @@ Today’s slides are based on student presentations from 2019 by: Andrei Barsan,
 
 ## 
 
-{{< video https://www.youtube.com/watch?v=wjnhrzugBj4?rel=0&enablejsapi=1 width="100%" height="80%" >}}
+{{< video https://www.youtube.com/watch?v=wjnhrzugBj4?rel=0&enablejsapi=1 width="90%" height="65%" >}}
 
 ## 
 
-{{< video https://www.youtube.com/watch?v=Wvh-uixQrGI&t=1s?rel=0&enablejsapi=1 width="100%" height="80%" >}}
+{{< video https://www.youtube.com/watch?v=Wvh-uixQrGI&t=1s?rel=0&enablejsapi=1 width="90%" height="65%" >}}
 
 ## Shared Autonomy via Deep Reinforcement Learning
 

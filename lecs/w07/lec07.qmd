@@ -777,13 +777,13 @@ Expanding 1 and 2 requires solving continuous optimization problems with constra
 
 Solubility experiment
 
-{{< video https://www.youtube.com/watch?v=NjpZmaKQWls?rel=0&enablejsapi=1 width="100%" height="80%" >}}
+{{< video https://www.youtube.com/watch?v=NjpZmaKQWls?rel=0&enablejsapi=1 width="80%" height="60%" >}}
 
 [<https://www.youtube.com/watch?v=NjpZmaKQWls>]{.tiny-font}
 
 ## [Constrained Motion Planner to Avoid Spilling]{.medium}
 
-{{< video https://www.youtube.com/watch?v=NjpZmaKQWls?rel=0&enablejsapi=1 width="80%" height="65%" >}}
+{{< video https://www.youtube.com/watch?v=NjpZmaKQWls?rel=0&enablejsapi=1 width="80%" height="60%" >}}
 
 [<https://www.youtube.com/watch?v=NjpZmaKQWls>]{.tiny-font}
 
@@ -835,4 +835,4 @@ Today’s slides are based on student presentations from 2019 by: Zeqi Li, Angra
 
 ## 
 
-{{< video https://www.youtube.com/watch?v=hlvRmLlYHZ0?rel=0&enablejsapi=1 width="100%" height="90%" >}}
+{{< video https://www.youtube.com/watch?v=hlvRmLlYHZ0?rel=0&enablejsapi=1 width="100%" height="80%" >}}

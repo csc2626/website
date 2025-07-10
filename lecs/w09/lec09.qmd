@@ -527,7 +527,7 @@ GAIL
 
 ## 
 
-{{< video https://www.youtube.com/watch?v=YtNPBAW6h5k?rel=0&enablejsapi=1 width="100%" height="80%" >}}
+{{< video https://www.youtube.com/watch?v=YtNPBAW6h5k?rel=0&enablejsapi=1 width="80%" height="60%" >}}
 
 [<https://www.youtube.com/watch?v=YtNPBAW6h5k>]{.small-math}
 

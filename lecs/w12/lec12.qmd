@@ -40,7 +40,7 @@ html-math-method:
 
 ## Learning dense representations for manipulation
 
-{{< video https://www.youtube.com/watch?v=L5UW1VapKNE?rel=0&enablejsapi=1 width="100%" height="65%" >}}
+{{< video https://www.youtube.com/watch?v=L5UW1VapKNE?rel=0&enablejsapi=1 width="80%" height="65%" >}}
 
 ::: small-math
 [Dense Object Nets: Learning Dense Visual Object Descriptors By and For Robotic Manipulation.]{.red} Florence, Manuelli, Tedrake. 2018
@@ -48,7 +48,7 @@ html-math-method:
 
 ## Learning policies on top of pretrained representations
 
-{{< video https://www.youtube.com/watch?v=RBvaazKSOAc?rel=0&enablejsapi=1 width="100%" height="65%" >}}
+{{< video https://www.youtube.com/watch?v=RBvaazKSOAc?rel=0&enablejsapi=1 width="80%" height="65%" >}}
 
 ::: small-math
 [Self-Supervised Correspondence in Visuomotor Policy Learning.]{.red} Florence, Manuelli, Tedrake. 2020
@@ -56,7 +56,7 @@ html-math-method:
 
 ## Another example of policy learning on pretrained representations
 
-{{< video https://www.youtube.com/watch?v=bIzWADZjdoA?rel=0&enablejsapi=1 width="100%" height="70%" >}}
+{{< video https://www.youtube.com/watch?v=bIzWADZjdoA?rel=0&enablejsapi=1 width="80%" height="70%" >}}
 
 ## Can we show theoretically that representation learning helps?
 
