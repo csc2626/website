@@ -58,11 +58,14 @@
             const player = new YT.Player(iframe.id, {
                 events: {
                     'onStateChange': function(event) {
+                        // console.log("STATE of youtube : ", event.data); 
+
                         if(event.data == 0){
                             curtain.style.opacity = '1';
                         } else {
                             curtain.style.opacity = '0';
                         }
+                        
                     }
                 }
             });
@@ -74,7 +77,7 @@
     }
 
     function updateCurtain(iframe, curtain) {
-        console.log("is udateCurtain called for iframe:", iframe.id);
+        // console.log("is udateCurtain called for iframe:", iframe.id);
         if (!iframe || !curtain) return;
 
         let positionedParent = iframe.offsetParent;
@@ -88,7 +91,7 @@
         // Get iframe's position relative to its positioned parent
         const iframeRect = iframe.getBoundingClientRect();
         const parentRect = positionedParent.getBoundingClientRect();
-        console.log('Getting height and width Iframe rect:', iframeRect, iframe.width);
+        // console.log('Getting height and width Iframe rect:', iframeRect, iframe.width);
         
         // Calculate curtain dimensions (70% height, same width)
         const curtainWidth = iframe.offsetWidth;
@@ -182,13 +185,11 @@
         // Find current slide (section with class 'present')
         const currentSlide = document.querySelector('section.present');
         if (!currentSlide) return;
-        console.log('Current slide found:', currentSlide);
         
         // Find all iframes in current slide
         const iframes = currentSlide.querySelectorAll('iframe');
 
         if(iframes.length === 0) {
-            console.log('No iframes found in current slide');
             return;
         }
         
