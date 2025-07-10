@@ -1904,7 +1904,7 @@
     "href": "lecs/w03/lec03.html#the-need-for-safe-exploration-in-rl-for-robotics-2",
     "title": "CSC2626 Imitation Learning for Robotics",
     "section": "The need for safe exploration in RL for robotics",
-    "text": "The need for safe exploration in RL for robotics\n   \nWhen applying RL to robotics we need to guarantee that the algorithm will not visit unsafe states very often during learning.\n\nOur proposed method:\nThe learned policy should be safe at each iteration, not just when optimization has converged"
+    "text": "The need for safe exploration in RL for robotics\n\n\n\n\n\n\n\n\n\n\nWhen applying RL to robotics we need to guarantee that the algorithm will not visit unsafe states very often during learning.\n\nOur proposed method:\nThe learned policy should be safe at each iteration, not just when optimization has converged"
   },
   {
     "objectID": "lecs/w03/lec03.html#our-solution-constrained-safety-critics-csc",
