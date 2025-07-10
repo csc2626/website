@@ -29,10 +29,9 @@
         const curtain = document.createElement('div');
         curtain.className = 'curtain';
         curtain.style.position = 'absolute';
-        curtain.style.backgroundColor = 'rgba(100, 0, 0, 0.7)';
+        curtain.style.backgroundColor = 'rgba(0, 0, 0, 1)';
         curtain.style.zIndex = '10';
         curtain.style.pointerEvents = 'none'; // allows clicks to pass through
-        //curtain.style.visibility = 'hidden'; // Hidden by default   
         curtain.style.opacity = '0';
         return curtain;
     }
@@ -80,8 +79,6 @@
 
         let positionedParent = iframe.offsetParent;
 
-        //let positionedParent = iframe.parentNode; // this changed
-
         if (!positionedParent || positionedParent === document.body) {
             // If no positioned parent, make the immediate parent positioned
             const parent = iframe.parentNode;
@@ -93,15 +90,14 @@
         const parentRect = positionedParent.getBoundingClientRect();
         console.log('Getting height and width Iframe rect:', iframeRect, iframe.width);
         
-        // Calculate curtain dimensions (60% height, same width)
+        // Calculate curtain dimensions (70% height, same width)
         const curtainWidth = iframe.offsetWidth;
-        const curtainHeight = iframe.offsetHeight * 0.6;
+        const curtainHeight = iframe.offsetHeight * 0.7;
         
         // Calculate exact position relative to the positioned parent
-        // const curtainLeft = iframeRect.left - parentRect.left;
-        // const curtainLeft = iframeRect.left;
         curtainLeft = 0;
-        const curtainTop = (iframeRect.top - parentRect.top) + (iframe.offsetHeight * 0.2);
+        // const curtainTop = (iframeRect.top - parentRect.top) + (iframe.offsetHeight * 0.2);
+        const curtainTop = (iframeRect.top - parentRect.top) + (iframe.offsetHeight * 0.15);
         
         // Apply styles
         curtain.style.width = curtainWidth + 'px';
@@ -121,6 +117,10 @@
         // Find the closest positioned parent or create one
         let positionedParent = iframe.offsetParent;
         //let positionedParent = iframe.parentNode; // this changed 
+        const parent = iframe.parentNode;
+            if (getComputedStyle(parent).position === 'static') {
+                parent.style.position = 'relative';
+            }
         
         if (!positionedParent || positionedParent === document.body) {
             // If no positioned parent, make the immediate parent positioned
@@ -133,7 +133,8 @@
         
         // Create curtain and append to the positioned parent
         const curtain = createCurtain(iframe);
-        positionedParent.appendChild(curtain);
+        //positionedParent.appendChild(curtain);
+        iframe.parentNode.appendChild(curtain); //fixed this to append 
         curtains.set(iframeId, curtain);
         
         // Initial update
@@ -177,11 +178,7 @@
     }
 
     // Handle slide change
-    function handleSlideChange() {
-        // Clean up existing curtains
-        // cleanupCurtains();
-        console.log('HandleSlideChange called');
-        
+    function handleSlideChange() {        
         // Find current slide (section with class 'present')
         const currentSlide = document.querySelector('section.present');
         if (!currentSlide) return;
@@ -208,9 +205,8 @@
         // Load YouTube API first
         loadYouTubeAPI();
 
+        // assign IDs to all iframes
         const allIframes = document.querySelectorAll('iframe');
-
-        // 1. assign IDs to all iframes
         allIframes.forEach((iframe, index) => {
             // Only assign ID if iframe doesn't already have one
             if (!iframe.id) {

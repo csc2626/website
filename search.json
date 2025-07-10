@@ -63,7 +63,7 @@
     "href": "lecs/w01/lec01.html#applications",
     "title": "CSC2626 Imitation Learning for Robotics",
     "section": "Applications",
-    "text": "Applications\n\n\nAny control problem where:\n\nwriting down a dense cost function is difficult\nthere is a hierarchy of decision-making processes\nour engineered solutions might not cover all cases\nunrestricted exploration during learning is slow or dangerous\n\n\n\n\n\n\n\n\nhttps://www.youtube.com/watch?v=M8r0gmQXm1Y"
+    "text": "Applications\n\n\nAny control problem where:\n\nwriting down a dense cost function is difficult\nthere is a hierarchy of decision-making processes\nour engineered solutions might not cover all cases\nunrestricted exploration during learning is slow or dangerous\n\n\n\n\n\n\nhttps://www.youtube.com/watch?v=M8r0gmQXm1Y"
   },
   {
     "objectID": "lecs/w01/lec01.html#applications-1",
@@ -1890,14 +1890,14 @@
     "href": "lecs/w03/lec03.html#the-need-for-safe-exploration-in-rl-for-robotics",
     "title": "CSC2626 Imitation Learning for Robotics",
     "section": "The need for safe exploration in RL for robotics",
-    "text": "The need for safe exploration in RL for robotics\n   \n\nWhen applying RL to robotics we need to guarantee that the algorithm will not visit unsafe states very often during learning."
+    "text": "The need for safe exploration in RL for robotics\n\n\n\n\n\n\n\n\n\n\n\nWhen applying RL to robotics we need to guarantee that the algorithm will not visit unsafe states very often during learning."
   },
   {
     "objectID": "lecs/w03/lec03.html#the-need-for-safe-exploration-in-rl-for-robotics-1",
     "href": "lecs/w03/lec03.html#the-need-for-safe-exploration-in-rl-for-robotics-1",
     "title": "CSC2626 Imitation Learning for Robotics",
     "section": "The need for safe exploration in RL for robotics",
-    "text": "The need for safe exploration in RL for robotics\n   \nWhen applying RL to robotics we need to guarantee that the algorithm will not visit unsafe states very often during learning."
+    "text": "The need for safe exploration in RL for robotics\n\n\n\n\n\n\n\n\n\n\nWhen applying RL to robotics we need to guarantee that the algorithm will not visit unsafe states very often during learning."
   },
   {
     "objectID": "lecs/w03/lec03.html#the-need-for-safe-exploration-in-rl-for-robotics-2",
