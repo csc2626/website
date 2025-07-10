@@ -16,6 +16,9 @@ format:
             chalk-width: 2
             chalk-effect: 1.0
         css: ../style.css
+        include-after-body:
+          - text: |
+                <script type="text/javascript" src="../custom_curtain.js"></script> 
 html-math-method:
     method: mathjax
     url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
@@ -158,4 +161,4 @@ Composition of robust policies
 
 ## Stability via Contraction Theory
 
-{{< video https://www.youtube.com/watch?v=kmmJ6naGOfE?rel=0&enablejsapi=1 width="100%" height="70%" >}}
+{{< video https://www.youtube.com/watch?v=kmmJ6naGOfE?rel=0&enablejsapi=1 width="100%" height="65%" >}}

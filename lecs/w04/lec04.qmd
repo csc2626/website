@@ -16,6 +16,9 @@ format:
       chalk-width: 2
       chalk-effect: 1.0
     css: ../style.css
+    include-after-body:
+      - text: |
+          <script type="text/javascript" src="../custom_curtain.js"></script>
 html-math-method:
   method: mathjax
   url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
@@ -274,7 +277,9 @@ $$
 
 ## 
 
-<iframe data-external="1" src="https://www.youtube.com/embed/Q4bMcUk6pcw?rel=0&enablejsapi=1" width="800" height="550" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+<iframe data-external="1" src="https://www.youtube.com/embed/Q4bMcUk6pcw?rel=0&amp;enablejsapi=1" width="800" height="550" title frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+
+</iframe>
 
 [<https://www.youtube.com/watch?v=Q4bMcUk6pcw&t=40s&ab_channel=RAIL>]{.tiny-font}
 
@@ -298,7 +303,7 @@ Today’s slides are based on student presentations from 2019 by: Yuwei Chen, Ji
 
 ## 
 
-{{< video https://www.youtube.com/watch?v=clHp6QgVyAU?rel=0&enablejsapi=1 width="800" height="550" >}}\
+{{< video https://www.youtube.com/watch?v=clHp6QgVyAU?rel=0&enablejsapi=1 aspect-ratio="16x9" width="800" >}}\
 [<https://www.youtube.com/watch?v=clHp6QgVyAU>]{.tiny-font}
 
 ## Problem Set-up
@@ -419,7 +424,7 @@ Today’s slides are based on student presentations from 2019 by: Yuwei Chen, Ji
 
 ## 
 
-{{< video https://www.youtube.com/watch?v=vppFvq2quQ0?rel=0&enablejsapi=1 width="800" height="550" >}}
+{{< video https://www.youtube.com/watch?v=vppFvq2quQ0?rel=0&enablejsapi=1 aspect-ratio="16x9" width="800" >}}
 
 [<https://www.youtube.com/watch?v=vppFvq2quQ0>]{.tiny-font}
 
@@ -794,7 +799,7 @@ hyperparameters]{.absolute bottom="90" left="350"}
 
 ## Results
 
-{{< video https://www.youtube.com/watch?v=jJtBll8l_OM?rel=0&enablejsapi=1 width="800" height="500" >}}
+{{< video https://www.youtube.com/watch?v=jJtBll8l_OM?rel=0&enablejsapi=1 aspect-ratio="16x9" width="800" >}}
 
 [<https://www.youtube.com/watch?v=jJtBll8l_OM>]{.tiny-font}
 
@@ -820,7 +825,7 @@ Today’s slides are based on student presentations from 2019 by: Yuwei Chen, Ji
 
 ## 
 
-{{< video https://www.youtube.com/watch?v=IV8Eze9Hxrc?rel=0&enablejsapi=1 width="900" height="550" >}}
+{{< video https://www.youtube.com/watch?v=IV8Eze9Hxrc?rel=0&enablejsapi=1 aspect-ratio="16x9" width="900" >}}
 
 [<https://www.youtube.com/watch?v=IV8Eze9Hxrc>]{.tiny-font}
 

@@ -16,6 +16,9 @@ format:
             chalk-width: 2
             chalk-effect: 1.0
         css: ../style.css
+        include-after-body:
+          - text: |
+                <script type="text/javascript" src="../custom_curtain.js"></script> 
 html-math-method:
     method: mathjax
     url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
@@ -38,11 +41,11 @@ Today’s slides are based on student presentations from 2019 by: Andrei Barsan,
 
 ## 
 
-{{< video https://www.youtube.com/watch?v=wjnhrzugBj4?rel=0&enablejsapi=1 width="100%" height="75%" >}}
+{{< video https://www.youtube.com/watch?v=wjnhrzugBj4?rel=0&enablejsapi=1 width="100%" height="80%" >}}
 
 ## 
 
-{{< video https://www.youtube.com/watch?v=Wvh-uixQrGI&t=1s?rel=0&enablejsapi=1 width="100%" height="75%" >}}
+{{< video https://www.youtube.com/watch?v=Wvh-uixQrGI&t=1s?rel=0&enablejsapi=1 width="100%" height="80%" >}}
 
 ## Shared Autonomy via Deep Reinforcement Learning
 
@@ -538,7 +541,7 @@ each future
 
 ## Results (video)
 
-{{< video https://www.cs.cmu.edu/~sjavdani/videos/rss_2015_hindsight_presentation.mp4 width="800" height="500" >}} 
+{{< video https://www.cs.cmu.edu/~sjavdani/videos/rss_2015_hindsight_presentation.mp4 width="800" height="500" >}}
 
 ## Results
 

@@ -10,12 +10,14 @@ format:
     smaller: true
     footer: '<a href="https://csc2626.github.io/website/" target="_blank" style="font-size:0.8em; bottom: -5px;">↩ Back to Course Website</a>'
     chalkboard:
-      src: chalkboard.json
       buttons: true
       boardmarker-width: 2
       chalk-width: 2
       chalk-effect: 1.0
     css: ../style.css
+    include-after-body:
+      - text: |
+          <script type="text/javascript" src="../custom_curtain.js"></script>
 html-math-method:
   method: mathjax
   url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
@@ -193,8 +195,10 @@ Any control problem where:
 ::: {.column width="5%"}
 :::
 
-::: {.column width="40%"}
-{{< video https://www.youtube.com/watch?v=M8r0gmQXm1Y?enablejsapi=1 width="400" height="300" >}}
+::: {.column width="45%"}
+{{< video https://www.youtube.com/watch?v=M8r0gmQXm1Y width="100%" height="300" >}}
+
+<!-- <div class="curtain"></div> -->
 
 [<https://www.youtube.com/watch?v=M8r0gmQXm1Y>]{.small-math}
 :::
@@ -219,7 +223,7 @@ Any control problem where:
 :::
 
 ::: {.column width="40%"}
-{{< video https://www.youtube.com/watch?v=Q3LXJGha7Ws?enablejsapi=1?enablejsapi=1 width="400" height="300" >}} 
+{{< video https://www.youtube.com/watch?v=Q3LXJGha7Ws?loop=1 width="400" height="300" >}}
 
 [<https://www.youtube.com/watch?v=Q3LXJGha7Ws>]{.small-math}
 :::
@@ -306,7 +310,7 @@ Any control problem where:
 
 :::::: columns
 ::: {.column .small-math width="33%"}
-{{< video https://www.youtube.com/watch?v=I39sxwYKlEE?enablejsapi=1 width="500" height="200" >}}
+{{< video https://www.youtube.com/watch?v=I39sxwYKlEE?enablejsapi=1 width="500" height="250" >}}
 
 [<https://www.youtube.com/watch?v=I39sxwYKlEE>]{.tiny-font}
 
@@ -314,7 +318,7 @@ Ernst Dickmans + Mercedes (1986-2003)
 :::
 
 ::: {.column .small-math width="33%"}
-{{< video https://www.youtube.com/watch?v=2KMAAmkz9go?enablejsapi=1 start="2:02" width="500" height="200" >}}
+{{< video https://www.youtube.com/watch?v=2KMAAmkz9go start="2:02" width="500" height="250" >}}
 
 [<https://www.youtube.com/watch?v=2KMAAmkz9go>]{.tiny-font}
 
@@ -322,7 +326,7 @@ Navlab 1 (1986-1989)
 :::
 
 ::: {.column .small-math width="33%"}
-{{< video https://www.youtube.com/watch?v=ilP4aPDTBPE?enablejsapi=1 width="500" height="200" >}}
+{{< video https://www.youtube.com/watch?v=ilP4aPDTBPE width="500" height="250" >}}
 
 [<https://www.youtube.com/watch?v=ilP4aPDTBPE>]{.tiny-font}
 
@@ -705,19 +709,19 @@ Errors are independent
 
 :::::: columns
 ::: {.column .small-math width="33%"}
-{{< video https://www.youtube.com/watch?v=V00npNnWzSU?enablejsapi=1 width="300" height="200" >}}
+{{< video https://www.youtube.com/watch?v=V00npNnWzSU?enablejsapi=1 width="300" height="250" >}}
 
 Initial expert trajectories
 :::
 
 ::: {.column .small-math width="33%"}
-{{< video https://www.youtube.com/watch?v=V00npNnWzSU?enablejsapi=1 width="300" height="200" >}}
+{{< video https://www.youtube.com/watch?v=V00npNnWzSU?enablejsapi=1 width="300" height="250" >}}
 
 Supervised learning
 :::
 
 ::: {.column .small-math width="33%"}
-{{< video https://www.youtube.com/watch?v=V00npNnWzSU?enablejsapi=1 width="300" height="200" >}}
+{{< video https://www.youtube.com/watch?v=V00npNnWzSU?enablejsapi=1 width="300" height="250" >}}
 
 DAgger
 :::

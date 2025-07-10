@@ -16,6 +16,9 @@ format:
             chalk-width: 2
             chalk-effect: 1.0
         css: ../style.css
+        include-after-body:
+          - text: |
+                <script type="text/javascript" src="../custom_curtain.js"></script> 
 html-math-method:
     method: mathjax
     url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
@@ -320,13 +323,19 @@ Cosmos model from NVIDIA. <https://research.nvidia.com/labs/dir/cosmos-tokenizer
 ::: {.column width="50%"}
 <!-- {{< video videos/prev-sota.mp4 autoplay="true" >}}  -->
 
-<video data-autoplay controls src="videos/prev-sota.mp4"></video>  Previous SOTA
+<video data-autoplay controls src="videos/prev-sota.mp4">
 
+</video>
+
+Previous SOTA
 :::
 
 ::: {.column width="50%"}
+<video data-autoplay controls src="videos/cosmos.mp4">
 
-<video data-autoplay controls src="videos/cosmos.mp4"></video> Cosmos
+</video>
+
+Cosmos
 :::
 :::::
 
@@ -338,14 +347,21 @@ Cosmos model from NVIDIA. <https://research.nvidia.com/labs/dir/cosmos-tokenizer
 
 ::::: columns
 ::: {.column width="50%"}
-
 <!-- {{< video videos/kitchen-prevsota.mp4 >}}  -->
-<video data-autoplay controls src="videos/kitchen-prevsota.mp4"></video> Previous SOTA
+
+<video data-autoplay controls src="videos/kitchen-prevsota.mp4">
+
+</video>
+
+Previous SOTA
 :::
 
 ::: {.column width="50%"}
+<video data-autoplay controls src="videos/kitchen-cosmos.mp4">
 
-<video data-autoplay controls src="videos/kitchen-cosmos.mp4"></video> Cosmos
+</video>
+
+Cosmos
 :::
 :::::
 

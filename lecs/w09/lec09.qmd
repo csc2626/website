@@ -16,6 +16,9 @@ format:
             chalk-width: 2
             chalk-effect: 1.0
         css: ../style.css
+        include-after-body:
+          - text: |
+                <script type="text/javascript" src="../custom_curtain.js"></script>
 html-math-method:
     method: mathjax
     url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
@@ -130,7 +133,7 @@ $$IRL_\psi(\pi_E) = \arg \max_{c \in \mathcal{C}} -\psi(c) + (\min_{\pi \in \Pi}
 
 $$- \mathbb{E}_{\pi_E}[c(s,a)]$$
 
-▶ Define $RL(c) = \arg \min_{\pi \in \Pi} -H(\pi) + \mathbb{E}_\pi[c(s,a)]$. \
+▶ Define $RL(c) = \arg \min_{\pi \in \Pi} -H(\pi) + \mathbb{E}_\pi[c(s,a)]$.\
 Let $\tilde{c} \in IRL_\psi(\pi_E)$. We are interested in characterizing the induced policy $RL(\tilde{c})$.
 
 ## Derivations
@@ -248,7 +251,6 @@ g(x) = \begin{cases}
 +\infty & \text{otherwise}
 \end{cases}
 $$
-
 
 ## GAIL
 
@@ -546,13 +548,11 @@ Acknowledgments\
 Today’s slides are based on student presentations from 2019 by: Yeming Wen, Yin-Hung Chen , and Yuwen Xiong
 :::
 
-## Model-based Adversarial Imitation Learning{.center}
+## Model-based Adversarial Imitation Learning {.center}
 
 Nir Baram, Oron Anschel, Shie Mannor
 
-
 Presented by Yuwen Xiong, Mar 1 st
-
 
 ## Recap: GAIL algorithm
 
@@ -560,10 +560,10 @@ $$
 \underset{\pi}{\text{argmin}} \quad \underset{D \in (0,1)}{\text{argmax}} \mathbb{E}_{\pi}[\log D(s, a)] + \mathbb{E}_{\pi_E}[\log(1 - D(s, a))] - \lambda H(\pi)
 $$
 
-* We use Adam to optimize the discriminator and use TRPO to optimize the policy
-* The optimization of the discriminator can be done by using backpropagation, but this is not the case for the optimization of the policy
-* $\pi$ affects the data distribution but do not appear in the objective itself
-* We use these two equations to get gradient estimation for $\pi_{\theta}$
+-   We use Adam to optimize the discriminator and use TRPO to optimize the policy
+-   The optimization of the discriminator can be done by using backpropagation, but this is not the case for the optimization of the policy
+-   $\pi$ affects the data distribution but do not appear in the objective itself
+-   We use these two equations to get gradient estimation for $\pi_{\theta}$
 
 $$
 \nabla_{\theta} \mathbb{E}_{\pi}[\log D(s, a)] \cong \mathbb{\hat{E}}_{\tau_i}[\nabla_{\theta} \log \pi_{\theta}(a|s) Q(s, a)]
@@ -571,30 +571,29 @@ $$
 
 $$Q(\hat{s}, \hat{a}) = \mathbb{\hat{E}}_{\tau_i}[\log D(s, a) \mid s_0 = \hat{s}, a_0 = \hat{a}]$$
 
-## Motivation 
+## Motivation
 
-* A model-free approach like GAIL has its limitations
-    * The generative model can no longer be trained by simply backpropagating the gradient from the loss function defined over the discriminator
-    * Has to resort to high-variance gradient estimations
+-   A model-free approach like GAIL has its limitations
+    -   The generative model can no longer be trained by simply backpropagating the gradient from the loss function defined over the discriminator
+    -   Has to resort to high-variance gradient estimations
 
 . . .
 
 <br>
 
-* If we have a model-based version of adversarial imitation learning
-    * The system can be easily trained end-to-end using regular backpropagation
-    * The policy gradient can be derived directly from the gradient of the discriminator 
-    * Policies can be more robust and training requires fewer interactions with the environment
+-   If we have a model-based version of adversarial imitation learning
+    -   The system can be easily trained end-to-end using regular backpropagation
+    -   The policy gradient can be derived directly from the gradient of the discriminator
+    -   Policies can be more robust and training requires fewer interactions with the environment
 
 ## Algorithm - overview
 
-::::: columns
-::: {.column width="70%"}
+:::::: columns
+:::: {.column width="70%"}
 The model-free approach treats the state s as fixed and only tries to optimize the behavior.
 
-:::{.fragment}
-Instead, we treat s as a function of the policy:
-$$s' = f(s, a)$$
+::: fragment
+Instead, we treat s as a function of the policy: $$s' = f(s, a)$$
 
 So that, by using the law of total derivative we can get:
 
@@ -605,16 +604,12 @@ $$
 \end{align}
 $$
 :::
-
-
-:::
+::::
 
 ::: {.column width="30%"}
-![](images/algo-diagram.png){height=300}
+![](images/algo-diagram.png){height="300"}
 :::
-:::::
-
-
+::::::
 
 ## Algorithm - preparation
 
@@ -632,8 +627,6 @@ $$\qquad \qquad \qquad = \frac{p(s, a|\pi)p(\pi)}{p(s, a|\pi)p(\pi) + p(s, a|\pi
 
 $$\qquad = \frac{p(s, a|\pi)}{p(s, a|\pi) + p(s, a|\pi_E)}$$
 
-
-
 ## Algorithm - preparation
 
 Re-writing it as following:
@@ -649,7 +642,7 @@ $$
 D(s, a) = \frac{1}{1 + \varphi(s, a) \cdot \psi(s)}
 $$
 
-## Algorithm - preparation 
+## Algorithm - preparation
 
 Here $\varphi(s, a) = \frac{p(a|s,\pi_E)}{p(a|s,\pi)}$ stands for policy likelihood ratio
 
@@ -687,7 +680,6 @@ $$
 \pi_\theta(a|s) = \mu_\theta(s) + \xi\sigma_\theta(s), \text{ where } \xi \sim \mathcal{N}(0, 1)
 $$
 
-
 . . .
 
 So that we can get a Monte-Carlo estimator of the derivative
@@ -699,11 +691,9 @@ $$
 \end{align}
 $$
 
-
 ## Algorithm
 
 ![](images/algo-model-diagram.png)
-
 
 ## Algorithm
 
@@ -711,13 +701,11 @@ To maximize the reward function, we can view reward as $r(s, a) = -D(s, a)$, and
 
 . . .
 
-So that we can define:
-$$
+So that we can define: $$
 J(\theta) = \mathbb{E} \left[ \sum_{t=0} \gamma^t D(s_t, a_t) \mid \theta \right]
 $$
 
-And write down the derivatives: (this follows SVG paper [Heess et al. 2015])
-$$
+And write down the derivatives: (this follows SVG paper \[Heess et al. 2015\]) $$
 J_s = \mathbb{E}_{p(a\mid s)}\mathbb{E}_{p(s'\mid s,a)}\mathbb{E}_{p(\xi\mid s,a,s')} 
 \left[ D_s + D_a\pi_s + \gamma J'_{s'}(f_s + f_a\pi_s) 
 \right] 
@@ -728,16 +716,13 @@ J_\theta =  \mathbb{E}_{p(a\mid s)}\mathbb{E}_{p(s'\mid s,a)}\mathbb{E}_{p(\xi\m
 [D_a\pi_\theta +  \gamma(J'_{s'}f_a\pi_\theta + J'_\theta)]
 $$
 
-
-## Algorithm 
+## Algorithm
 
 ![](images/algo1.png)
 
 ## Experiments
 
 ![](images/experiments.png)
-
-
 
 ## Today’s agenda
 
