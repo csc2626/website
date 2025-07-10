@@ -509,9 +509,28 @@ When applying RL to robotics we need to guarantee that the algorithm will not vi
 
 ![](images/2theories-method.png)
 
-## The need for safe exploration in RL for robotics
+## [The need for safe exploration in RL for robotics]{.medium}
 
-![](images/robot1.png){width="250"} ![](images/robot2.png){width="200"} {{< video https://www.youtube.com/watch?v=eRwTbRtnT1I?rel=0&enablejsapi=1 width="300" height="200" >}} {{< video https://www.youtube.com/watch?v=VfDYUeyzHqc?rel=0&enablejsapi=1 width="200" height="200" >}}
+:::::: columns
+
+::: {.column width="25%"}
+![](images/robot1.png){width="100%"}
+:::
+
+::: {.column width="25%"}
+![](images/robot2.png){width="100%"} 
+
+:::
+
+::: {.column width="25%"}
+{{< video https://www.youtube.com/watch?v=eRwTbRtnT1I?rel=0&enablejsapi=1 width="300" height="200" >}} 
+:::
+
+::: {.column width="25%"}
+{{< video https://www.youtube.com/watch?v=VfDYUeyzHqc?rel=0&enablejsapi=1 width="200" height="200" >}}
+:::
+
+::::::
 
 When applying RL to robotics we need to guarantee that the algorithm will not visit **unsafe states** very often during learning.
 
