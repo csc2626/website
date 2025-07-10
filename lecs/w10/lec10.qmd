@@ -538,7 +538,7 @@ each future
 
 ## Results (video)
 
-![](images/results.jpg)
+{{< video https://www.cs.cmu.edu/~sjavdani/videos/rss_2015_hindsight_presentation.mp4 width="800" height="500" >}} 
 
 ## Results
 
